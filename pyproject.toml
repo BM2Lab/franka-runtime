@@ -7,7 +7,7 @@ name = "franka-runtime"
 version = "0.0.1"
 description = "Offline-first lab platform scaffold"
 requires-python = ">=3.10"
-dependencies = ["contracts==0.0.1"]
+dependencies = ["contracts==0.0.2"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
