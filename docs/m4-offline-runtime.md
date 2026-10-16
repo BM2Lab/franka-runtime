@@ -149,7 +149,7 @@ motion objects using a Python robot double, forbids `Robot` creation and replace
 scheduler mutation with a null scope. It checks all six routes and DLS numerical
 parity; it is not a live-control test.
 
-Next migration work is Phase 3: PPO worker/client and learning orchestration.
+Phase 3 PPO worker/client and learning orchestration are now extracted; see [integration guide](ppo-offline-runtime.md).
 Hardware commissioning remains a separate phase per physical unit/tool and
 firmware family. Panda, grippers, ROS backend and server6 modified-controller
 qualification remain unimplemented here.

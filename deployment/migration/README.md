@@ -109,3 +109,7 @@ Physical commissioning requires separate authorization and per-unit qualificatio
 ## Phase 2 implemented
 
 The offline M4 extraction is now available; see [runtime guide](../../docs/m4-offline-runtime.md) and [validation receipt](phase2-validation.json). The earlier phase 0–1 records above remain historical. Next work is Phase 3.
+
+## Phase 3 implemented
+
+PPO reference/native adapters, installed learning worker/client/exporter and historical report tools are extracted. See [integration guide](../../docs/ppo-offline-runtime.md), [validation receipt](phase3-validation.json) and [provenance](phase3-extraction.json). Phase 4 simulation extraction and phase 5 per-unit commissioning remain planned. Earlier receipts remain historical.

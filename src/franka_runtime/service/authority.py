@@ -1,4 +1,4 @@
-"""Non-RT local M4 command authority; native guards/watchdogs remain final.
+"""Non-RT local motion command authority; native guards/watchdogs remain final.
 
 All mutation is serialized. This is an in-process API, not network authentication.
 No imports or connections to vendor software occur here.
@@ -10,6 +10,7 @@ import threading
 import time
 import uuid
 from contracts.motion import MotionSessionSpec
+from contracts.franka_policy import JointPolicySessionSpec
 from contracts.sessions import (SessionLease, LeaseRequest, LeaseRelease, CommandEnvelope,
                                 CommandReceipt, FaultReport, payload_sha256)
 
@@ -21,8 +22,8 @@ class AuthorityError(RuntimeError):
 class SessionAuthority:
     def __init__(self, backend, specification, validate_payload, *, clock_id,
                  command_timeout_ns, clock=None, max_lease_ns=600_000_000_000,
-                 receipt_capacity=4096, id_factory=None, expect_application=True):
-        if not isinstance(specification, MotionSessionSpec) or not callable(validate_payload):
+                 receipt_capacity=4096, id_factory=None, expect_application=True, capability_prefix="m4-v1"):
+        if not isinstance(specification, (MotionSessionSpec,JointPolicySessionSpec)) or not callable(validate_payload):
             raise ValueError('Typed session specification and payload validator required')
         if not isinstance(clock_id,str) or not clock_id:
             raise ValueError('Explicit host/boot/clock identity required')
@@ -32,9 +33,11 @@ class SessionAuthority:
                 raise ValueError(f'{name} must be a positive integer')
         if type(expect_application) is not bool:
             raise ValueError('expect_application must be boolean')
+        if not isinstance(capability_prefix,str) or not capability_prefix.strip():
+            raise ValueError('Capability prefix required')
         self.expect_application = expect_application
         self.backend, self.specification, self.validate_payload = backend, specification, validate_payload
-        self.capability_id = 'm4-v1:' + payload_sha256(specification)
+        self.capability_id = capability_prefix + ':' + payload_sha256(specification)
         self.clock_id, self.command_timeout_ns, self.max_lease_ns = clock_id,command_timeout_ns,max_lease_ns
         self._clock = clock or (lambda:time.clock_gettime_ns(time.CLOCK_MONOTONIC_RAW))
         self._id = id_factory or (lambda:uuid.uuid4().hex)

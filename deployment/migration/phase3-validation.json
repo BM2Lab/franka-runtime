@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "phase": 3,
+  "created_utc": "2026-10-16T14:47:30.056431+00:00",
+  "status": "implemented_offline_candidate",
+  "candidate_versions": {
+    "contracts": "0.0.3",
+    "learning": "0.0.3",
+    "franka-runtime": "0.0.3"
+  },
+  "repositories": {
+    "source": "0bd7f54044f8cc404a53c3223a19966edbfbf917",
+    "runtime_base": "6b57413597683442831605b02620e9a27b4bb40c",
+    "learning_base": "0ba9994c31983a89f0141157ba6bf71aeef00528",
+    "working_tree_changes": "uncommitted; prior phase 1 learning changes preserved"
+  },
+  "tests": {
+    "editable": {
+      "passed": 165,
+      "skipped": 3
+    },
+    "installed_wheels": {
+      "passed": 165,
+      "skipped": 3
+    },
+    "skip_reason": "optional Torch/LeRobot integrations absent",
+    "import_isolation": "Final wheel-only imports; optional/native modules, socket creation and thread startup blocked",
+    "cleanup_fault_injection": "Terminal disk failure occurs only after stop and worker cleanup",
+    "source_inventory": "288 inputs/external provenance verified unchanged",
+    "dependency_check": "No broken requirements found"
+  },
+  "bundle_parity": {
+    "schema_version": 1,
+    "hardware_accessed": false,
+    "bundles": [
+      {
+        "passed": true,
+        "vectors": 1024,
+        "max_abs_error": 1.8477439880371094e-06,
+        "manifest_sha256": "9c1a72d9b0430343572c5cfd3580fe1b52cb63f6092e844e73f39d11f3be12dd",
+        "provider": "CPUExecutionProvider",
+        "hardware_validated": false,
+        "ignored_legacy_cache_files": [
+          "franka_policy_bundle/__pycache__/__init__.cpython-312.pyc",
+          "franka_policy_bundle/__pycache__/bundle.cpython-312.pyc",
+          "franka_policy_bundle/__pycache__/contract.cpython-312.pyc"
+        ],
+        "bundle_id": "fr3_incremental_6d_position_nominal_model149_v2",
+        "runtime_observation_max_abs_error": 1.1920928955078125e-07,
+        "runtime_action_mapping_max_abs_error": 2.3758888278990753e-07,
+        "worker_sentinel_count": 30,
+        "worker_max_abs_error": 2.682209014892578e-07
+      },
+      {
+        "passed": true,
+        "vectors": 1024,
+        "max_abs_error": 6.780028343200684e-07,
+        "manifest_sha256": "8d19cb788f43530241dffba708cb47ca964e469ecaa085a51bb4ddc09cb5982c",
+        "provider": "CPUExecutionProvider",
+        "hardware_validated": false,
+        "ignored_legacy_cache_files": [
+          "franka_policy_bundle/__pycache__/__init__.cpython-312.pyc",
+          "franka_policy_bundle/__pycache__/bundle.cpython-312.pyc",
+          "franka_policy_bundle/__pycache__/contract.cpython-312.pyc"
+        ],
+        "bundle_id": "fr3_velocity_impedance_position_only_nominal_model149_v1",
+        "runtime_observation_max_abs_error": 1.1920928955078125e-07,
+        "runtime_action_mapping_max_abs_error": 4.434585565427085e-08,
+        "worker_sentinel_count": 30,
+        "worker_max_abs_error": 1.7881393432617188e-07
+      }
+    ]
+  },
+  "historical_ppo_replay": [
+    {
+      "schema_version": 1,
+      "hardware_executed": false,
+      "source_events_sha256": "4b5899ae7061f7eaa422bff57f831c18222e0caad70ba8f0ceb9242f950483b9",
+      "manifest_sha256": "9c1a72d9b0430343572c5cfd3580fe1b52cb63f6092e844e73f39d11f3be12dd",
+      "observations": 1199,
+      "consumed_results": 1175,
+      "max_observation_error": 1.7881393432617188e-07,
+      "max_action_or_velocity_error": 0.0,
+      "max_reference_error": 4.2808056033294406e-07,
+      "passed": true
+    },
+    {
+      "schema_version": 1,
+      "hardware_executed": false,
+      "source_events_sha256": "f1f947629a5dba96839b2bba5399316a93a121439b00d0c423d5a6a616d77d01",
+      "manifest_sha256": "8d19cb788f43530241dffba708cb47ca964e469ecaa085a51bb4ddc09cb5982c",
+      "observations": 1249,
+      "consumed_results": 1225,
+      "max_observation_error": 1.7881393432617188e-07,
+      "max_action_or_velocity_error": 2.4080276495030972e-08,
+      "max_reference_error": 6.102025551513179e-10,
+      "passed": true
+    }
+  ],
+  "native_api": {
+    "hardware_accessed": false,
+    "native_rebuilt": false,
+    "routes": [
+      {
+        "route": "position",
+        "constructor_passed": true,
+        "stiffness": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "damping": [
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      {
+        "route": "velocity-impedance",
+        "constructor_passed": true,
+        "stiffness": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "damping": [
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      }
+    ]
+  },
+  "client_smokes": [
+    {
+      "path": "/tmp/franka-phase03/position-mock-wheel",
+      "mode": "mock",
+      "kind": "position",
+      "metadata": {
+        "schema_version": 1,
+        "execution_context": "mock",
+        "hardware_executed": false,
+        "terminal_state": "complete",
+        "terminal_reason": "",
+        "installed_client_versions": {
+          "contracts": "0.0.3",
+          "learning": "0.0.3",
+          "franka-runtime": "0.0.3"
+        },
+        "model_sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
+        "profile_sha256": "f42f377742a18c9c014c474aecac2dae19a408c14b3bea6a8fb4c941fec1aeb0",
+        "manifest_sha256": "9c1a72d9b0430343572c5cfd3580fe1b52cb63f6092e844e73f39d11f3be12dd",
+        "contract_id": "fr3_incremental_position_29d_v1",
+        "provider": "CPUExecutionProvider",
+        "session_id": "b70ae3961b7b479ab8681386c14be6d5",
+        "runtime_source_role": "installed packages; no bundled code imports",
+        "smooth_stop_ok": true,
+        "runtime_fault": null,
+        "dropped_receipts": 0,
+        "dropped_samples": 0,
+        "recording_errors": [],
+        "observation_count": 51,
+        "consumed_result_count": 50,
+        "discarded_stale_result_count": 0,
+        "metrics_scope": "Offline reference/inference pipeline; static encoders, not physical tracking performance"
+      },
+      "receipt_count": 100,
+      "final_metadata_sha256": "0da7ffd0cb22f07147e008fe4ed9c5a3aa5a32136e6454190bb4784df1fc318d"
+    },
+    {
+      "path": "/tmp/franka-phase03/position-shadow-wheel",
+      "mode": "shadow",
+      "kind": "position",
+      "metadata": {
+        "schema_version": 1,
+        "execution_context": "shadow",
+        "hardware_executed": false,
+        "terminal_state": "complete",
+        "terminal_reason": "",
+        "installed_client_versions": {
+          "contracts": "0.0.3",
+          "learning": "0.0.3",
+          "franka-runtime": "0.0.3"
+        },
+        "model_sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
+        "profile_sha256": "f42f377742a18c9c014c474aecac2dae19a408c14b3bea6a8fb4c941fec1aeb0",
+        "manifest_sha256": "9c1a72d9b0430343572c5cfd3580fe1b52cb63f6092e844e73f39d11f3be12dd",
+        "contract_id": "fr3_incremental_position_29d_v1",
+        "provider": "CPUExecutionProvider",
+        "session_id": "a1b7ec6e1e004ebe81481798a459a287",
+        "runtime_source_role": "installed packages; no bundled code imports",
+        "smooth_stop_ok": true,
+        "runtime_fault": null,
+        "dropped_receipts": 0,
+        "dropped_samples": 0,
+        "recording_errors": [],
+        "observation_count": 51,
+        "consumed_result_count": 50,
+        "discarded_stale_result_count": 0,
+        "metrics_scope": "Offline reference/inference pipeline; static encoders, not physical tracking performance"
+      },
+      "receipt_count": 50,
+      "final_metadata_sha256": "e2ac4b93a4c3c192870749927e7ef3f4209e66ea1a13413c40a7cbe2b402a434"
+    },
+    {
+      "path": "/tmp/franka-phase03/velocity-impedance-mock-wheel",
+      "mode": "mock",
+      "kind": "velocity-impedance",
+      "metadata": {
+        "schema_version": 1,
+        "execution_context": "mock",
+        "hardware_executed": false,
+        "terminal_state": "complete",
+        "terminal_reason": "",
+        "installed_client_versions": {
+          "contracts": "0.0.3",
+          "learning": "0.0.3",
+          "franka-runtime": "0.0.3"
+        },
+        "model_sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
+        "profile_sha256": "94e9c81ce7e916a69bd55aa6b09249a8eb7cf211b2d856728d32d11cc1cf0080",
+        "manifest_sha256": "8d19cb788f43530241dffba708cb47ca964e469ecaa085a51bb4ddc09cb5982c",
+        "contract_id": "fr3_joint_velocity_impedance_29d_v1",
+        "provider": "CPUExecutionProvider",
+        "session_id": "498cada2079147438f30f2c9ab7d507b",
+        "runtime_source_role": "installed packages; no bundled code imports",
+        "smooth_stop_ok": true,
+        "runtime_fault": null,
+        "dropped_receipts": 0,
+        "dropped_samples": 0,
+        "recording_errors": [],
+        "observation_count": 51,
+        "consumed_result_count": 50,
+        "discarded_stale_result_count": 0,
+        "metrics_scope": "Offline reference/inference pipeline; static encoders, not physical tracking performance"
+      },
+      "receipt_count": 100,
+      "final_metadata_sha256": "7d0c5af52e1e8baa8f72eeba69631e2e18fbb8ee975b2ecbbca35108724e3ca2"
+    },
+    {
+      "path": "/tmp/franka-phase03/velocity-impedance-shadow-wheel",
+      "mode": "shadow",
+      "kind": "velocity-impedance",
+      "metadata": {
+        "schema_version": 1,
+        "execution_context": "shadow",
+        "hardware_executed": false,
+        "terminal_state": "complete",
+        "terminal_reason": "",
+        "installed_client_versions": {
+          "contracts": "0.0.3",
+          "learning": "0.0.3",
+          "franka-runtime": "0.0.3"
+        },
+        "model_sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
+        "profile_sha256": "94e9c81ce7e916a69bd55aa6b09249a8eb7cf211b2d856728d32d11cc1cf0080",
+        "manifest_sha256": "8d19cb788f43530241dffba708cb47ca964e469ecaa085a51bb4ddc09cb5982c",
+        "contract_id": "fr3_joint_velocity_impedance_29d_v1",
+        "provider": "CPUExecutionProvider",
+        "session_id": "58ea253829f84de199ef74eac6af7daa",
+        "runtime_source_role": "installed packages; no bundled code imports",
+        "smooth_stop_ok": true,
+        "runtime_fault": null,
+        "dropped_receipts": 0,
+        "dropped_samples": 0,
+        "recording_errors": [],
+        "observation_count": 51,
+        "consumed_result_count": 50,
+        "discarded_stale_result_count": 0,
+        "metrics_scope": "Offline reference/inference pipeline; static encoders, not physical tracking performance"
+      },
+      "receipt_count": 50,
+      "final_metadata_sha256": "ec30794e0604e9a9637a10c9ab196956cf947310fcc874feb1add03c695ad555"
+    }
+  ],
+  "historical_metrics": [
+    {
+      "run_dir": "/home/chen-lab/franka_ros2_ws/hardware_inventory/2026-10-12/m4/tracking.20261012T195600.810579Z/trial-01",
+      "original_metrics_sha256": "82178907c61b250b778ddbfb00929a940b699f5ab0f86957f757e93cccd7e63c",
+      "derived_metrics_sha256": "82178907c61b250b778ddbfb00929a940b699f5ab0f86957f757e93cccd7e63c",
+      "exact_metrics_equal": true,
+      "raw_data_modified": false
+    },
+    {
+      "run_dir": "/home/chen-lab/franka_ros2_ws/hardware_inventory/2026-10-12/m4/tracking.20261012T225714.056239Z/trial-01",
+      "original_metrics_sha256": "9685c2d719fd39f54d64d55ec365c41cff60d9c0c20ca15672696533a430ee78",
+      "derived_metrics_sha256": "9685c2d719fd39f54d64d55ec365c41cff60d9c0c20ca15672696533a430ee78",
+      "exact_metrics_equal": true,
+      "raw_data_modified": false
+    }
+  ],
+  "reporting": "Historical hold/circle/Lissajous reports generated with installed analysis; final wheel-only hold report also checked",
+  "profile_sha256": {
+    "ppo.velocity-impedance.pending.yaml": "94e9c81ce7e916a69bd55aa6b09249a8eb7cf211b2d856728d32d11cc1cf0080",
+    "ppo.position.pending.yaml": "f42f377742a18c9c014c474aecac2dae19a408c14b3bea6a8fb4c941fec1aeb0"
+  },
+  "environment": {
+    "numpy": "2.5.4",
+    "PyYAML": "6.0.3",
+    "onnx": "1.21.0",
+    "onnxruntime": "1.24.3",
+    "jsonschema": "4.26.0",
+    "pytest": "8.4.2"
+  },
+  "python": "CPython 3.12.14",
+  "candidate_wheels": {
+    "contracts-0.0.3-py3-none-any.whl": {
+      "sha256": "c09f8085e283a70484cc545f48c40607ac8e64760d3eb9c7085b6b15a7811aed",
+      "path": "/home/chen-lab/yifan/lab-runtime-artifacts/phase03/contracts-0.0.3-py3-none-any.whl",
+      "bytes": 18060
+    },
+    "franka_runtime-0.0.3-py3-none-any.whl": {
+      "sha256": "30c24f2a2b6c5266f2b4f556735422dae4604eae5080d72d5688ceb1241a211c",
+      "path": "/home/chen-lab/yifan/lab-runtime-artifacts/phase03/franka_runtime-0.0.3-py3-none-any.whl",
+      "bytes": 55130
+    },
+    "learning-0.0.3-py3-none-any.whl": {
+      "sha256": "e2c5407cd561783119da1faeb765303252734ab040398e01979909f24f564fcc",
+      "path": "/home/chen-lab/yifan/lab-runtime-artifacts/phase03/learning-0.0.3-py3-none-any.whl",
+      "bytes": 84391
+    }
+  },
+  "preservation": {
+    "hardware_accessed": false,
+    "native_rebuilt": false,
+    "baseline_modified": false,
+    "legacy_source_or_bundles_modified": false,
+    "raw_logs_modified": false
+  },
+  "pending": [
+    "Fresh Torch/checkpoint export on training workstation (no checkpoint/training framework installed here)",
+    "Optional matplotlib plot rendering not exercised in this environment",
+    "Phase 4 simulator extraction/selective-reset parity",
+    "Phase 5 per-unit hardware/FCI/stop qualification and consumer cutover"
+  ],
+  "artifact_note": "Candidate wheels are project-owned, unpublished. Smoke recordings/derived reports under /tmp are disposable. This receipt does not authorize motion."
+}

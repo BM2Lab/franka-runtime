@@ -21,7 +21,7 @@ def _unique(pairs):
     return result
 
 
-def verify_motion_bundle(root, expected_manifest_sha256):
+def verify_motion_bundle(root, expected_manifest_sha256, *, allow_legacy_cache=False):
     """Anchor identity and exact file inventory. Hashes are not authorization."""
     root = Path(root).resolve(strict=True)
     manifest_path = root / 'manifest.json'
@@ -46,7 +46,13 @@ def verify_motion_bundle(root, expected_manifest_sha256):
             raise ValueError('Bundle symlinks are not permitted')
         if p.is_file() and p != manifest_path:
             actual.add(p.relative_to(root).as_posix())
-    if set(files) != actual:
+    ignored = set()
+    if allow_legacy_cache and manifest.get('artifact_format') is None:
+        ignored = {name for name in actual-set(files)
+                   if Path(name).parent.as_posix() == 'franka_policy_bundle/__pycache__'
+                   and Path(name).stem.split('.')[0] in ('__init__','contract','bundle')
+                   and name.endswith('.pyc')}
+    if set(files) != actual-ignored:
         raise ValueError('Bundle file inventory mismatch')
     for name, digest in files.items():
         if sha256(root/name) != digest:

@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "source": "deployment/franka_policy_bundle/contract.py",
+      "source_sha256": "852a5183199596f8c1b9d5c47f70f39c7937751949d20a6dac3b2b2a254cc0d7",
+      "destination": "packages/learning/src/learning/artifacts/franka_bundle/contract.py",
+      "repository": "robot-learning",
+      "destination_sha256": "088c2c0c87465a85e8c8de2dc32ce47dd2b048a4386affc7cc5ee508f24101a7"
+    },
+    {
+      "source": "deployment/franka_policy_bundle/bundle.py",
+      "source_sha256": "853bad4a79af73c048259c234f67e12abbba1ac05022ecaa682d74388a699325",
+      "destination": "packages/learning/src/learning/artifacts/franka_bundle/bundle.py",
+      "repository": "robot-learning",
+      "destination_sha256": "f1bc648acfdb6bb55d501522173650d588bb19693116d0c9ce9003ee977fb0f2"
+    },
+    {
+      "source": "deployment/franka_policy_bundle/suite.py",
+      "source_sha256": "184ccf2021a33f2da640f5775424928bd83c327811ad68e0206c3373e7d5328d",
+      "destination": "packages/learning/src/learning/artifacts/franka_bundle/suite.py",
+      "repository": "robot-learning",
+      "destination_sha256": "01290ae2069e63770e8cc278af945f47fc3ca29ef2720703a205c5f1f27f6184"
+    },
+    {
+      "source": "deployment/franky_runtime/franky_experiment/path_runtime.py",
+      "source_sha256": "e9dcd7d22f2d89dfaf2de31dd3db8b8a37d733a6bff58cadd200ddce4a71ee6b",
+      "destination": "packages/learning/src/learning/experiments/paths.py",
+      "repository": "robot-learning",
+      "destination_sha256": "e9dcd7d22f2d89dfaf2de31dd3db8b8a37d733a6bff58cadd200ddce4a71ee6b"
+    },
+    {
+      "source": "deployment/franky_runtime/summarize_shadow.py",
+      "source_sha256": "dec439021c8c7576e7a01fda78b9f255cb8d6aed95634ff1b6466a99a3604121",
+      "destination": "packages/learning/src/learning/evaluation/franka/summarize_shadow.py",
+      "repository": "robot-learning",
+      "destination_sha256": "acbf7f69be89a0aad373985cc98d73e1a4ae409d498f2844d268afb9d7ea1d0a"
+    },
+    {
+      "source": "deployment/franky_runtime/summarize_m4.py",
+      "source_sha256": "69ac13a8d107b553c5e3d93bcd4dfebe7bb2bcc1ca49c121e5d451e272f97a97",
+      "destination": "packages/learning/src/learning/evaluation/franka/summarize_m4.py",
+      "repository": "robot-learning",
+      "destination_sha256": "ebe743e752cc477eff61875c6b5e4e1a4ad2d98f873089b28dd1d00e950f94f0"
+    },
+    {
+      "source": "deployment/franky_runtime/report_m4_comparisons.py",
+      "source_sha256": "f159be1bdf83f47dcc85a1225da0a9a1c250a257d165c3e71a4250bb8b002a71",
+      "destination": "packages/learning/src/learning/evaluation/franka/report_m4_comparisons.py",
+      "repository": "robot-learning",
+      "destination_sha256": "9c6883a3841dcc12577a65524624d7c9443b9290a65251303c166c22e100c68b"
+    },
+    {
+      "source": "source/franka_motion/franka_motion/metrics.py",
+      "source_sha256": "1d7894ee64dd4bb44f27c0f009f7938e72bd31535589c49b51a8846a442ee4c9",
+      "destination": "packages/learning/src/learning/evaluation/franka/geometry.py",
+      "repository": "robot-learning",
+      "destination_sha256": "466f93c9c04712582c84d7ae142529061742b802bdaff9d6073c4406378ff68b"
+    },
+    {
+      "source": "deployment/franky_runtime/franky_experiment/backend.py",
+      "source_sha256": "3401c2b2aafd7ba170a45e255d124df2a9d6b12c0614dde2e7b4742e0ec1dd6c",
+      "destination": "src/franka_runtime/common/backends/franky_joint.py",
+      "repository": "franka-runtime",
+      "destination_sha256": "0547443469118b06e6d59862bf38ec2be46c2263985c3a759f0d9aca14d9f4ca"
+    },
+    {
+      "source": "deployment/franky_runtime/franky_experiment/policy_worker.py",
+      "source_sha256": "b674af381739cc4598fbc969cf2a59b8445148e51329683c53f02d087b5b8556",
+      "destination": "packages/learning/src/learning/integrations/onnx/franka_worker.py",
+      "repository": "robot-learning",
+      "disposition": "split/adapt responsibilities; not a byte-for-byte copy",
+      "destination_sha256": "349e4bc73ad469b222db4538c0521d734ce14096c41555aef124ed567009037c"
+    },
+    {
+      "source": "deployment/franky_runtime/franky_experiment/policy_worker.py",
+      "source_sha256": "b674af381739cc4598fbc969cf2a59b8445148e51329683c53f02d087b5b8556",
+      "destination": "packages/learning/src/learning/integrations/onnx/bridge.py",
+      "repository": "robot-learning",
+      "disposition": "split/adapt responsibilities; not a byte-for-byte copy",
+      "destination_sha256": "723cff235554c559437ddc4a454b440e35f015879308d2a3291dd43da3005e7e"
+    },
+    {
+      "source": "deployment/franky_runtime/franky_experiment/coordinator.py",
+      "source_sha256": "993725d789abd1c7f64429b453ff4a9002408951713aa0aff250134967fc0189",
+      "destination": "packages/learning/src/learning/experiments/ppo.py",
+      "repository": "robot-learning",
+      "disposition": "split/adapt responsibilities; not a byte-for-byte copy",
+      "destination_sha256": "e89ff402ca26c01a301069d087cdb895d8c78b9ea5fb208490368a20571e0599"
+    },
+    {
+      "source": "deployment/franky_runtime/franky_experiment/coordinator.py",
+      "source_sha256": "993725d789abd1c7f64429b453ff4a9002408951713aa0aff250134967fc0189",
+      "destination": "packages/learning/src/learning/experiments/recording.py",
+      "repository": "robot-learning",
+      "disposition": "split/adapt responsibilities; not a byte-for-byte copy",
+      "destination_sha256": "66c68b6073b5d172039f46014d3dc89ce6e66cd67af88d7162d63ffff4d5cc19"
+    },
+    {
+      "source": "deployment/franky_runtime/franky_experiment/coordinator.py",
+      "source_sha256": "993725d789abd1c7f64429b453ff4a9002408951713aa0aff250134967fc0189",
+      "destination": "src/franka_runtime/service/joint_policy.py",
+      "repository": "franka-runtime",
+      "disposition": "split/adapt responsibilities; not a byte-for-byte copy",
+      "destination_sha256": "5c6b80df2fb0bd34dd594c3da9ce5be44de9bfcad60d2d34fdea0ac5cf97dd13"
+    },
+    {
+      "source": "deployment/franky_runtime/run_m4_hardware.py",
+      "source_sha256": "67ccd3417962af8098274d325cef6e8ec829776a4335f01d9b1ce7729d720a64",
+      "destination": "packages/learning/src/learning/experiments/runner.py",
+      "repository": "robot-learning",
+      "disposition": "split/adapt responsibilities; not a byte-for-byte copy",
+      "destination_sha256": "6156555ad26003b279dac208fdcfa02c542c2c61418fc95a7aa5024ff477c537"
+    }
+  ],
+  "hardware_accessed": false,
+  "native_rebuilt": false,
+  "source_revision": "0bd7f54044f8cc404a53c3223a19966edbfbf917",
+  "native_fork_revision": "ea855c9ce3f48ece2c7a0bc4e1d7d033083e1bf9",
+  "new_components": [
+    "contracts.franka_policy: lightweight legacy metadata adapter and typed PPO session",
+    "learning.integrations.franka.ppo_client: installed offline client with runtime-owned admission",
+    "learning.evaluation.franka.replay_ppo: data-only historical actor/reference parity",
+    "learning.artifacts.franka_bundle.inventory: exact inventory with explicit inert legacy-cache exception"
+  ],
+  "adaptations": [
+    "Installed verifier instead of bundle-imported Python",
+    "New exports are data-only; source snapshots remain inert provenance",
+    "Explicit source/model/worker/output paths; no sibling checkout imports",
+    "Bounded callback queue and off-callback serialization",
+    "Runtime receives joint actions through leases/deadlines/receipts; native joint sequence application is unobservable",
+    "Stop and worker cleanup precede final disk writes",
+    "Historical analysis writes derived files outside input recordings"
+  ]
+}

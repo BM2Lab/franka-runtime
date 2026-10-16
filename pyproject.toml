@@ -4,13 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "franka-runtime"
-version = "0.0.2"
+version = "0.0.3"
 description = "Offline-first lab platform scaffold"
 requires-python = ">=3.10"
-dependencies = ["contracts==0.0.2"]
+dependencies = ["contracts==0.0.3"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+ppo = ["numpy>=1.26,<3", "PyYAML>=6,<7"]
 m4 = ["numpy>=1.26,<3", "PyYAML>=6,<7"]
 
 [project.scripts]

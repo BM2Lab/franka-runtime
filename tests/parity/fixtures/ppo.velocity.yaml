@@ -1,0 +1,134 @@
+schema_version: 2
+contract_id: fr3_joint_velocity_impedance_29d_v1
+robot_model: fr3
+robot_description: fr3v2.1_bare_flange
+joint_names:
+- fr3_joint1
+- fr3_joint2
+- fr3_joint3
+- fr3_joint4
+- fr3_joint5
+- fr3_joint6
+- fr3_joint7
+default_joint_position_rad:
+- 0.0
+- -0.7853981633974483
+- 0.0
+- -2.356194490192345
+- 0.0
+- 1.5707963267948966
+- 0.0
+default_joint_velocity_rad_s:
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+policy_period_s: 0.02
+observation_layout:
+- start: 0
+  stop: 7
+  expression: q_measured - q_default
+  unit: rad
+- start: 7
+  stop: 14
+  expression: dq_measured
+  unit: rad/s
+- start: 14
+  stop: 17
+  expression: target_base - fr3_flange_base
+  unit: m
+- start: 17
+  stop: 23
+  expression: q_reference_normalized
+  unit: unitless
+- start: 23
+  stop: 29
+  expression: previous_normalized_joint_velocity
+  unit: unitless
+observation:
+  size: 29
+  dtype: float32
+  terms:
+  - joint_pos_rel
+  - joint_vel_rel
+  - ee_position_error
+  - position_reference
+  - previous_velocity_action
+  normalization: false
+  previous_action: bounded_normalized_joint_velocity
+  reset_previous_action:
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  reference_initialization: measured_start_position
+action:
+  type: normalized_joint_velocity
+  size: 6
+  dtype: float32
+  inference: deterministic_tanh
+  normalized_bounds:
+  - -1.0
+  - 1.0
+  integration: controller_1khz_forward_euler
+  initial_reference: measured_start_position
+  controlled_joint_names:
+  - fr3_joint1
+  - fr3_joint2
+  - fr3_joint3
+  - fr3_joint4
+  - fr3_joint5
+  - fr3_joint6
+  held_joint_names:
+  - fr3_joint7
+  max_reference_velocity_rad_s:
+  - 0.435
+  - 0.435
+  - 0.435
+  - 0.435
+  - 0.522
+  - 0.522
+  soft_limit_projection: true
+  soft_lower_rad:
+  - -2.610666015
+  - -1.652481015
+  - -2.610666015
+  - -2.92901587
+  - -2.588673015
+  - 0.648913185
+  - -2.745750015
+  soft_upper_rad:
+  - 2.610666015
+  - 1.652481015
+  - 2.610666015
+  - -0.26494123
+  - 2.588673015
+  - 4.412542815
+  - 2.745750015
+frames:
+  base: fr3_link0
+  tracked_body: fr3_flange
+target_workspace_m:
+  x:
+  - 0.35
+  - 0.6
+  y:
+  - -0.2
+  - 0.2
+  z:
+  - 0.2
+  - 0.5
+deployment_observation_noise: false
+controller:
+  nominal_stiffness_nm_rad: 100.0
+  nominal_damping_nms_rad: 20.0
+  position_error_clip_rad: 0.5
+  torque_slew_rate_nm_s: 1000.0
+  torque_filter_cutoff_hz: 100.0
+  coriolis_compensation: true
+  hardware_gravity_convention: libfranka_external_to_user_torque

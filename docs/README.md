@@ -12,3 +12,5 @@ change the scaffold qualification status.
 [Phases 0–1 implementation and validation](../deployment/migration/README.md) records the source inventory, portable contracts, golden fixtures and offline-only scope.
 
 [Extracted offline M4 runtime (phase 2)](m4-offline-runtime.md) — installed commands, authority/native boundary and validation.
+
+[Installed PPO adapters/client (phase 3)](ppo-offline-runtime.md) — worker/artifact boundaries, reference semantics and offline validation.
