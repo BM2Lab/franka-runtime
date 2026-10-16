@@ -1,0 +1,154 @@
+schema_version: 1
+runtime: franky_m4_cartesian_v1
+execution_context: hardware
+status: pending
+executable: false
+motion_authorized: false
+approval:
+  approved_by: ''
+  approved_at: ''
+  physical_stop_procedure: ''
+  workspace_review: ''
+bundle: SET_BUNDLE_ROOT
+bundle_manifest_sha256: 79c3ea84734761e46bc4954320555f5c8bf70a4b14060f43c621aec972938816
+output_root: SET_OUTPUT_ROOT
+reference_hz: 50
+log_capacity: 4096
+robot:
+  host: SET_ROBOT_HOST
+  expected_franky_version: 2.0.1.dev66+gm4comparefix.libfranka.0.21.2
+  collision_torque_nm: 20.0
+  collision_force_n: 30.0
+  max_start_velocity_rad_s: 0.02
+dependencies:
+  libPocoFoundation-7da29abf.so.80: 6310f44e552476ec2fbfce58400308d7c9df5cc68a8ffb853d1d06166583f422
+  libPocoNet-2ac48fc8.so.80: fe06797637195a11cb651dc28aa873813a05f313f63dea74aa2afa7098fc9f77
+  libassimp-bd15e49b.so.5.2.0: 8bed847ad93a303f3ad40aa539a167554d9589efe26f4384bab58c5654a07832
+  libboost_filesystem-54588694.so.1.74.0: fd947ec5d902a183d955755ac958f1f9cd161466bc286098805d56407610a83c
+  libboost_serialization-fc223801.so.1.74.0: f10dc4736f875452897c839ec0d79b9957a31d43527b317e360eb4e43ff1816a
+  libcoal-1ad34bad.so.3.0.3: 483bdc4592580fbb8dd4823f2b02fa0719e0f53093587c6568eab2fb605f9db2
+  libconsole_bridge-e5c857be.so.1.0: 8c04f568c6ecc1f12a08d03e793c1be9b5e47cfafbb1d83605783a5e702072f4
+  libdraco-e3a01c94.so.4.0.0: 400b0ad5255b47b15b059dd7fa1e5fca47ab1021bd3a6b28cb6e8af37c6694e2
+  libfmt-d463bedd.so.8.1.1: e5d19e5c5704e6cebd9cb8ca7eadc099ae0af8c076594d2b19dde53a3ba0c1e4
+  libfranka-bfc9e82d.so.0.21.2: d98ea587aa59104cb5e9d8780a96820800d567e49d872a42f3289e65ea4d5136
+  libminizip-fbdca10d.so.1.0.0: b1c2050f4a263a2f3f3f2a551ce7e756ea6c9339c614362b2f9dee7992d776f9
+  liboctomap-ac730ccb.so.1.9.8: 5b7a9cc717e73f400c26da170ddadcc3054d43afcbd1bfa4814ac6b65e842815
+  liboctomath-82557666.so.1.9.8: 919ecbe9271281c54bd84036dc9fbfce36a46955055cc599d55706b1d6be71b6
+  libpcre-baae995e.so.3.13.3: 9b9e0f8613804e34198ac5959facadcb18879f3019754c17ee54532fbb0d619a
+  libpinocchio_default-1d49a5f1.so.4.0.0: 0ffdeefb7e335750aeafa78530c85f54cf7b50e7a25f48bc3fb789ca90502be4
+  libpinocchio_parsers-2def7ebf.so.4.0.0: 8d660f39872f7faf010b9e3267327de5856f36f6e4aa173fc43625886046054e
+  libruckig-5b3ec43e.so: 85d2ea111b3e17a2a38f579b2771add01f4bdc2e68ceb69cae25b07fcfc08d87
+  libtinyxml-d7a94d05.so.2.6.2: 35a24020d8972677db277d7f70030640b72905f44e2c0649d40f8e5e4bb7e6fe
+  libtinyxml2-05059e5d.so.9.0.0: 28ecf20da9da218d2bb5f72eda6b3c741ea50b04cd34c996b3a25f953d5be70c
+  liburdfdom_model-72486beb.so.3.0: bf4c42f28761f4d7e1217bcf03a2fe8da45ff98d255af9696424ac0377e9e119
+  liburdfdom_world-b99821e0.so.3.0: 9161ccef0836ec40cf88b89ef6f1e99d7462c154cce061b49dd42814d8376770
+controller:
+  stiffness:
+  - 800.0
+  - 800.0
+  - 800.0
+  - 40.0
+  - 40.0
+  - 40.0
+  damping:
+  - 56.568542494923804
+  - 56.568542494923804
+  - 56.568542494923804
+  - 13.000000000000004
+  - 13.000000000000004
+  - 13.000000000000004
+  posture_stiffness: 0.0
+  posture_damping: 0.0
+  projector: dynamic
+  cutoff_hz: 100.0
+  max_delta_tau: 1.0
+stop:
+  damping:
+  - 2.0
+  - 2.0
+  - 2.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 0.5
+  ramp_duration: 0.2
+  velocity_epsilon: 0.02
+  max_duration: 2.0
+  compensate_coriolis: true
+  max_delta_tau: 1.0
+limits:
+  joint_lower:
+  - -2.610666015
+  - -1.652481015
+  - -2.610666015
+  - -2.92901587
+  - -2.588673015
+  - 0.648913185
+  - -2.745750015
+  joint_upper:
+  - 2.610666015
+  - 1.652481015
+  - 2.610666015
+  - -0.26494123
+  - 2.588673015
+  - 4.412542815
+  - 2.745750015
+  joint_velocity:
+  - 0.6525
+  - 0.6525
+  - 0.6525
+  - 0.6525
+  - 0.783
+  - 0.783
+  - 0.783
+  external_torque:
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  command_torque:
+  - 40.0
+  - 40.0
+  - 40.0
+  - 40.0
+  - 8.0
+  - 8.0
+  - 8.0
+  workspace_lower:
+  - 0.276891
+  - -0.18
+  - 0.17
+  workspace_upper:
+  - 0.505
+  - 0.18
+  - 0.620282
+  reference_timeout_s: 0.1
+  callback_gap_s: 0.01
+  position_error_m: 0.03
+  orientation_error_rad: 0.2
+  linear_speed_m_s: 0.15
+  angular_speed_rad_s: 0.5
+  minimum_jacobian_singular_value: 0.02
+  minimum_command_success_rate: 0.95
+  abort_on_contact: false
+reference_limits:
+  acceleration_m_s2: 0.2
+  jerk_m_s3: 1.0
+task:
+  kind: yz_circle
+  duration_s: 30.0
+  fixture_anchor_to_start: true
+fixture:
+  origin:
+  - 0.0
+  - 0.0
+  - 0.0
+  normal_stiffness: 1200.0
+  normal_damping: 69.81
+  tangent_damping: 20.0
+  initialization_tolerance: 0.001
+  radius: 0.1
+required_stop_behavior_version: 2

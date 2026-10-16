@@ -1,6 +1,6 @@
 # Migration plan: franka-rl deployment to the lab infrastructure
 
-Date: 2026-10-16. Status: phases 0–1 implemented offline; see [implementation receipt](../deployment/migration/README.md). No hardware control code extracted or hardware accessed. Later phases remain planned.
+Date: 2026-10-16. Status: phases 0–2 implemented offline; see [implementation receipt](../deployment/migration/README.md). M4 integration is extracted; no hardware accessed. See [phase 2](m4-offline-runtime.md). Later phases remain planned.
 
 ## 1. Decision and scope
 

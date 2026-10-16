@@ -1,0 +1,230 @@
+{
+  "baselines_changed": false,
+  "extraction_manifest_sha256": "d6fa4e61591268f55015e05df99a77db191ef7d9b9b24b4f992453751744dba5",
+  "hardware_accessed": false,
+  "historical_lissajous_replay": {
+    "hardware_executed": false,
+    "historical_replay": true,
+    "max_filtered_prediction_error_nm": 0.0,
+    "max_fk_position_error_m": 3.885780586188048e-16,
+    "native_faults": {},
+    "nonfinite_rows": 0,
+    "numerical_checks_passed": true,
+    "prediction_rows": 73719,
+    "qualification": "Historical numerical consistency only; not physical stop qualification",
+    "rows": 73719,
+    "stop_finished_seen": true,
+    "valid_fk_rows": 73719
+  },
+  "limits": [
+    "Mock receipts are logical consumption, not native timing or physical dynamics.",
+    "Existing native publication watchdog remains unchanged; no native lease/deadline field added.",
+    "No physical commissioning or current-arm compatibility qualification claimed."
+  ],
+  "mock_tracking": {
+    "applied_receipts": 3671,
+    "dropped_receipts": 0,
+    "fault": null,
+    "hardware_executed": false,
+    "mode": "mock",
+    "qualification": "Mock lifecycle only; no physical dynamics or native timing validation",
+    "receipt_source": "mock_logical_consumption",
+    "stop_ok": true,
+    "submitted": 3671,
+    "terminal_state": "complete"
+  },
+  "native_api": {
+    "dls": [
+      {
+        "case": "full_rank",
+        "rank": 6,
+        "velocity_max_error": 4.85722573273506e-17
+      },
+      {
+        "case": "rank_deficient",
+        "rank": 5,
+        "velocity_max_error": 1.3877787807814457e-17
+      },
+      {
+        "case": "velocity_scaled",
+        "rank": 6,
+        "velocity_max_error": 2.3852447794681098e-18
+      }
+    ],
+    "hardware_accessed": false,
+    "native_rebuilt": false,
+    "routes": [
+      {
+        "move_kwargs": {
+          "asynchronous": true,
+          "cutoff_frequency": 100.0,
+          "limit_rate": false
+        },
+        "native_constructor_passed": true,
+        "robot_created": false,
+        "route": "hold"
+      },
+      {
+        "move_kwargs": {
+          "asynchronous": true,
+          "cutoff_frequency": 100.0,
+          "limit_rate": false
+        },
+        "native_constructor_passed": true,
+        "robot_created": false,
+        "route": "tracking"
+      },
+      {
+        "move_kwargs": {
+          "asynchronous": true,
+          "cutoff_frequency": 100.0,
+          "limit_rate": false
+        },
+        "native_constructor_passed": true,
+        "robot_created": false,
+        "route": "dls"
+      },
+      {
+        "move_kwargs": {
+          "asynchronous": true,
+          "cutoff_frequency": 100.0,
+          "limit_rate": false
+        },
+        "native_constructor_passed": true,
+        "robot_created": false,
+        "route": "posture"
+      },
+      {
+        "move_kwargs": {
+          "asynchronous": true,
+          "cutoff_frequency": 100.0,
+          "limit_rate": false
+        },
+        "native_constructor_passed": true,
+        "robot_created": false,
+        "route": "z_line"
+      },
+      {
+        "move_kwargs": {
+          "asynchronous": true,
+          "cutoff_frequency": 100.0,
+          "limit_rate": false
+        },
+        "native_constructor_passed": true,
+        "robot_created": false,
+        "route": "yz_circle"
+      }
+    ]
+  },
+  "native_rebuilt": false,
+  "phase": 2,
+  "preflight_circle_recorded_start": {
+    "artifact": "/home/chen-lab/yifan/lab-runtime-artifacts/phase02-preflight-circle/preflight.json",
+    "note": "Synthetic rounded home was correctly rejected at unchanged circle normal-margin guard; recorded start passed.",
+    "passed": true,
+    "sha256": "031202b59020e558d32a4010aa563f93a4426968d2a3137afd7fd391eb37bcb9"
+  },
+  "preflight_synthetic_home": {
+    "hardware_accessed": false,
+    "results": [
+      {
+        "duration_s": 10.0,
+        "passed": true,
+        "route": "hold"
+      },
+      {
+        "duration_s": 73.41592653589794,
+        "passed": true,
+        "route": "tracking"
+      },
+      {
+        "duration_s": 73.41592653589794,
+        "passed": true,
+        "route": "dls"
+      },
+      {
+        "duration_s": 32.0,
+        "passed": true,
+        "route": "posture"
+      },
+      {
+        "duration_s": 30.0,
+        "passed": true,
+        "route": "z_line"
+      },
+      {
+        "passed": false,
+        "reason": "circle plus normal-error margin outside workspace; reposition or reduce radius",
+        "route": "yz_circle"
+      }
+    ]
+  },
+  "runtime_base_commit": "a03db1e0d6c4b627ec07e9be5bbd4d7ff6d5a0ac",
+  "runtime_version": "0.0.2",
+  "runtime_wheel": {
+    "artifact": "/home/chen-lab/yifan/lab-runtime-artifacts/phase02/wheels/franka_runtime-0.0.2-py3-none-any.whl",
+    "published": false,
+    "sha256": "a5044f18f45200e736eaddef4acf066047fcc4341ab564a98d1dd4abacf8d70f"
+  },
+  "schema_version": 1,
+  "source_commit": "0bd7f54044f8cc404a53c3223a19966edbfbf917",
+  "source_files": {
+    "configs/fr3/m4.circle.mock-start.json": "442669172c0f4fd6ce4e4f8eddda73e44d672e70fb0c9bba82cd430cbb5a2c90",
+    "configs/fr3/m4.dls.pending.yaml": "381e270f169561f424da0614d12f6b36758fd67b361f0b38d7e41d1ede79ddd8",
+    "configs/fr3/m4.hold.pending.yaml": "2d8416f803ae784ef4baaaa5f2113ea52b27cdda6553cad807a4641eabd9c322",
+    "configs/fr3/m4.mock-start.json": "8a93ddaae551e094b188046a8f7618e1a471cc833b6f5e1717ae58f1190b49a0",
+    "configs/fr3/m4.posture.pending.yaml": "0e74bf19166f17c00b0a6e3b71da61eaa3ab87d9d82e1c6c85521481dfdfbd06",
+    "configs/fr3/m4.tracking.pending.yaml": "d22693251879ac16b0270f42fbb97cc466316d8162e7a83e70d0c92e3099d1fa",
+    "configs/fr3/m4.yz_circle.pending.yaml": "62c51d05d972d9a7c5e6781b708a56037d73ad9e00e596dbb861e1d3a7f733ca",
+    "configs/fr3/m4.z_line.pending.yaml": "ac4d32a54490685901b8fbbbb34e38edca9c9f3448d04d684c32126911e183db",
+    "pyproject.toml": "569eeaf665746f6cc8dad8668a35340fc231d11ca07718bb088f06c36e106a8d",
+    "src/franka_runtime/__init__.py": "685e7c56e9af62abbb09ca2db7a44f6de7d36b8b2a220626f72320c9ddf2b5a5",
+    "src/franka_runtime/common/__init__.py": "05a03fe5fdf5f7bbd6267d800128a73c9ecfca98a6c225361db598a819e5c9b5",
+    "src/franka_runtime/common/artifacts/__init__.py": "99a3c578d67609644bbfb86bcba7abc624710329215f9e59f5b2a5f06dca5c27",
+    "src/franka_runtime/common/artifacts/bundle.py": "9a94816fc511e1a2169323a4e576cc0025c2ca804526442e4818f913e70fc902",
+    "src/franka_runtime/common/backends/__init__.py": "99a3c578d67609644bbfb86bcba7abc624710329215f9e59f5b2a5f06dca5c27",
+    "src/franka_runtime/common/backends/feedback.py": "b2ed05f71dbb92bc4a3ddf2f1c9e4f5a5915159b7bf7211b3bc71a114c563287",
+    "src/franka_runtime/common/backends/franky-server10.json": "5b4e1093d6d18f58b31eed2896036b152266ee009455e946a08a1e27a43d55af",
+    "src/franka_runtime/common/backends/franky_m4.py": "0d41538262891db68274dfaa0ed8538100e90a112dd83b7d6bddd32a5c233b7c",
+    "src/franka_runtime/common/backends/offline.py": "02eb0df43a59c24643f0d06e0430baf36168571046e0224aa52259db1b5b146b",
+    "src/franka_runtime/common/motion/__init__.py": "99a3c578d67609644bbfb86bcba7abc624710329215f9e59f5b2a5f06dca5c27",
+    "src/franka_runtime/common/motion/config.py": "5ac9f3e88fb9ca16868102daf0ac941c9bb3421d91078686aa83d50f2bc49892",
+    "src/franka_runtime/common/motion/dls_tracking.py": "e8b8e60683520014634230ce25ac3d6bff2d12e6e38923ca1bcc296e7ad787f9",
+    "src/franka_runtime/common/motion/impedance.py": "04da7895626a6418999dd877092e304f4f95a9cc241dce2ca66c9822ece7c022",
+    "src/franka_runtime/common/motion/kinematics.py": "9c57a6e2358580f6aad63c5028e5d9b145e32a75aeb8039609cc6b72ec0d3af3",
+    "src/franka_runtime/common/motion/legacy.py": "650bb5af077abdfaefce5743770bc3588aaaeaf649ab2e6c724e365fe9447da8",
+    "src/franka_runtime/common/motion/payload.py": "51d9c59baab32d63d4dcd22b5ac6f102a691f808fc8cae92a6fb8ca6d7fc05a6",
+    "src/franka_runtime/common/motion/reference_types.py": "4ceaffdfa453126c209383fe05c703749f2a9325f71cb8aa13df61fc23dcd484",
+    "src/franka_runtime/common/motion/time_scaling.py": "59ac0cf7d74feacd78062c493f48d45ac2d810cc70c18da0e3418a92f979ea5a",
+    "src/franka_runtime/common/motion/trajectories.py": "79c65b44cf053a405547c10dbf3cb5f560442bfefa282c3ab343debb247e713e",
+    "src/franka_runtime/common/motion/virtual_fixture.py": "1152e4dcf05c0a91c33ca3049304d114c551710c7ac4c33f31bcddb95600ae38",
+    "src/franka_runtime/fr3/__init__.py": "579c797fdb5b63b55fa1b97813e7272b4ad65b028cd8bf77e3fb9247dce394bb",
+    "src/franka_runtime/grippers/__init__.py": "3dcce56ef7385719a741b92dfa97d671aabe650b0204cd3b891c3ad5c21f846b",
+    "src/franka_runtime/lerobot_adapter/__init__.py": "e9c7444b20719d2176485e47ad34be929aca08d37e11f6c766e0922d687b318c",
+    "src/franka_runtime/panda/__init__.py": "24860d08f9bfe04bb37efb80287996a26863519b70d253929585ffe9b41c7c27",
+    "src/franka_runtime/safety/__init__.py": "174c6d019824d4dc9937e085e05f10ba935752d0012259aabd68998a3d230cc0",
+    "src/franka_runtime/service/__init__.py": "66dbeb257dca540e99f279312eb6c3b787628dbe697706a922b83661862532ab",
+    "src/franka_runtime/service/authority.py": "69db6ed84f311e231767d19c700ef9f9147ed9a074b331ec3ef2ab382d6c8266",
+    "src/franka_runtime/service/cli.py": "96e26e46a24338bcbabc15568128ce020326d1e30e7e700d7c3dbac11051a9cd",
+    "src/franka_runtime/service/m4.py": "c8044d531e93a5034a82c14daeeabcd51a23609493d8eab0f40331142b580630",
+    "src/franka_runtime/service/replay.py": "5937e21ad7cbfe01fee1837a9be284b7a0cb3f677e5ddbe18a83365b45cd1618"
+  },
+  "validation": {
+    "base_wheel_import_isolation": true,
+    "combined": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 3,
+      "tests": 144
+    },
+    "dependency_check": "passed",
+    "installed_runtime_wheel": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 35
+    },
+    "packaged_native_hash_manifest_verified": true,
+    "phase0_inventory_reverified": true
+  }
+}

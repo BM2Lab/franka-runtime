@@ -1,10 +1,22 @@
 # franka-runtime
 
-Offline-first runtime scaffold. Install with ../robot-learning/packages/contracts,
-not the learning package. Importing this package never connects to hardware.
+Physical Franka runtime infrastructure with an extracted offline M4 slice.
+The base package depends on lightweight `contracts`; optional `m4` adds
+NumPy/PyYAML. Importing the base package never loads a vendor driver or connects
+to hardware. Native controllers remain in the separately pinned Franky fork.
 
-Extract FR3/Panda code only after source/dependency inventory. Preserve native 1 kHz guards, stop behavior, model/tool checks and reference timing. Qualify each model and unit independently.
+[Offline M4 runtime, commands and boundaries](docs/m4-offline-runtime.md).
+[Migration plan](docs/franka-rl-deployment-migration.md).
+[Source inventory and phase 0–1 receipts](deployment/migration/README.md).
 
-No backend, controller, stop path or physical deployment is implemented or
-approved. The workstation supports pure/offline tests only. Receiving control
-hosts maintain separate pinned environments; do not copy this machine's venv.
+Install local version-pinned contracts/runtime wheels in a project-isolated
+environment. Use the `m4,dev` extras for the full offline test suite:
+
+```bash
+python -m pytest tests --import-mode=importlib
+```
+
+Physical status: **NOT QUALIFIED**. Phase 2 exposes preflight/mock/offline-shadow
+and historical replay only. There is no FCI connection or hardware execution CLI.
+Preserve per-unit model/tool/firmware checks, native guards and stop semantics;
+historical deployment approval does not approve this extracted runtime.

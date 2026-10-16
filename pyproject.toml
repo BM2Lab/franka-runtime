@@ -4,16 +4,23 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "franka-runtime"
-version = "0.0.1"
+version = "0.0.2"
 description = "Offline-first lab platform scaffold"
 requires-python = ">=3.10"
 dependencies = ["contracts==0.0.2"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+m4 = ["numpy>=1.26,<3", "PyYAML>=6,<7"]
+
+[project.scripts]
+franka-m4 = "franka_runtime.service.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib"
+
+[tool.setuptools.package-data]
+"franka_runtime.common.backends" = ["*.json"]

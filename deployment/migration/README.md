@@ -105,3 +105,7 @@ Phase 2: extract the offline/mock M4 runtime, remove its dependency on
 `franka-motion`, implement local command authority and compare the new adapter
 against these fixtures. Keep native Franky/ROS forks separate and pinned.
 Physical commissioning requires separate authorization and per-unit qualification.
+
+## Phase 2 implemented
+
+The offline M4 extraction is now available; see [runtime guide](../../docs/m4-offline-runtime.md) and [validation receipt](phase2-validation.json). The earlier phase 0–1 records above remain historical. Next work is Phase 3.

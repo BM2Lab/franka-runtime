@@ -1,0 +1,697 @@
+{
+  "schema_version": 1,
+  "source": "source/franka_motion/franka_motion/config/trajectories.yaml",
+  "source_sha256": "7f3c3a63426d2b3b408191e07c17983a08f9e78050833f66c671859990b8755f",
+  "hardware_accessed": false,
+  "cases": [
+    {
+      "name": "circle_yz_m2",
+      "spec": {
+        "type": "circle",
+        "center_m": [
+          0.475,
+          0.0,
+          0.35
+        ],
+        "plane_rpy_deg": [
+          0.0,
+          90.0,
+          0.0
+        ],
+        "radius_m": 0.15,
+        "quaternion_xyzw": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "phase_rad": 3.141592653589793,
+        "turns": 1.0,
+        "ramp_duration_s": 2.0,
+        "approach_duration_s": 6.0,
+        "settle_duration_s": 2.0,
+        "exit_duration_s": 6.0,
+        "return_to_start": true
+      },
+      "angular_speed_rad_s": 0.2,
+      "initial_position_m": [
+        0.30689056659294117,
+        0.0,
+        0.5902820523028393
+      ],
+      "initial_quaternion_xyzw": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "duration_s": 47.41592653589793,
+      "samples": [
+        {
+          "time_s": 0.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.30689056659294117,
+                0.0,
+                0.5902820523028393
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 0.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              0.046697064835294025,
+              5.102694996447296e-18,
+              -0.025078347861899736
+            ],
+            "phase": "approach"
+          }
+        },
+        {
+          "time_s": 3.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.3909452832964704,
+                9.184850993605132e-18,
+                0.5451410261514198
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.05253419793970578,
+                5.740531871003208e-18,
+                -0.028213141344637187
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 3.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              1.2335811384723961e-17
+            ],
+            "jerk_m_s3": [
+              -0.023348532417647012,
+              -2.551347498223648e-18,
+              0.012539173930949877
+            ],
+            "phase": "approach"
+          }
+        },
+        {
+          "time_s": 6.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.475,
+                1.8369701987210297e-17,
+                0.5
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 6.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "phase": "settle"
+          }
+        },
+        {
+          "time_s": 8.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.475,
+                1.8369701987210297e-17,
+                0.5
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 8.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "phase": "track"
+          }
+        },
+        {
+          "time_s": 10.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.475,
+                -0.02980039961925919,
+                0.49700998667618623
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                3.6494964007037776e-19,
+                -0.029401997335237247,
+                -0.005960079923851839
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 10.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              3.6007061925137304e-19,
+              0.001192015984770368,
+              -0.00588039946704745
+            ],
+            "jerk_m_s3": [
+              -1.4597985602815112e-20,
+              0.00117607989340949,
+              0.0002384031969540736
+            ],
+            "phase": "track"
+          }
+        },
+        {
+          "time_s": 41.41592653589793,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.475,
+                5.510910596163089e-17,
+                0.5
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 41.41592653589793,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              -0.046697064835294025,
+              -1.5308084989341887e-17,
+              0.025078347861899736
+            ],
+            "phase": "exit"
+          }
+        },
+        {
+          "time_s": 47.41592653589793,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.30689056659294167,
+                9.244463733058732e-32,
+                0.5902820523028388
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                -1.4802973661668753e-16
+              ],
+              "angular_velocity_rad_s": [
+                -0.0,
+                -0.0,
+                -0.0
+              ],
+              "time_s": 47.41592653589793,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              -0.046697064835294025,
+              -1.5308084989341887e-17,
+              0.025078347861899736
+            ],
+            "phase": "exit"
+          }
+        }
+      ]
+    },
+    {
+      "name": "lissajous_yz_small",
+      "spec": {
+        "type": "lissajous",
+        "center_m": [
+          0.475,
+          0.0,
+          0.35
+        ],
+        "plane_rpy_deg": [
+          0.0,
+          90.0,
+          0.0
+        ],
+        "amplitudes_m": [
+          0.08,
+          0.08
+        ],
+        "harmonics": [
+          1,
+          2
+        ],
+        "phase_offsets_rad": [
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "phase_rad": 0.0,
+        "turns": 1.0,
+        "ramp_duration_s": 2.0,
+        "approach_duration_s": 12.0,
+        "settle_duration_s": 1.0,
+        "exit_duration_s": 12.0,
+        "return_to_start": true
+      },
+      "angular_speed_rad_s": 0.2,
+      "initial_position_m": [
+        0.30689056659294117,
+        0.0,
+        0.5902820523028393
+      ],
+      "initial_quaternion_xyzw": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "duration_s": 58.41592653589793,
+      "samples": [
+        {
+          "time_s": 0.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.30689056659294117,
+                0.0,
+                0.5902820523028393
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 0.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              0.005837133104411753,
+              0.0,
+              -0.00834312681607079
+            ],
+            "phase": "approach"
+          }
+        },
+        {
+          "time_s": 6.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.3909452832964704,
+                0.0,
+                0.47014102615141995
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.02626709896985289,
+                0.0,
+                -0.03754407067231854
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 6.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              6.1679056923619804e-18
+            ],
+            "jerk_m_s3": [
+              -0.0029185665522058766,
+              0.0,
+              0.004171563408035397
+            ],
+            "phase": "approach"
+          }
+        },
+        {
+          "time_s": 12.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.475,
+                0.0,
+                0.35
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 12.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "phase": "settle"
+          }
+        },
+        {
+          "time_s": 13.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.475,
+                0.0,
+                0.35
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 13.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "phase": "track"
+          }
+        },
+        {
+          "time_s": 15.0,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.475,
+                0.031153467384692043,
+                0.33410645353639506
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                9.601883180036614e-19,
+                0.029473951808092327,
+                -0.015681065245459865
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 15.0,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              -3.8927961607506957e-20,
+              -0.004984554781550728,
+              0.0006357418585441961
+            ],
+            "jerk_m_s3": [
+              -3.8407532720146465e-20,
+              -0.004715832289294773,
+              0.0006272426098183948
+            ],
+            "phase": "track"
+          }
+        },
+        {
+          "time_s": 46.41592653589793,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.475,
+                -3.91886975727153e-17,
+                0.35
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "angular_velocity_rad_s": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "time_s": 46.41592653589793,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              -0.005837133104411753,
+              1.3607186657192787e-18,
+              0.00834312681607079
+            ],
+            "phase": "exit"
+          }
+        },
+        {
+          "time_s": 58.41592653589793,
+          "expected": {
+            "reference": {
+              "position_m": [
+                0.30689056659294167,
+                -8.628166150854817e-32,
+                0.5902820523028381
+              ],
+              "quaternion_xyzw": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "linear_velocity_m_s": [
+                0.0,
+                0.0,
+                -1.4802973661668753e-16
+              ],
+              "angular_velocity_rad_s": [
+                -0.0,
+                -0.0,
+                -0.0
+              ],
+              "time_s": 58.41592653589793,
+              "base_frame": "fr3_link0",
+              "tcp_frame": "fr3_flange"
+            },
+            "acceleration_m_s2": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "jerk_m_s3": [
+              -0.005837133104411753,
+              1.3607186657192787e-18,
+              0.00834312681607079
+            ],
+            "phase": "exit"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "additional_fixture_inputs": [
+    {
+      "destination": "configs/fr3/m4.circle.mock-start.json",
+      "role": "recorded q/dq for offline planning only; no motion authority",
+      "sha256": "373b0bcd19e46859e23ba2cc7f00903edeebac562f6222067dfe3d885890513d",
+      "source_artifact": "/home/chen-lab/franka_ros2_ws/hardware_inventory/2026-10-12/m4/yz_circle.20261012T164958Z/start.json"
+    }
+  ],
+  "admission_changes": [
+    "reject boolean numeric gains and nonfinite/malformed artifact identities",
+    "SHA-anchor and exact-inventory checks include all nested files and reject symlinks",
+    "one-entry command queue, bounded receipts, lease/deadline checks and latched faults added outside native loop",
+    "old Python supervisor not copied; new authority owns session state",
+    "native connection construction withheld; real native parameter API checked with a robot double"
+  ],
+  "entries": [
+    {
+      "destination": "src/franka_runtime/common/motion/reference_types.py",
+      "destination_sha256": "4ceaffdfa453126c209383fe05c703749f2a9325f71cb8aa13df61fc23dcd484",
+      "source": "source/franka_motion/franka_motion/contracts.py",
+      "source_sha256": "c0e681b5f18a4a36ffb5ae30a359720e76f2b17b1b564652b125e48b8838240f",
+      "symbols": [
+        "finite_vector",
+        "positive",
+        "unit_quaternion_xyzw",
+        "CartesianReference",
+        "TrajectorySample"
+      ],
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/motion/kinematics.py",
+      "destination_sha256": "9c57a6e2358580f6aad63c5028e5d9b145e32a75aeb8039609cc6b72ec0d3af3",
+      "source": "source/franka_motion/franka_motion/kinematics.py",
+      "source_sha256": "f7f94f4c4d046c4e02d27b4acc3d634ee9420608bf2230a23c6335b488c42e65",
+      "symbols": "module",
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/motion/time_scaling.py",
+      "destination_sha256": "59ac0cf7d74feacd78062c493f48d45ac2d810cc70c18da0e3418a92f979ea5a",
+      "source": "source/franka_motion/franka_motion/time_scaling.py",
+      "source_sha256": "fac999138727767fac1ab5457903d59d16d57c1cae0464fac2eab5ea21ca767f",
+      "symbols": "module",
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/motion/trajectories.py",
+      "destination_sha256": "79c65b44cf053a405547c10dbf3cb5f560442bfefa282c3ab343debb247e713e",
+      "source": "source/franka_motion/franka_motion/trajectories.py",
+      "source_sha256": "6ad7671a9c10f5beb6cca0c3d6b8b959ab66dbde494fcc0186bfa45571b41213",
+      "symbols": "module",
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/motion/impedance.py",
+      "destination_sha256": "04da7895626a6418999dd877092e304f4f95a9cc241dce2ca66c9822ece7c022",
+      "source": "source/franka_motion/franka_motion/impedance.py",
+      "source_sha256": "5d2ae5ebd42464793f7800f4e4bd758b9244eebb70dfbbab356aae278e9c54b8",
+      "symbols": "module",
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/motion/dls_tracking.py",
+      "destination_sha256": "e8b8e60683520014634230ce25ac3d6bff2d12e6e38923ca1bcc296e7ad787f9",
+      "source": "source/franka_motion/franka_motion/dls_tracking.py",
+      "source_sha256": "e8b8e60683520014634230ce25ac3d6bff2d12e6e38923ca1bcc296e7ad787f9",
+      "symbols": "module",
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/motion/config.py",
+      "destination_sha256": "5ac9f3e88fb9ca16868102daf0ac941c9bb3421d91078686aa83d50f2bc49892",
+      "source": "source/franka_motion/franka_motion/config.py",
+      "source_sha256": "694cbdd42ee0bd379bbd3ad6c621daf74f98213c2fd3eea7f0e5bb79740c3ca5",
+      "symbols": [
+        "_UniqueLoader",
+        "_unique_mapping",
+        "_load",
+        "_keys",
+        "_boolean",
+        "TrajectorySpec"
+      ],
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/motion/virtual_fixture.py",
+      "destination_sha256": "1152e4dcf05c0a91c33ca3049304d114c551710c7ac4c33f31bcddb95600ae38",
+      "source": "source/franka_motion/franka_motion/virtual_fixture.py",
+      "source_sha256": "656c1378233920f166d9647aec3fb4839fd4256adca1410093699aa40effaf90",
+      "symbols": [
+        "CurveVirtualFixture"
+      ],
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/motion/legacy.py",
+      "destination_sha256": "650bb5af077abdfaefce5743770bc3588aaaeaf649ab2e6c724e365fe9447da8",
+      "source": "deployment/franky_runtime/franky_experiment/core.py",
+      "source_sha256": "c9f335c43daa4031d645683991f78d9a7e7fb4173e61b0585ced1d41f964b1ec",
+      "symbols": [
+        "ConfigError",
+        "require",
+        "sha256",
+        "vector",
+        "_approval",
+        "check_target",
+        "action_to_target",
+        "action_to_velocity",
+        "assemble_policy_observation"
+      ],
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/backends/feedback.py",
+      "destination_sha256": "b2ed05f71dbb92bc4a3ddf2f1c9e4f5a5915159b7bf7211b3bc71a114c563287",
+      "source": "deployment/franky_runtime/franky_experiment/backend.py",
+      "source_sha256": "3401c2b2aafd7ba170a45e255d124df2a9d6b12c0614dde2e7b4742e0ec1dd6c",
+      "symbols": [
+        "Snapshot",
+        "_tuple",
+        "_matrix",
+        "EncoderPoseFeedback",
+        "EncoderForwardKinematics",
+        "_encoder_pose_feedback",
+        "_snapshot"
+      ],
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "src/franka_runtime/common/backends/franky_m4.py",
+      "destination_sha256": "0d41538262891db68274dfaa0ed8538100e90a112dd83b7d6bddd32a5c233b7c",
+      "source": "deployment/franky_runtime/franky_experiment/motion_demos/hardware.py",
+      "source_sha256": "cfe068f9d78117d9ced8ec75568c7fbbecab0970eaf8e703f6c013e7f9fe7aec",
+      "symbols": "module",
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "tests/parity/fixtures/robot_returned_model.urdf",
+      "destination_sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
+      "source": "deployment/hardware_control_audit/2026-09-25/robot_returned_model.urdf",
+      "source_sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
+      "symbols": "module",
+      "transformation": "namespace/import isolation; numerical equations retained; see phase2 documentation"
+    },
+    {
+      "destination": "configs/fr3/m4.hold.pending.yaml",
+      "destination_sha256": "2d8416f803ae784ef4baaaa5f2113ea52b27cdda6553cad807a4641eabd9c322",
+      "source": "deployment/franky_runtime/config/m4.hold.pending.yaml",
+      "source_sha256": "7dad323c4222953d077d12a3cb3bcaa7cb8f3de65ff6fe6d667c3c3d07bd460d",
+      "symbols": "module",
+      "transformation": "numerical parameters retained; approval/host paths removed; existing dev66 artifact pin and stop behavior version 2 selected"
+    },
+    {
+      "destination": "configs/fr3/m4.tracking.pending.yaml",
+      "destination_sha256": "d22693251879ac16b0270f42fbb97cc466316d8162e7a83e70d0c92e3099d1fa",
+      "source": "deployment/franky_runtime/config/comparisons/cartesian.circle.k1.5.d1.pending.yaml",
+      "source_sha256": "5292ad74c22325ad8b609a10b644e0708847f079959338e78febb594b7fda2c2",
+      "symbols": "module",
+      "transformation": "numerical parameters retained; approval/host paths removed; existing dev66 artifact pin and stop behavior version 2 selected"
+    },
+    {
+      "destination": "configs/fr3/m4.posture.pending.yaml",
+      "destination_sha256": "0e74bf19166f17c00b0a6e3b71da61eaa3ab87d9d82e1c6c85521481dfdfbd06",
+      "source": "deployment/franky_runtime/config/comparisons/cartesian.posture.selected.dynamic.pending.yaml",
+      "source_sha256": "99ceb3bd0c55298b58249696bb0602fcf3cb3092cd197cb7d2392ba27ff51bcc",
+      "symbols": "module",
+      "transformation": "numerical parameters retained; approval/host paths removed; existing dev66 artifact pin and stop behavior version 2 selected"
+    },
+    {
+      "destination": "configs/fr3/m4.dls.pending.yaml",
+      "destination_sha256": "381e270f169561f424da0614d12f6b36758fd67b361f0b38d7e41d1ede79ddd8",
+      "source": "deployment/franky_runtime/config/comparisons/joint.circle.k200.d1.pending.yaml",
+      "source_sha256": "3ef7b7d8f11cf01fb31ece6f1e5f299de4d493621385bd9e87d46cad2c5899b2",
+      "symbols": "profile",
+      "transformation": "numerical parameters retained; approval/host paths removed; existing dev66 artifact pin and stop behavior version 2 selected"
+    },
+    {
+      "destination": "configs/fr3/m4.z_line.pending.yaml",
+      "destination_sha256": "ac4d32a54490685901b8fbbbb34e38edca9c9f3448d04d684c32126911e183db",
+      "source": "deployment/franky_runtime/config/m4.z_line.approved.yaml",
+      "source_sha256": "31888243ab12ed132e1794c715488b946d5be36d371b57f8fbfd41741425f2b4",
+      "symbols": "profile",
+      "transformation": "numerical parameters retained; approval/host paths removed; existing dev66 artifact pin and stop behavior version 2 selected"
+    },
+    {
+      "destination": "configs/fr3/m4.yz_circle.pending.yaml",
+      "destination_sha256": "62c51d05d972d9a7c5e6781b708a56037d73ad9e00e596dbb861e1d3a7f733ca",
+      "source": "deployment/franky_runtime/config/m4.yz_circle.approved.yaml",
+      "source_sha256": "ac79addb84054c561f3030263a4dc0789df9a3ff2d90a9f244ec997a8a61628c",
+      "symbols": "profile",
+      "transformation": "numerical parameters retained; approval/host paths removed; existing dev66 artifact pin and stop behavior version 2 selected"
+    }
+  ],
+  "hardware_accessed": false,
+  "native_rebuilt": false,
+  "new_components": [
+    "service/authority.py",
+    "service/m4.py",
+    "service/cli.py",
+    "service/replay.py",
+    "common/artifacts/bundle.py",
+    "common/backends/offline.py",
+    "common/motion/payload.py"
+  ],
+  "notes": [
+    "Numerical reference oracles are offline-only, never a Python replacement for native servo control.",
+    "No franka_motion or legacy-checkout import is required by extracted modules.",
+    "Historical approvals, IPs, absolute bundle/output paths and shared posture plan paths were not transferred.",
+    "Franky backend connection constructor is intentionally not exposed until separate commissioning."
+  ],
+  "schema_version": 1,
+  "source_commit": "0bd7f54044f8cc404a53c3223a19966edbfbf917"
+}
