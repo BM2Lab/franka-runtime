@@ -49,3 +49,6 @@ builds and deployable binary artifacts outside Git; retain configuration, source
 lightweight fixtures and dependency/qualification manifests. Check explicit output
 locations for availability/capacity. Buffer logging outside the native callback.
 This scaffold provides no working driver, validated stop path or motion approval.
+The DROID chunk runtime (`franka_runtime.droid`, `docs/droid-runtime.md`) is mock-only.
+Keep its executor pure and time-injected, reject rather than clip, never reset latched
+faults through the service API, and never ship a runnable config without commissioning values.

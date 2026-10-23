@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "franka-runtime"
-version = "0.0.3"
+version = "0.0.4"
 description = "Offline-first lab platform scaffold"
 requires-python = ">=3.10"
-dependencies = ["contracts==0.0.3"]
+dependencies = ["contracts==0.0.2"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
@@ -16,6 +16,7 @@ m4 = ["numpy>=1.26,<3", "PyYAML>=6,<7"]
 
 [project.scripts]
 franka-m4 = "franka_runtime.service.cli:main"
+franka-droid-mock = "franka_runtime.droid.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

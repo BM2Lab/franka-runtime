@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "contract_id": "droid_fr3_jointpos_v1",
+  "robot": {
+    "robot_id": "fr3_01",
+    "model": "fr3_franka_hand",
+    "manipulator": "arm",
+    "joint_names": ["panda_joint1", "panda_joint2", "panda_joint3", "panda_joint4", "panda_joint5", "panda_joint6", "panda_joint7"],
+    "base_frame": "robot_base",
+    "tcp_frame": "franka_hand_tcp",
+    "schema_version": 1
+  },
+  "gripper": {
+    "open_width_m": 0.08,
+    "gripper_model": "franka_hand",
+    "observation": "linear_width_clipped",
+    "command": "binary_threshold",
+    "close_above": 0.5
+  },
+  "action": {
+    "max_deviation_from_source_rad": 0.6,
+    "mode": "droid_absolute_joint_position_gripper",
+    "components": ["panda_joint1", "panda_joint2", "panda_joint3", "panda_joint4", "panda_joint5", "panda_joint6", "panda_joint7", "gripper_closure"],
+    "joint_unit": "rad_absolute_target",
+    "gripper_unit": "closure_0_open_1_closed",
+    "policy_hz": 15.0
+  },
+  "open_loop_horizon": 8,
+  "observation": {
+    "joint_key": "observation/joint_position",
+    "gripper_key": "observation/gripper_position",
+    "instruction_key": "prompt",
+    "joint_names": ["panda_joint1", "panda_joint2", "panda_joint3", "panda_joint4", "panda_joint5", "panda_joint6", "panda_joint7"],
+    "joint_unit": "rad",
+    "gripper_unit": "closure_0_open_1_closed",
+    "image_preprocessing": "openpi_resize_with_pad",
+    "cameras": [
+      {"key": "observation/exterior_image_1_left", "optical_frame": "exterior_optical", "height": 224, "width": 224},
+      {"key": "observation/wrist_image_left", "optical_frame": "wrist_optical", "height": 224, "width": 224}
+    ]
+  },
+  "chunk_size": 15
+}

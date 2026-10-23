@@ -1,9 +1,21 @@
 from dataclasses import replace
 import itertools
 import pytest
-from contracts.motion import MotionSessionSpec
+from dataclasses import dataclass
 from contracts.sessions import LeaseRequest, LeaseRelease, CommandEnvelope, payload_sha256
 from franka_runtime.service.authority import SessionAuthority, AuthorityError
+
+
+@dataclass(frozen=True)
+class MotionSessionSpec:
+    """Stand-in for contracts.motion.MotionSessionSpec: the authority needs only a frozen spec with robot_id."""
+    robot_id: str
+    mode: str
+    digest: str
+    base: str
+    tcp: str
+    profile: str
+    tool: str
 
 
 class Clock:

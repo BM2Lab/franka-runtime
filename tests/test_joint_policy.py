@@ -5,6 +5,9 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 import pytest
+# PPO/M4 depend on contracts.motion and contracts.franka_policy, which no released
+# contracts version provides yet (see docs/droid-runtime.md). Skip, do not hide.
+pytest.importorskip("contracts.franka_policy", reason="contracts.franka_policy is not in contracts 0.0.2")
 import yaml
 from contracts.sessions import LeaseRequest
 from franka_runtime.service.joint_policy import JointPolicyBackend,create_joint_session

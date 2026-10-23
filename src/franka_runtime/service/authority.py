@@ -5,12 +5,10 @@ No imports or connections to vendor software occur here.
 """
 from collections import deque
 from copy import deepcopy
-from dataclasses import replace
+from dataclasses import is_dataclass, replace
 import threading
 import time
 import uuid
-from contracts.motion import MotionSessionSpec
-from contracts.franka_policy import JointPolicySessionSpec
 from contracts.sessions import (SessionLease, LeaseRequest, LeaseRelease, CommandEnvelope,
                                 CommandReceipt, FaultReport, payload_sha256)
 
@@ -22,9 +20,16 @@ class AuthorityError(RuntimeError):
 class SessionAuthority:
     def __init__(self, backend, specification, validate_payload, *, clock_id,
                  command_timeout_ns, clock=None, max_lease_ns=600_000_000_000,
-                 receipt_capacity=4096, id_factory=None, expect_application=True, capability_prefix="m4-v1"):
-        if not isinstance(specification, (MotionSessionSpec,JointPolicySessionSpec)) or not callable(validate_payload):
+                 receipt_capacity=4096, id_factory=None, expect_application=True, capability_prefix="m4-v1",
+                 robot_id=None):
+        # Any frozen contract dataclass (M4, PPO, DROID, ...); its hash forms the capability.
+        if (not is_dataclass(specification) or isinstance(specification,type)
+                or not specification.__dataclass_params__.frozen or not callable(validate_payload)):
             raise ValueError('Typed session specification and payload validator required')
+        robot_id=getattr(specification,'robot_id',None) if robot_id is None else robot_id
+        if not isinstance(robot_id,str) or not robot_id.strip():
+            raise ValueError('Explicit robot identity required')
+        self.robot_id=robot_id
         if not isinstance(clock_id,str) or not clock_id:
             raise ValueError('Explicit host/boot/clock identity required')
         for name,value in [('command_timeout_ns',command_timeout_ns),('max_lease_ns',max_lease_ns),
@@ -95,7 +100,7 @@ class SessionAuthority:
             if not isinstance(request, LeaseRequest):
                 raise AuthorityError('Typed lease request required')
             now=self._now()
-            if (request.robot_id != self.specification.robot_id or request.clock_id != self.clock_id or
+            if (request.robot_id != self.robot_id or request.clock_id != self.clock_id or
                     not request.requested_ns <= now <= request.requested_ns+self.command_timeout_ns):
                 raise AuthorityError('Lease request identity/clock/time mismatch')
             if self.fault is not None or self._stopping or self.state not in ('idle','complete'):

@@ -5,6 +5,9 @@ import subprocess
 import sys
 import hashlib
 import pytest
+# PPO/M4 depend on contracts.motion and contracts.franka_policy, which no released
+# contracts version provides yet (see docs/droid-runtime.md). Skip, do not hide.
+pytest.importorskip("contracts.motion", reason="contracts.motion is not in contracts 0.0.2")
 np=pytest.importorskip("numpy")
 pytest.importorskip("yaml")
 yaml=pytest.importorskip("yaml")

@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "runtime": "droid_jointpos_v1",
+  "provenance": {
+    "joint_limits": "copied from configs/fr3/ppo.position.pending.yaml (fr3v2.1, pending_lab_review); not re-verified for this unit or tool",
+    "contract": "configs/fr3/droid_fr3_jointpos_v1.contract.json, copied from robot-learning configs/contracts (contracts 0.0.2)",
+    "mock_values": "velocity, acceleration, target-lead, timing, clock, gripper and network values are MOCK test values, not commissioning results; mock start pose is the observed home pose",
+    "workspace": "MOCK: parity-fixture URDF (robot-returned FR3, bare flange); nominal Franka Hand fingertip points; table at base z=0; box and clearance are test values"
+  },
+  "robot": {
+    "robot_id": "fr3_01",
+    "model": "fr3v2.1",
+    "end_effector": "franka_hand",
+    "observed": {
+      "system_version": "5.9.2",
+      "mode": "Idle",
+      "errors": [],
+      "home_q_rad": [
+        0.005415,
+        -0.783251,
+        -0.000904,
+        -2.35323,
+        -0.013001,
+        1.56224,
+        -0.001859
+      ],
+      "source": "libfranka echo_robot_state, read-only, 2026-10-23; serial and model not reported"
+    }
+  },
+  "contract": {
+    "allowed_sha256": [
+      "46b22083d8cf18e669ff06e35a4f759806140ae4e074712dd480ba85a3f239fc"
+    ],
+    "capability_prefix": "droid-jointpos-v1"
+  },
+  "limits": {
+    "joint_lower_rad": [
+      -2.9007400166666666,
+      -1.8360900166666667,
+      -2.9007400166666666,
+      -3.077020016666667,
+      -2.87630335,
+      0.43982265,
+      -3.05083335
+    ],
+    "joint_upper_rad": [
+      2.9007400166666666,
+      1.8360900166666667,
+      2.9007400166666666,
+      -0.11693708333333333,
+      2.87630335,
+      4.62163335,
+      3.05083335
+    ],
+    "position_margin_rad": [
+      0.2900740016666667,
+      0.1836090016666667,
+      0.2900740016666667,
+      0.1480041466666667,
+      0.287630335,
+      0.209090535,
+      0.305083335
+    ],
+    "max_joint_velocity_rad_s": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "max_joint_acceleration_rad_s2": [
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0
+    ],
+    "max_target_lead_rad": [
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3
+    ]
+  },
+  "status": "mock_only",
+  "backend": "mock",
+  "executable": true,
+  "motion_authorized": false,
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "physical_stop_procedure": null,
+    "workspace_review": null
+  },
+  "timing": {
+    "control_hz": 250,
+    "hold_timeout_ms": 200,
+    "heartbeat_timeout_ms": 1500,
+    "command_timeout_ms": 700,
+    "max_lease_s": 600
+  },
+  "clock": {
+    "max_uncertainty_us": 2000,
+    "min_probes": 4
+  },
+  "gripper": {
+    "open_width_m": 0.08,
+    "grasp_force_n": 20.0,
+    "speed_m_s": 0.05
+  },
+  "network": {
+    "bind_host": "127.0.0.1",
+    "port": 0,
+    "allowed_peers": [
+      "127.0.0.1"
+    ],
+    "token_env": "FRANKA_DROID_TOKEN"
+  },
+  "mock_start_q_rad": [
+    0.005415,
+    -0.783251,
+    -0.000904,
+    -2.35323,
+    -0.013001,
+    1.56224,
+    -0.001859
+  ],
+  "workspace": {
+    "model_urdf": "../../tests/parity/fixtures/robot_returned_model.urdf",
+    "base_link": "link0",
+    "flange_link": "link8",
+    "link_points": [
+      "link3",
+      "link4",
+      "link5",
+      "link6",
+      "link7",
+      "link8"
+    ],
+    "tool_points_m": [
+      [
+        0.0,
+        0.0,
+        0.1034
+      ],
+      [
+        0.0,
+        0.04,
+        0.1034
+      ],
+      [
+        0.0,
+        -0.04,
+        0.1034
+      ]
+    ],
+    "table_z_m": 0.0,
+    "clearance_m": 0.05,
+    "box_min_m": [
+      0.15,
+      -0.6,
+      0.0
+    ],
+    "box_max_m": [
+      0.85,
+      0.6,
+      1.0
+    ],
+    "interpolation_steps": 4
+  }
+}
