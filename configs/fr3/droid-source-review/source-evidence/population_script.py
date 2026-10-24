@@ -17,7 +17,8 @@ from franka_runtime.droid.workspace import SerialChain
 HAND_FRESHNESS_NS=250_000_000  # measured-period basis below; at least two Hand periods of margin required
 
 
-def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir,recording_dir,hand_timing=None):
+def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir,recording_dir,hand_timing=None,
+             fresh_state=None,collision_bundle=None,unit_observation=None):
     import yaml
     repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir=map(Path,
         (repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir))
@@ -66,7 +67,13 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
     def proposal(field,value,basis):
         sources['population_script']=dict(path=str(Path(__file__).resolve()),sha256=digest(__file__))
         put(field,value,'population_script','ENGINEERING PROPOSAL, not hardware evidence: '+basis)
-    put('robot.address',droid['robot_client']['executable_cfg']['robot_ip'],'droid_fr3','DROID reference address; confirm against the current unit before connection')
+    if unit_observation is not None:
+        unit=load('unit_observation',Path(unit_observation))
+        if unit.get('schema_version')!=1 or not isinstance(unit.get('address'),str) or not unit.get('basis'):
+            raise ValueError('Unit observation needs schema 1, address and basis')
+        put('robot.address',unit['address'],'unit_observation',unit['basis'])
+    else:
+        put('robot.address',droid['robot_client']['executable_cfg']['robot_ip'],'droid_fr3','DROID reference address; confirm against the current unit before connection')
     put('robot.model',ET.parse(urdf).getroot().get('name'),'arm_reference_urdf','Archived FR3 model identity; not a fresh physical-unit identification')
     put('robot.firmware_version','5.9.2','archived_d6_summary','Archived October 23 read-only summary; must be reconfirmed with unit serials')
     put('robot.fci_version',10,'archived_d6_summary','Selected server10 family; not a new FCI query')
@@ -105,6 +112,27 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
     put('gripper.close_width_m',0.,'droid_robot','DROID closure=1 endpoint mapped to zero width; grasp outcome still needs Hand qualification')
     put('gripper.speed_m_s',wrapper['speed'],'droid_robot','Pinned DROID update_gripper speed=0.05 m/s')
     put('gripper.grasp_force_n',mock['gripper']['grasp_force_n'],'mock_link','20 N provisional direct-libfranka force; not blindly copying Polymetis goto(force=0.1)')
+    if fresh_state is not None:
+        st=load('fresh_state',Path(fresh_state))
+        if st.get('robot_mode')!='Idle' or st.get('current_errors'):
+            raise ValueError('Fresh tool state must be an Idle, error-free read-only capture')
+        c=st['F_T_EE'];mount=[[c[col*4+row] for col in range(4)] for row in range(4)]  # libfranka column-major
+        basis=('Read-only echo_robot_state with the Franka Hand configured in Desk; Desk nominal Hand '
+               'parameters as reported by the controller, not a per-unit calibration')
+        put('tool.F_T_EE',mount,'fresh_state',basis)
+        for key in ('m_ee','I_ee','F_x_Cee','m_load','I_load','F_x_Cload'):put('tool.'+key,st[key],'fresh_state',basis)
+    collision_manifest=None
+    if collision_bundle is not None:
+        collision_bundle=Path(collision_bundle)
+        collision_manifest=load('collision_manifest',collision_bundle/'manifest.json')
+        if collision_manifest['workspace_urdf_sha256']!=hashlib.sha256(aliased).hexdigest():
+            raise ValueError('Collision bundle is bound to a different workspace URDF')
+        if fresh_state is not None and collision_manifest['hand_mount_F_T_EE']!=mount:
+            raise ValueError('Collision bundle Hand mount differs from the fresh tool state')
+        put('artifacts.collision_model','assets/collision/manifest.json','collision_manifest',
+            'Bundled franka_description FR3 v2.1 + Franka Hand mesh collision model (manifest-pinned files)')
+        put('artifacts.collision_model_sha256',sources['collision_manifest']['sha256'],'collision_manifest',
+            'SHA-256 of the collision manifest, which pins every model file')
     if hand_timing is not None:
         timing=load('hand_timing',Path(hand_timing))
         period_ms=timing['hand']['max_ms']
@@ -158,6 +186,10 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
                 row['source']['path']=str(output_dir/Path(row['source']['path']).relative_to(temp))
         receipt_path.write_text(json.dumps(meta,indent=2)+'\n')
     (output_dir/'assets').mkdir();(output_dir/'assets/arm-contract-names.reference.urdf').write_bytes(aliased)
+    if collision_bundle is not None:
+        shutil.copytree(collision_bundle,output_dir/'assets/collision')
+        if digest(output_dir/'assets/collision/manifest.json')!=sources['collision_manifest']['sha256']:
+            raise ValueError('Collision manifest changed while copying')
     alias=SerialChain(output_dir/'assets/arm-contract-names.reference.urdf','link0','link8')
     for q in ([0.]*7,state['q']):
         if raw_chain.frames(q)!=alias.frames(q):raise ValueError('Joint alias changed FK geometry')
@@ -167,6 +199,8 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
         joint_aliases=renames,geometry_note='Arm reference only; transformed joint names do not add Hand geometry or self-collision qualification.',
         droid_alternatives=dict(joint_limits=exec_cfg['limits'],collision_behavior=exec_cfg['collision_behavior'],
             gripper_wrapper_force_argument=wrapper['force']),
+        fresh_tool=None if fresh_state is None else dict(source=sources['fresh_state'],
+            note='Promoted to tool.* from a read-only capture after the Hand was configured in Desk; Desk nominal values, not a per-unit calibration'),
         remaining=report['missing'],sources=sources)
     (output_dir/'observations-and-alternatives.json').write_text(json.dumps(observations,indent=2)+'\n')
     # Fix the evidence receipt to the retained copy rather than the removed staging path.
@@ -185,6 +219,9 @@ def main():
     for name in ('repo','m4-run','legacy-reference','droid-sources','mock-link','observed-state','output-dir','recording-dir'):
         p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--hand-timing',type=Path,help='read-only Hand timing summary (sets gripper.max_state_age_ns from measurement)')
+    p.add_argument('--fresh-state',type=Path,help='read-only robot state JSON with the Hand configured (tool fields)')
+    p.add_argument('--collision-bundle',type=Path,help='directory with manifest.json from build_collision_manifest.py')
+    p.add_argument('--unit-observation',type=Path,help='operator/observation evidence JSON with the robot address')
     args=p.parse_args();print(json.dumps(populate(**vars(args)),indent=2))
 
 

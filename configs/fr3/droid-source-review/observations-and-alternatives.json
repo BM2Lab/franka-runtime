@@ -157,19 +157,18 @@
     },
     "gripper_wrapper_force_argument": 0.1
   },
+  "fresh_tool": {
+    "source": {
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-fresh-state/robot_state_20261024T184702Z.json",
+      "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751",
+      "snapshot": "source-evidence/fresh_state.json"
+    },
+    "note": "Promoted to tool.* from a read-only capture after the Hand was configured in Desk; Desk nominal values, not a per-unit calibration"
+  },
   "remaining": [
     "robot.arm_serial",
     "robot.control_serial",
     "robot.identity_max_age_ns",
-    "tool.F_T_EE",
-    "tool.m_ee",
-    "tool.I_ee",
-    "tool.F_x_Cee",
-    "tool.m_load",
-    "tool.I_load",
-    "tool.F_x_Cload",
-    "artifacts.collision_model",
-    "artifacts.collision_model_sha256",
     "approval.approved_by",
     "approval.approved_at",
     "approval.physical_stop_procedure",
@@ -233,10 +232,25 @@
       "sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
       "snapshot": "source-evidence/arm_reference_urdf.urdf"
     },
+    "unit_observation": {
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-unit-address/unit-observation.json",
+      "sha256": "13f174b9a884970b72e8ba989a77dc3c8d79eaaf5a4a8f152d92b8964e3fbdd9",
+      "snapshot": "source-evidence/unit_observation.json"
+    },
     "population_script": {
       "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
-      "sha256": "baa7d46b93b00854808a9061d3bf1b416018b6367da4edfa6b3e07a02420a815",
+      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
       "snapshot": "source-evidence/population_script.py"
+    },
+    "fresh_state": {
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-fresh-state/robot_state_20261024T184702Z.json",
+      "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751",
+      "snapshot": "source-evidence/fresh_state.json"
+    },
+    "collision_manifest": {
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-collision-model/bundle-manifested/manifest.json",
+      "sha256": "4200dc3753fda20a51941e3698065a21382f780e6e830482a51e0dd295dbe9af",
+      "snapshot": "source-evidence/collision_manifest.json"
     },
     "hand_timing": {
       "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-hand-timing/summary.json",

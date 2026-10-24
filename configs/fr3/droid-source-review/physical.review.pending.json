@@ -8,7 +8,7 @@
   "provenance": "Offline review draft; see provenance.json. No unit approval, fresh identity, or geometry qualification implied.",
   "robot": {
     "robot_id": "fr3_01",
-    "address": "172.16.0.1",
+    "address": "172.16.0.6",
     "model": "fr3v2.1",
     "firmware_version": "5.9.2",
     "fci_version": 10,
@@ -193,13 +193,66 @@
     "history_capacity": 1024
   },
   "tool": {
-    "F_T_EE": null,
-    "m_ee": null,
-    "I_ee": null,
-    "F_x_Cee": null,
-    "m_load": null,
-    "I_load": null,
-    "F_x_Cload": null,
+    "F_T_EE": [
+      [
+        0.707107,
+        0.707107,
+        0,
+        0
+      ],
+      [
+        -0.707107,
+        0.707107,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0.1034
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "m_ee": 0.73,
+    "I_ee": [
+      0.001,
+      0,
+      0,
+      0,
+      0.0025,
+      0,
+      0,
+      0,
+      0.0017
+    ],
+    "F_x_Cee": [
+      -0.01,
+      0,
+      0.03
+    ],
+    "m_load": 0,
+    "I_load": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "F_x_Cload": [
+      0,
+      0,
+      0
+    ],
     "scalar_tolerance": 1e-06,
     "transform_tolerance": 1e-06
   },
@@ -267,8 +320,8 @@
   "artifacts": {
     "native_pin": "native-pin.json",
     "native_pin_sha256": "1d6fa08b997f4513e24a11edcae1974c14e6616f7f8282dc456245b1c8890df7",
-    "collision_model": null,
-    "collision_model_sha256": null
+    "collision_model": "assets/collision/manifest.json",
+    "collision_model_sha256": "4200dc3753fda20a51941e3698065a21382f780e6e830482a51e0dd295dbe9af"
   },
   "recording": {
     "directory": "/home/chen-lab/yifan/droid-deployment/sessions/droid-first",

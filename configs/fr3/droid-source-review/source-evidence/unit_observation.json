@@ -1,0 +1,3 @@
+{"schema_version": 1, "address": "172.16.0.6", "observed": "2026-10-24",
+ "basis": "Current FR3 FCI address: operator-stated and confirmed by successful read-only libfranka connections from the RT host built-in port (D7 shadow runs and echo_robot_state capture robot_state_20261024T184702Z.json, sha256 c582264e...); supersedes archived DROID 172.16.0.1",
+ "evidence": ["/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-fresh-state/robot_state_20261024T184702Z.json", "/home/chen-lab/yifan/droid-deployment/runs/d7-shadow-30steps-20261024"]}
