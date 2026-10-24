@@ -2,10 +2,10 @@
   "schema_version": 2,
   "runtime": "droid_jointpos_v1",
   "backend": "franky",
-  "status": "pending_lab_review",
+  "status": "reviewed",
   "executable": false,
   "motion_authorized": false,
-  "provenance": "Offline review draft; see provenance.json. No unit approval, fresh identity, or geometry qualification implied.",
+  "provenance": "Operator-reviewed candidate 1fe53de615ccc6e38064c0e84340d846c527e0a39bcc3809d58a6ccd129177b9; see approval.json. Not executable and not motion-authorized; motion needs separate per-stage authorization.",
   "robot": {
     "robot_id": "fr3_01",
     "address": "172.16.0.6",
@@ -375,11 +375,11 @@
     "close_timeout_s": 5.0
   },
   "approval": {
-    "approved_by": null,
-    "approved_at": null,
-    "physical_stop_procedure": null,
-    "workspace_review": null,
-    "hand_review": null,
-    "collision_review": null
+    "approved_by": "Yifan Wang <wangyf@gatech.edu>",
+    "approved_at": "2026-10-24T20:41:15Z",
+    "physical_stop_procedure": "Approved as populated: runtime smooth torque stop per stop.* of DROID FR3 + Franka Hand candidate 1fe53de615ccc6e38064c0e84340d846c527e0a39bcc3809d58a6ccd129177b9, with Franka safety reflexes and the FR3 external stop/enabling device kept within operator reach. Wording drafted for the operator; amend if the lab procedure differs.",
+    "workspace_review": "Approved as populated: workspace.* (FK point checks, historical box, table plane, clearance) of DROID FR3 + Franka Hand candidate 1fe53de615ccc6e38064c0e84340d846c527e0a39bcc3809d58a6ccd129177b9; box to be revisited for the DROID scene; tool points TCP + true fingertips, rig corners as table-plane body points.",
+    "hand_review": "Approved as populated: gripper.* and tool.* (Desk nominal Franka Hand: m_ee 0.73 kg, TCP 0.1034 m, Rz(-45 deg) mount; 250 ms Hand freshness; 1 mm open-width tolerance) of DROID FR3 + Franka Hand candidate 1fe53de615ccc6e38064c0e84340d846c527e0a39bcc3809d58a6ccd129177b9; plus wrist D435i + mount payload 0.123 kg set via libfranka setLoad.",
+    "collision_review": "Approved as populated: franka_description 1.3.0 FR3 v2.1 + Franka Hand mesh self-collision model (manifest 4200dc37...), Franka SRDF exclusions, min clearance 0.02 m, of DROID FR3 + Franka Hand candidate 1fe53de615ccc6e38064c0e84340d846c527e0a39bcc3809d58a6ccd129177b9; plus the wrist rig bounding box attached to the flange and paired with links 0-6 (manifest 486db0a4)."
   }
 }
