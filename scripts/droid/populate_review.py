@@ -18,7 +18,8 @@ HAND_FRESHNESS_NS=250_000_000  # measured-period basis below; at least two Hand 
 
 
 def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir,recording_dir,hand_timing=None,
-             fresh_state=None,collision_bundle=None,unit_observation=None,payload=None,workspace_observation=None):
+             fresh_state=None,collision_bundle=None,unit_observation=None,payload=None,workspace_observation=None,
+             operator_decisions=None):
     import yaml
     repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir=map(Path,
         (repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir))
@@ -60,7 +61,15 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
         if joint.get('name') in renames:joint.set('name',renames[joint.get('name')])
     aliased=ET.tostring(tree.getroot(),encoding='utf-8',xml_declaration=True)+b'\n'
     entries=[];ledger={}
+    decided={}
+    if operator_decisions is not None:
+        decided=load('operator_decisions',Path(operator_decisions))
+        if (decided.get('schema_version')!=1 or not decided.get('basis') or not isinstance(decided.get('fields'),dict)
+                or not decided['fields'] or any(f.startswith('approval.') for f in decided['fields'])):
+            raise ValueError('Operator decisions need schema 1, basis and non-approval fields')
     def put(field,value,source,basis):
+        if field in decided.get('fields',{}) and source!='operator_decisions':
+            return  # replaced by the operator decision below
         s=sources[source]
         entries.append(dict(field=field,value=value,source=s['path'],sha256=s['sha256'],basis=basis))
         ledger[field]=dict(value=value,source=source,basis=basis)
@@ -201,6 +210,8 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
     for field,value,basis in [('queue_capacity',4096,'Match historical native logging capacity; writer must keep up'),('max_record_bytes',65536,'64 KiB per-event bound'),
         ('max_event_bytes',1073741824,'1 GiB event budget; session faults on exhaustion'),('min_free_bytes',1073741824,'Additional 1 GiB free-space reserve'),
         ('fsync_interval_s',1.,'1 s target durability interval'),('close_timeout_s',5.,'5 s bounded writer close')]:proposal('recording.'+field,value,basis)
+    for field,value in decided.get('fields',{}).items():
+        put(field,value,'operator_decisions',f"Operator decision: {decided['basis']}")
     # Generate evidence in a staging file; preserve any pre-existing review directory.
     output_dir.parent.mkdir(parents=True,exist_ok=True)
     import tempfile
@@ -263,6 +274,7 @@ def main():
     p.add_argument('--unit-observation',type=Path,help='operator/observation evidence JSON with the robot address')
     p.add_argument('--payload',type=Path,help='per-rig payload file from build_payload.py (tool.m_load/F_x_Cload/I_load)')
     p.add_argument('--workspace-observation',type=Path,help='operator-measured task box in the base frame (workspace.box_*)')
+    p.add_argument('--operator-decisions',type=Path,help='operator-decided field values (schema 1: fields, basis); override other sources')
     args=p.parse_args();print(json.dumps(populate(**vars(args)),indent=2))
 
 

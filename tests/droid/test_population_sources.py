@@ -232,3 +232,17 @@ def test_operator_workspace_box_replaces_the_historical_box(tmp_path):
     box.write_text(json.dumps(dict(schema_version=1,box_min_m=[.9,-.38,.03],box_max_m=[.88,.38,.53],basis='x')))
     bad=tmp_path/'bad';bad.mkdir()
     with pytest.raises(ValueError,match='Workspace observation'):POP(**inputs(bad),workspace_observation=box)
+
+
+def test_operator_decisions_replace_archived_values_with_their_own_provenance(tmp_path):
+    dec=tmp_path/'decisions.json'
+    dec.write_text(json.dumps(dict(schema_version=1,basis='trial-1 stop analysis',fields={
+        'stop.ramp_duration_s':.01,'stop.damping':[5,5,5,2,1,1,.5],'guards.max_measured_joint_velocity_rad_s':[1.]*4+[1.2]*3})))
+    POP(**inputs(tmp_path),operator_decisions=dec)
+    out=tmp_path/'out';d=PhysicalDroidConfig.load(out/'physical.review.pending.json').data
+    assert d['stop']['ramp_duration_s']==.01 and d['stop']['damping']==[5,5,5,2,1,1,.5]
+    assert d['guards']['max_measured_joint_velocity_rad_s']==[1.]*4+[1.2]*3 and d['stop']['max_duration_s']==2
+    prov=json.loads((out/'provenance.json').read_text())['field_provenance']
+    assert prov['stop.damping']['basis']=='Operator decision: trial-1 stop analysis'
+    bad=tmp_path/'bad';bad.mkdir();dec.write_text(json.dumps(dict(schema_version=1,basis='x',fields={'approval.approved_by':'me'})))
+    with pytest.raises(ValueError,match='Operator decisions'):POP(**inputs(bad),operator_decisions=dec)
