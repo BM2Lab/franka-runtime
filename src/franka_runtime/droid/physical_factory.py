@@ -78,6 +78,11 @@ class PhysicalDeviceFactory:
         robot=sdk.Robot(r['address'],default_torque_threshold=r['collision_torque_nm'],
                         default_force_threshold=r['collision_force_n'],realtime_config=sdk.RealtimeConfig.Enforce)
 
+        # The rig payload (e.g. wrist camera) is not in Desk's end-effector profile; set it on every
+        # connect so gravity compensation matches the commissioned tool, then read_arm verifies it.
+        t=d['tool'];robot.set_load(t['m_load'],t['F_x_Cload'],t['I_load'])
+        record('payload_set',dict(m_load=t['m_load'],F_x_Cload=t['F_x_Cload'],I_load=t['I_load']))
+
         def read_arm():
             record('device_identity',self._identity(d))
             state=robot.state

@@ -99,7 +99,9 @@ def test_factory_connect_is_passive_until_start_and_refreshes(tmp_path):
     d=complete(tmp_path);c=PhysicalDroidConfig(d);calls=[]
     state=NS(q=[0.]*7,dq=[.01]*7,robot_mode='idle',current_errors=NS(joint_reflex=False),F_T_EE=NS(matrix=d['tool']['F_T_EE']),
              **{k:d['tool'][k] for k in ('m_ee','m_load','I_ee','I_load','F_x_Cee','F_x_Cload')})
-    robot=NS(state=state)
+    loads=[]
+    def set_load(m,c,i):loads.append((m,list(c),list(i)));state.m_load,state.F_x_Cload,state.I_load=m,c,i
+    robot=NS(state=state,set_load=set_load)
     count=[0]
     class Gripper:
         @property
@@ -124,6 +126,7 @@ def test_factory_connect_is_passive_until_start_and_refreshes(tmp_path):
     # Robot() raised the constructing thread to FIFO max; it is demoted before any worker thread exists.
     assert sched==[(0,0,0)] and b.driver.realtime==dict(cpu=3,priority=99)
     assert b.driver.thread is None and b.hand._thread is None and b.arm.dq==(.01,)*7
+    assert loads==[(d['tool']['m_load'],d['tool']['F_x_Cload'],d['tool']['I_load'])]  # set before the tool check
     assert calls==[dict(default_torque_threshold=1,default_force_threshold=1,realtime_config='enforce')]
     state.q=[.1]*7;b.estimate=object();assert b.preflight()['q']==(.1,)*7
     np=pytest.importorskip('numpy')  # Franky's shapes: I_* 3x3, F_x_C* 3x1, column-major like libfranka

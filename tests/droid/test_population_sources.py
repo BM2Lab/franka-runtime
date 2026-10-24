@@ -179,3 +179,30 @@ def test_approval_refuses_incomplete_candidate_or_record(tmp_path):
     with pytest.raises(ValueError,match='nonempty'):
         APPROVE(candidate_dir=full/'out',approval=approval(tmp_path,hand_review=' '),expected_sha256=c.sha256)
     assert PhysicalDroidConfig.load(full/'out/physical.review.pending.json').data['status']=='pending_lab_review'
+
+
+BUILD=runpy.run_path(str(ROOT/'scripts/droid/build_payload.py'))['build']
+
+
+def payload(tmp_path,**changes):
+    v=BUILD(name='wrist-d435i',components=[('D435i',.072),('mount',.051)],com_tcp_m=(-.1,-.04,-.07),state=FRESH,
+            box_m=(.09,.025,.025),box_component='D435i',basis='weighed; COM measured from TCP')
+    v.update(changes);path=tmp_path/'payload.json';path.write_text(json.dumps(v));return path
+
+
+def test_payload_converts_tcp_com_to_flange_and_fills_load_fields(tmp_path):
+    v=json.loads(payload(tmp_path).read_text())
+    assert v['m_load']==.123 and [round(x,4) for x in v['F_x_Cload']]==[-.099,.0424,.0334]
+    assert v['I_load'][0]>0 and v['I_load'][1]==0  # column-major diagonal box inertia
+    r=POP(**inputs(tmp_path),fresh_state=FRESH,collision_bundle=BUNDLE,unit_observation=full_unit_observation(tmp_path),
+          payload=payload(tmp_path))
+    d=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json').data
+    assert r['remaining']==6 and d['tool']['m_load']==.123 and d['tool']['F_x_Cload']==v['F_x_Cload']
+    assert d['tool']['m_ee']==.73  # Desk Hand profile unchanged
+    prov=json.loads((tmp_path/'out/provenance.json').read_text())['field_provenance']
+    assert 'Operator-measured payload wrist-d435i' in prov['tool.m_load']['basis']
+
+
+def test_implausible_payload_is_refused(tmp_path):
+    with pytest.raises(ValueError,match='Payload'):
+        POP(**inputs(tmp_path),fresh_state=FRESH,payload=payload(tmp_path,m_load=5.))
