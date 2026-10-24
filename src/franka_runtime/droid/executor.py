@@ -2,8 +2,10 @@
 
 Rows of the active chunk start on a fixed grid (``row_period_ns``). An accepted chunk
 waits as the single pending chunk and replaces the current chunk's not-yet-started
-rows at the next row boundary (immediately when idle or holding). No row starts at or
-after its chunk's runtime deadline. When rows run out, the last target is held for at
+rows at the next row boundary (immediately when idle or holding). No row starts within
+``start_margin_ns`` of its chunk's runtime deadline: a row's first native expiry is that
+deadline, and the backend extends a consumed row into the hold only on a later supervisor
+tick, which must land before the native expiry. When rows run out, the last target is held for at
 most ``hold_timeout_ns``; then the executor requests a stop. The backend owns native
 execution; the hybrid impedance candidate does not interpolate row targets.
 """
@@ -35,11 +37,13 @@ class Step:
 
 
 class ChunkExecutor:
-    def __init__(self, row_period_ns, hold_timeout_ns):
+    def __init__(self, row_period_ns, hold_timeout_ns, start_margin_ns=0):
         for value, name in ((row_period_ns, "row_period_ns"), (hold_timeout_ns, "hold_timeout_ns")):
             if type(value) is not int or value <= 0:
                 raise ValueError(f"{name} must be a positive integer")
-        self.period, self.hold_timeout = row_period_ns, hold_timeout_ns
+        if type(start_margin_ns) is not int or not 0 <= start_margin_ns < row_period_ns:
+            raise ValueError("start_margin_ns must be an integer in [0, row_period_ns)")
+        self.period, self.hold_timeout, self.start_margin = row_period_ns, hold_timeout_ns, start_margin_ns
         self.current = self.pending = None
         self.active_row = None
         self.last_target = self.last_closure = None
@@ -65,7 +69,7 @@ class ChunkExecutor:
     def _row(self, chunk, now_ns):
         index = (now_ns-chunk.start_ns)//self.period
         start = chunk.start_ns+index*self.period
-        return index if index < len(chunk.rows) and start < chunk.deadline_ns else None
+        return index if index < len(chunk.rows) and start+self.start_margin < chunk.deadline_ns else None
 
     def tick(self, now_ns):
         dropped, self._dropped = tuple(self._dropped), []
@@ -89,7 +93,8 @@ class ChunkExecutor:
                         dropped, False, None)
         if self.current is not None:
             # Rows whose start time passed between sparse ticks still count: hold the last due row.
-            due = min(len(self.current.rows), -(-(self.current.deadline_ns-self.current.start_ns)//self.period))-1
+            due = min(len(self.current.rows),
+                      -(-(self.current.deadline_ns-self.start_margin-self.current.start_ns)//self.period))-1
             if due >= 0 and (self.active_row is None or due > self.active_row):
                 self.last_target, self.last_closure = self.current.rows[due][:7], self.current.rows[due][7]
         self.current, self.active_row = None, None

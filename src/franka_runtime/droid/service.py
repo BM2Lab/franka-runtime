@@ -40,6 +40,9 @@ from .workspace import from_settings as workspace_from_settings
 
 # Integer native fault codes reported through SessionAuthority.poll(native_fault=...).
 FAULT_CODES = {UNDERRUN: 101, "heartbeat_timeout": 102, "client_disconnected": 103}
+# No row starts this close to its chunk deadline: the consumed row must be extended into the hold
+# before its native expiry, across a supervisor pause (13.7 ms measured, D8 2026-10-24) plus a tick.
+ROW_START_MARGIN_NS = 50_000_000
 # Periodic state samples are recorded at this rate; every authority/fault change is always recorded.
 TELEMETRY_PERIOD_NS = 100_000_000
 MOCK_STOP_EVIDENCE = {"joined": True, "stop_finished": True, "stop_at_rest": True, "stop_fault": 0, "dropped_samples": 0}
@@ -120,7 +123,7 @@ class DroidRuntimeService:
         self.settings, self.spec, self.contract_sha256, self._token = settings, spec, sha, token
         self.clock, self.clock_id = clock, clock_id or host_clock_id()
         self.row_period_ns = round(1e9/spec.action.policy_hz)
-        self.executor = ChunkExecutor(self.row_period_ns, settings["hold_timeout_ns"])
+        self.executor = ChunkExecutor(self.row_period_ns, settings["hold_timeout_ns"], ROW_START_MARGIN_NS)
         if backend_factory is None:
             self.arm = MockArm(settings["mock_start_q"], settings["max_velocity"], settings["max_acceleration"])
             self.hand = MockHand(settings["open_width_m"], settings["gripper_speed_m_s"])
@@ -316,7 +319,7 @@ class DroidRuntimeService:
             lease = self.authority.acquire(request.lease_request, episode_id=f"droid-{uuid.uuid4().hex}")
             # The authority admits a new lease only after the previous stop completed without a latched
             # fault, so per-session execution state starts fresh here.
-            self.executor = ChunkExecutor(self.row_period_ns, self.settings["hold_timeout_ns"])
+            self.executor = ChunkExecutor(self.row_period_ns, self.settings["hold_timeout_ns"], ROW_START_MARGIN_NS)
             self.backend.reset_session(self.executor)
             self.intent = GripperIntent(self.spec.gripper, self.hand.width)
             self._last_step = None

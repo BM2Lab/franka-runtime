@@ -199,3 +199,20 @@ def test_fast_forward_kinematics_matches_the_reference_matrix_products():
         fast, ref = chain.frames(q), reference(q)
         assert fast.keys() == ref.keys()
         assert max(abs(a-b) for k in ref for ra, rb in zip(fast[k], ref[k]) for a, b in zip(ra, rb)) < 1e-12
+
+
+
+def test_no_row_starts_inside_the_start_margin_before_its_deadline():
+    # D9 episode 6: row 6 started 4 ms before the chunk deadline; the hold extension came a supervisor
+    # tick later, after the native expiry. With the margin the executor holds row 5 instead.
+    from franka_runtime.droid.executor import ChunkExecutor
+    ex = ChunkExecutor(P, 1_000_000_000, 50_000_000)
+    rows = [(float(i),)*7+(0.,) for i in range(8)]
+    start = 1_000_000_000
+    ex.submit(1, rows, start+6*P+4_000_000)  # deadline 4 ms after row 6 would start
+    assert ex.tick(start).row == 0
+    assert ex.tick(start+5*P).row == 5
+    held = ex.tick(start+6*P)
+    assert held.row is None and held.holding and held.target == rows[5][:7]
+    with pytest.raises(ValueError, match="start_margin"):
+        ChunkExecutor(P, 1_000_000_000, P)
