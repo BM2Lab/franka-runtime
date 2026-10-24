@@ -716,8 +716,8 @@
         0.03
       ],
       "source": "source-evidence/workspace_observation.json",
-      "sha256": "0cec5d7d5ebad91c7de66d5191df9fc2914efd93c3acc6b56d2dd92157abe83c",
-      "basis": "Operator-measured DROID task box, 2026-10-24: 76 cm in Y, centred; bottom (the table plane) 3 cm above the mounting plane; top 1.0 m; far face 0.88 m; front face moved by the operator from 0.27 m to 0.12 m from the base YZ plane because the home-pose fingertip sat 0.9 cm inside it and the policy's first moves were rejected (D9 episode 5); 2 cm table clearance"
+      "sha256": "7ddf25467378bed320d3a5f0cdced22d4aaafca08ab186d2cbefdbb7a5a4240e",
+      "basis": "Operator-measured DROID task box, 2026-10-24: 76 cm in Y, centred; bottom (the table plane) 3 cm above the mounting plane; top 1.0 m; far face 0.88 m; front face moved by the operator from 0.27 m to 0.12 m from the base YZ plane because the home-pose fingertip sat 0.9 cm inside it and the policy's first moves were rejected (D9 episode 5); table clearance reduced by the operator from 2 cm to 1 cm (D9 trial 3: a descent toward the 7 cm-tall toy was rejected at 2 cm)"
     },
     {
       "field": "workspace.box_max_m",
@@ -727,22 +727,22 @@
         1.0
       ],
       "source": "source-evidence/workspace_observation.json",
-      "sha256": "0cec5d7d5ebad91c7de66d5191df9fc2914efd93c3acc6b56d2dd92157abe83c",
-      "basis": "Operator-measured DROID task box, 2026-10-24: 76 cm in Y, centred; bottom (the table plane) 3 cm above the mounting plane; top 1.0 m; far face 0.88 m; front face moved by the operator from 0.27 m to 0.12 m from the base YZ plane because the home-pose fingertip sat 0.9 cm inside it and the policy's first moves were rejected (D9 episode 5); 2 cm table clearance"
+      "sha256": "7ddf25467378bed320d3a5f0cdced22d4aaafca08ab186d2cbefdbb7a5a4240e",
+      "basis": "Operator-measured DROID task box, 2026-10-24: 76 cm in Y, centred; bottom (the table plane) 3 cm above the mounting plane; top 1.0 m; far face 0.88 m; front face moved by the operator from 0.27 m to 0.12 m from the base YZ plane because the home-pose fingertip sat 0.9 cm inside it and the policy's first moves were rejected (D9 episode 5); table clearance reduced by the operator from 2 cm to 1 cm (D9 trial 3: a descent toward the 7 cm-tall toy was rejected at 2 cm)"
     },
     {
       "field": "workspace.table_z_m",
       "value": 0.03,
       "source": "source-evidence/workspace_observation.json",
-      "sha256": "0cec5d7d5ebad91c7de66d5191df9fc2914efd93c3acc6b56d2dd92157abe83c",
-      "basis": "Operator-measured DROID task box, 2026-10-24: 76 cm in Y, centred; bottom (the table plane) 3 cm above the mounting plane; top 1.0 m; far face 0.88 m; front face moved by the operator from 0.27 m to 0.12 m from the base YZ plane because the home-pose fingertip sat 0.9 cm inside it and the policy's first moves were rejected (D9 episode 5); 2 cm table clearance"
+      "sha256": "7ddf25467378bed320d3a5f0cdced22d4aaafca08ab186d2cbefdbb7a5a4240e",
+      "basis": "Operator-measured DROID task box, 2026-10-24: 76 cm in Y, centred; bottom (the table plane) 3 cm above the mounting plane; top 1.0 m; far face 0.88 m; front face moved by the operator from 0.27 m to 0.12 m from the base YZ plane because the home-pose fingertip sat 0.9 cm inside it and the policy's first moves were rejected (D9 episode 5); table clearance reduced by the operator from 2 cm to 1 cm (D9 trial 3: a descent toward the 7 cm-tall toy was rejected at 2 cm)"
     },
     {
       "field": "workspace.clearance_m",
-      "value": 0.02,
+      "value": 0.01,
       "source": "source-evidence/workspace_observation.json",
-      "sha256": "0cec5d7d5ebad91c7de66d5191df9fc2914efd93c3acc6b56d2dd92157abe83c",
-      "basis": "Operator-measured DROID task box, 2026-10-24: 76 cm in Y, centred; bottom (the table plane) 3 cm above the mounting plane; top 1.0 m; far face 0.88 m; front face moved by the operator from 0.27 m to 0.12 m from the base YZ plane because the home-pose fingertip sat 0.9 cm inside it and the policy's first moves were rejected (D9 episode 5); 2 cm table clearance"
+      "sha256": "7ddf25467378bed320d3a5f0cdced22d4aaafca08ab186d2cbefdbb7a5a4240e",
+      "basis": "Operator-measured DROID task box, 2026-10-24: 76 cm in Y, centred; bottom (the table plane) 3 cm above the mounting plane; top 1.0 m; far face 0.88 m; front face moved by the operator from 0.27 m to 0.12 m from the base YZ plane because the home-pose fingertip sat 0.9 cm inside it and the policy's first moves were rejected (D9 episode 5); table clearance reduced by the operator from 2 cm to 1 cm (D9 trial 3: a descent toward the 7 cm-tall toy was rejected at 2 cm)"
     },
     {
       "field": "network.bind_host",

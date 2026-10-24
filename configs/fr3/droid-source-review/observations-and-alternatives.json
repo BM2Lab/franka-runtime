@@ -265,8 +265,8 @@
       "snapshot": "source-evidence/hand_timing.json"
     },
     "workspace_observation": {
-      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-workspace-box/workspace-box-table-1m-front012.json",
-      "sha256": "0cec5d7d5ebad91c7de66d5191df9fc2914efd93c3acc6b56d2dd92157abe83c",
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-workspace-box/workspace-box-table-1m-front012-clear1cm.json",
+      "sha256": "7ddf25467378bed320d3a5f0cdced22d4aaafca08ab186d2cbefdbb7a5a4240e",
       "snapshot": "source-evidence/workspace_observation.json"
     }
   }
