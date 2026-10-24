@@ -2,19 +2,19 @@
   "schema_version": 2,
   "runtime": "droid_jointpos_v1",
   "backend": "franky",
-  "status": "pending_lab_review",
+  "status": "reviewed",
   "executable": false,
   "motion_authorized": false,
-  "provenance": "Offline review draft; see provenance.json. No unit approval, fresh identity, or geometry qualification implied.",
+  "provenance": "Operator-reviewed candidate b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896; see approval.json. Not executable and not motion-authorized; motion needs separate per-stage authorization.",
   "robot": {
     "robot_id": "fr3_01",
     "address": "172.16.0.6",
     "model": "fr3v2.1",
     "firmware_version": "5.9.2",
     "fci_version": 10,
-    "arm_serial": null,
-    "control_serial": null,
-    "identity_max_age_ns": null,
+    "arm_serial": "309969-2587331",
+    "control_serial": "295341-2593501",
+    "identity_max_age_ns": 9223372036854775807,
     "collision_torque_nm": 20.0,
     "collision_force_n": 30.0
   },
@@ -333,11 +333,11 @@
     "close_timeout_s": 5.0
   },
   "approval": {
-    "approved_by": null,
-    "approved_at": null,
-    "physical_stop_procedure": null,
-    "workspace_review": null,
-    "hand_review": null,
-    "collision_review": null
+    "approved_by": "yue.chen@bme.gatech.edu (operator account that gave the approval)",
+    "approved_at": "2026-10-24T19:02:40Z",
+    "physical_stop_procedure": "Approved as populated: runtime smooth torque stop per stop.* of DROID FR3 + Franka Hand candidate b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896, with Franka safety reflexes and the FR3 external stop/enabling device kept within operator reach. Wording drafted for the operator; amend if the lab procedure differs.",
+    "workspace_review": "Approved as populated: workspace.* (FK point checks, historical box, table plane, clearance) of DROID FR3 + Franka Hand candidate b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896; box to be revisited for the DROID scene.",
+    "hand_review": "Approved as populated: gripper.* and tool.* (Desk nominal Franka Hand: m_ee 0.73 kg, TCP 0.1034 m, Rz(-45 deg) mount; 250 ms Hand freshness; 1 mm open-width tolerance) of DROID FR3 + Franka Hand candidate b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896.",
+    "collision_review": "Approved as populated: franka_description 1.3.0 FR3 v2.1 + Franka Hand mesh self-collision model (manifest 4200dc37...), Franka SRDF exclusions, min clearance 0.02 m, of DROID FR3 + Franka Hand candidate b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896."
   }
 }

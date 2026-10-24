@@ -5,8 +5,29 @@
       "field": "robot.address",
       "value": "172.16.0.6",
       "source": "source-evidence/unit_observation.json",
-      "sha256": "13f174b9a884970b72e8ba989a77dc3c8d79eaaf5a4a8f152d92b8964e3fbdd9",
-      "basis": "Current FR3 FCI address: operator-stated and confirmed by successful read-only libfranka connections from the RT host built-in port (D7 shadow runs and echo_robot_state capture robot_state_20261024T184702Z.json, sha256 c582264e...); supersedes archived DROID 172.16.0.1"
+      "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17",
+      "basis": "Current FR3 FCI address: operator-stated and confirmed by successful read-only libfranka connections from the RT host built-in port (D7 shadow runs; echo_robot_state capture robot_state_20261024T184702Z.json sha256 c582264e...); supersedes archived DROID 172.16.0.1"
+    },
+    {
+      "field": "robot.arm_serial",
+      "value": "309969-2587331",
+      "source": "source-evidence/unit_observation.json",
+      "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17",
+      "basis": "Operator-read arm serial number, stated 2026-10-24 as \"309969-2587331 02.01\"; 02.01 recorded as the label revision, not part of the serial"
+    },
+    {
+      "field": "robot.control_serial",
+      "value": "295341-2593501",
+      "source": "source-evidence/unit_observation.json",
+      "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17",
+      "basis": "Operator-read control serial number, stated 2026-10-24"
+    },
+    {
+      "field": "robot.identity_max_age_ns",
+      "value": 9223372036854775807,
+      "source": "source-evidence/unit_observation.json",
+      "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17",
+      "basis": "Operator decision 2026-10-24: no age limit for now (int64 max). Recorded identity stays bound to the RT boot clock_id, so a reboot still requires a new identity record"
     },
     {
       "field": "robot.model",
@@ -359,21 +380,21 @@
       "field": "timing.startup_timeout_ns",
       "value": 5000000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s admission allowance, inspired by DROID policy-start wait; not a measured native startup bound"
     },
     {
       "field": "timing.consumption_timeout_ns",
       "value": 50000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 50 ms first-consumption allowance; choose after timing tests"
     },
     {
       "field": "timing.stop_timeout_ns",
       "value": 2500000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: native stop maximum plus 0.5 s for telemetry/worker join"
     },
     {
@@ -552,77 +573,77 @@
       "field": "gripper.epsilon_inner_m",
       "value": 0.005,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     {
       "field": "gripper.epsilon_outer_m",
       "value": 0.005,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     {
       "field": "gripper.poll_hz",
       "value": 50,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Contract feedback target, not achieved-rate evidence"
     },
     {
       "field": "gripper.moving_epsilon_m_s",
       "value": 0.001,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Width-change detection threshold"
     },
     {
       "field": "gripper.cancel_interval_ms",
       "value": 10,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device cancellation test cadence"
     },
     {
       "field": "gripper.cancel_attempts",
       "value": 20,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device bounded cancellation attempts"
     },
     {
       "field": "gripper.history_capacity",
       "value": 1024,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing serialized Hand worker default"
     },
     {
       "field": "tool.scalar_tolerance",
       "value": 1e-06,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured-value comparison tolerance; not physical calibration accuracy"
     },
     {
       "field": "tool.transform_tolerance",
       "value": 1e-06,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured matrix comparison tolerance; not physical calibration accuracy"
     },
     {
       "field": "workspace.model_urdf",
       "value": "assets/arm-contract-names.reference.urdf",
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Copied arm-only URDF with joint labels aliased in order; no Hand geometry added"
     },
     {
       "field": "workspace.model_sha256",
       "value": "8c16cace888871113ba8fd6dc4e3d750a97fb5cfa1740ba5421bacd0f717168d",
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Hash of the exact derived reference asset"
     },
     {
@@ -768,49 +789,49 @@
       "field": "recording.directory",
       "value": "/home/chen-lab/yifan/droid-deployment/sessions/droid-first",
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: New per-run recording directory; parent must exist and directory must not be reused"
     },
     {
       "field": "recording.queue_capacity",
       "value": 4096,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Match historical native logging capacity; writer must keep up"
     },
     {
       "field": "recording.max_record_bytes",
       "value": 65536,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 64 KiB per-event bound"
     },
     {
       "field": "recording.max_event_bytes",
       "value": 1073741824,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 GiB event budget; session faults on exhaustion"
     },
     {
       "field": "recording.min_free_bytes",
       "value": 1073741824,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Additional 1 GiB free-space reserve"
     },
     {
       "field": "recording.fsync_interval_s",
       "value": 1.0,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 s target durability interval"
     },
     {
       "field": "recording.close_timeout_s",
       "value": 5.0,
       "source": "source-evidence/population_script.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s bounded writer close"
     }
   ]

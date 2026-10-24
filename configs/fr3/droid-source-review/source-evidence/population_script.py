@@ -72,6 +72,10 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
         if unit.get('schema_version')!=1 or not isinstance(unit.get('address'),str) or not unit.get('basis'):
             raise ValueError('Unit observation needs schema 1, address and basis')
         put('robot.address',unit['address'],'unit_observation',unit['basis'])
+        for key in ('arm_serial','control_serial','identity_max_age_ns'):  # operator-stated label values / policy
+            if key in unit:
+                if not unit.get('basis_'+key):raise ValueError('Unit observation needs basis_'+key)
+                put('robot.'+key,unit[key],'unit_observation',unit['basis_'+key])
     else:
         put('robot.address',droid['robot_client']['executable_cfg']['robot_ip'],'droid_fr3','DROID reference address; confirm against the current unit before connection')
     put('robot.model',ET.parse(urdf).getroot().get('name'),'arm_reference_urdf','Archived FR3 model identity; not a fresh physical-unit identification')

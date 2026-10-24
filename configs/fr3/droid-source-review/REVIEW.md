@@ -2,13 +2,12 @@
 
 This is a non-executable review draft. No robot was accessed and no approval was generated.
 
-95 fields have sourced candidate values; 9 fields remain unset.
+98 fields have sourced candidate values; 6 fields remain unset.
 
 DROID gains have been populated as unapproved candidate values from the pinned implementation; see per-field provenance and controller.reference.json.
 
 | Section | Unset fields | Required evidence / decision |
 |---|---|---|
-| robot | arm_serial, control_serial, identity_max_age_ns | Current unit identity/Desk + trusted FCI evidence; operator collision thresholds |
 | approval | approved_by, approved_at, physical_stop_procedure, workspace_review, hand_review, collision_review | Operator review, never auto-generated |
 
 A partial draft is not a validated physical configuration. Unknown values stay null.

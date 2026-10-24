@@ -166,9 +166,6 @@
     "note": "Promoted to tool.* from a read-only capture after the Hand was configured in Desk; Desk nominal values, not a per-unit calibration"
   },
   "remaining": [
-    "robot.arm_serial",
-    "robot.control_serial",
-    "robot.identity_max_age_ns",
     "approval.approved_by",
     "approval.approved_at",
     "approval.physical_stop_procedure",
@@ -233,13 +230,13 @@
       "snapshot": "source-evidence/arm_reference_urdf.urdf"
     },
     "unit_observation": {
-      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-unit-address/unit-observation.json",
-      "sha256": "13f174b9a884970b72e8ba989a77dc3c8d79eaaf5a4a8f152d92b8964e3fbdd9",
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-unit-identity/unit-observation.json",
+      "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17",
       "snapshot": "source-evidence/unit_observation.json"
     },
     "population_script": {
       "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
-      "sha256": "ad2a0cfc1df719262f26a1b972e99975a57d7116d58675680ec5c6f022d2c8af",
+      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
       "snapshot": "source-evidence/population_script.py"
     },
     "fresh_state": {
