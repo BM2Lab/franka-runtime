@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "reviewed_candidate_sha256": "b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896",
-  "approved_candidate_sha256": "5952fb3d4bd5dcbaa1f454e9680edad9933a0c2232abc1e514d6265f30995199",
-  "approval_sha256": "0671fb822aedaac2f7869980e93310e89b934fe739482136e7465d81004cd879",
+  "approved_candidate_sha256": "5d494ce6b176430ebb6dfea922126714ced218e61131da6aa2fe26925cdb96b4",
+  "approval_sha256": "b43d3ee3ad07c7bb660ebac4e02901329c13b2af302f205d9135a7a032c6747d",
   "executable": false,
   "motion_authorized": false,
   "hardware_accessed": false

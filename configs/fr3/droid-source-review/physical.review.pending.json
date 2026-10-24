@@ -333,8 +333,8 @@
     "close_timeout_s": 5.0
   },
   "approval": {
-    "approved_by": "yue.chen@bme.gatech.edu (operator account that gave the approval)",
-    "approved_at": "2026-10-24T19:02:40Z",
+    "approved_by": "Yifan Wang <wangyf@gatech.edu>",
+    "approved_at": "2026-10-24T19:04:44Z",
     "physical_stop_procedure": "Approved as populated: runtime smooth torque stop per stop.* of DROID FR3 + Franka Hand candidate b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896, with Franka safety reflexes and the FR3 external stop/enabling device kept within operator reach. Wording drafted for the operator; amend if the lab procedure differs.",
     "workspace_review": "Approved as populated: workspace.* (FK point checks, historical box, table plane, clearance) of DROID FR3 + Franka Hand candidate b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896; box to be revisited for the DROID scene.",
     "hand_review": "Approved as populated: gripper.* and tool.* (Desk nominal Franka Hand: m_ee 0.73 kg, TCP 0.1034 m, Rz(-45 deg) mount; 250 ms Hand freshness; 1 mm open-width tolerance) of DROID FR3 + Franka Hand candidate b4c6420d4e7656301b355fbee41f20ce904457fd6be52a4c58d94fe1634f1896.",
