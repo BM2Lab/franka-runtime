@@ -85,10 +85,20 @@ class PhysicalDeviceFactory:
         # The rig payload (e.g. wrist camera) is not in Desk's end-effector profile; set it on every
         # connect so gravity compensation matches the commissioned tool, then read_arm verifies it.
         t=d['tool'];robot.set_load(t['m_load'],t['F_x_Cload'],t['I_load'])
-        # The reported state can lag the command; wait (bounded) until the robot reports the load.
+        # The reported state can lag the command; wait (bounded) until the robot reports every load field
+        # (a payload change can keep the mass and move only the COM).
+        def load_mismatch():
+            state=robot.state
+            for key in ('m_load','F_x_Cload','I_load'):
+                actual,expected=getattr(state,key),t[key]
+                a=[float(actual)] if isinstance(expected,(int,float)) else [float(x) for x in
+                   (actual.flatten(order='F') if hasattr(actual,'flatten') else actual)]
+                e=[expected] if isinstance(expected,(int,float)) else expected
+                if len(a)!=len(e) or any(abs(x-y)>t['scalar_tolerance'] for x,y in zip(a,e)):return key,a
+            return None
         start=self.clock()
-        while abs(float(robot.state.m_load)-t['m_load'])>t['scalar_tolerance']:
-            if self.clock()-start>1_000_000_000:raise ValueError(f'Robot did not report the set load: m_load {robot.state.m_load}')
+        while (mismatch:=load_mismatch()) is not None:
+            if self.clock()-start>1_000_000_000:raise ValueError(f'Robot did not report the set load: {mismatch[0]} {mismatch[1]}')
             self.sleep(.01)
         record('payload_set',dict(m_load=t['m_load'],F_x_Cload=t['F_x_Cload'],I_load=t['I_load'],confirmed_after_ns=self.clock()-start))
 

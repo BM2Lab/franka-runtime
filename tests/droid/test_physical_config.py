@@ -100,8 +100,19 @@ def test_factory_connect_is_passive_until_start_and_refreshes(tmp_path):
     state=NS(q=[0.]*7,dq=[.01]*7,robot_mode='idle',current_errors=NS(joint_reflex=False),F_T_EE=NS(matrix=d['tool']['F_T_EE']),
              **{k:d['tool'][k] for k in ('m_ee','m_load','I_ee','I_load','F_x_Cee','F_x_Cload')})
     loads=[]
-    def set_load(m,c,i):loads.append((m,list(c),list(i)));state.m_load,state.F_x_Cload,state.I_load=m,c,i
-    robot=NS(state=state,set_load=set_load)
+    def set_load(m,c,i):
+        # The robot applies the COM one state read later (mass unchanged): connect must wait for it.
+        loads.append((m,list(c),list(i)));state.m_load,state.I_load=m,i;state.F_x_Cload=[v+1 for v in c]
+        pending.append([c,2])  # COM reported from the third state read on
+    pending=[]
+    class Robot(NS):
+        @property
+        def state(self):
+            if pending:
+                pending[0][1]-=1
+                if pending[0][1]<0:state_ns.F_x_Cload=pending.pop()[0]
+            return state_ns
+    state_ns=state;robot=Robot(set_load=set_load)
     count=[0]
     class Gripper:
         @property
