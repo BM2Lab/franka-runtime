@@ -148,7 +148,20 @@ class NativeDroidBackend:
         return bool(self._started and self._last_status is None and not self._stopping and self._pending
                     and self._pending[0] == 1 and self.clock()-self._pending[1] < self.startup_timeout)
 
+    def _refresh_from_native(self):
+        # Wait-free read of the newest callback sample, so acceptance uses the native loop's own
+        # freshness and measured q rather than the supervisor's last copy (it can be blocked
+        # behind a long submit validation). Receipts/faults are still processed only in update().
+        motion = self.driver.motion
+        if not self._started or self._stopping or motion is None:
+            return
+        sample = motion.status()
+        if sample.tick and sample.tick >= self._last_sample_tick:
+            self._last_status, self._last_sample_tick = sample, sample.tick
+            self.arm.q, self.arm.dq = tuple(sample.q), tuple(sample.dq)
+
     def validate_state(self):
+        self._refresh_from_native()
         if hasattr(self.hand, "fresh") and not self.hand.fresh:
             if self._started and not self._stopping:
                 self._fault = self._fault or 205

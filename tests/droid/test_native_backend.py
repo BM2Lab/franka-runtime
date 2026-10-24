@@ -337,3 +337,17 @@ def test_control_thread_raises_and_pins_itself_before_move(monkeypatch):
     assert reports[0][0]=='native_thread' and reports[0][1]['cpus']==[3] and reports[0][1]['priority']==99
     with pytest.raises(ValueError,match='cpu/priority'):
         native.FrankyArmDriver(robot,lambda:object(),(0.,)*7,initial_timestamp_ns=1,initial_dq=(0.,)*7,limit_rate=True,cutoff_hz=100.,realtime=dict(cpu=3))
+
+
+def test_acceptance_state_comes_from_the_native_loop_not_the_supervisor_copy():
+    # D8 2026-10-24: a 28-75 ms submit validation held the service lock, the supervisor's copy
+    # aged past state_timeout and dispatch refused a chunk although the 1 kHz loop was healthy.
+    clock=Clock();driver=Driver(clock,(0.,)*7);hand=Hand()
+    b=FakeNativeBackend(None,driver,hand,clock=clock,startup_timeout_ns=1_000_000_000,
+                        consumption_timeout_ns=20_000_000,stop_timeout_ns=200_000_000,state_timeout_ns=30_000_000)
+    b.estimate=object();b._started=True;b._pending=None
+    driver.motion.q=(.2,)*7;clock.advance(50_000_000);driver.motion.callback(consume=False)
+    b.validate_state()
+    assert b.arm.q==(.2,)*7 and b._last_status.tick==1
+    clock.advance(50_000_000)  # native loop silent: still refused
+    with pytest.raises(ValueError,match='stale'):b.validate_state()
