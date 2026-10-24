@@ -98,6 +98,7 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
         legacy['safety']['position_margin_rad'],m4['limits']['joint_lower'],m4['limits']['joint_upper']):
         if abs(lo+margin-e_lo)>1e-8 or abs(hi-margin-e_hi)>1e-8:raise ValueError('Legacy margin differs from completed bounds')
     put('acceptance.max_target_lead_rad',mock['limits']['max_target_lead_rad'],'mock_link','D5 mock setpoint-lead baseline; physical acceptance proposal')
+    proposal('acceptance.predicted_torque_fraction',0.9,'Reject chunks whose predicted raw impedance torque step exceeds 90% of the command-torque guard')
     put('acceptance.max_consecutive_row_speed_rad_s',droid['robot_client']['executable_cfg']['limits']['joint_vel'],'droid_fr3','DROID reference velocity ceilings adopted for row-to-row target admission after cross-host replay; not a measured-speed guard or pi0.5 action-contract constant')
     meta=droid['robot_client']['metadata_cfg'];exec_cfg=droid['robot_client']['executable_cfg'];imp=legacy['robot']['impedance_controller']
     for field,key in [('joint_stiffness','default_Kq'),('joint_damping','default_Kqd'),('cartesian_stiffness','default_Kx'),('cartesian_damping','default_Kxd')]:

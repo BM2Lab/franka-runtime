@@ -29,7 +29,8 @@
   },
   "acceptance": {
     "max_target_lead_rad": null,
-    "max_consecutive_row_speed_rad_s": null
+    "max_consecutive_row_speed_rad_s": null,
+    "predicted_torque_fraction": null
   },
   "controller": {
     "kind": null,

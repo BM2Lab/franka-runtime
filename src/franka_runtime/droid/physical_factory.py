@@ -67,6 +67,9 @@ class PhysicalDeviceFactory:
         checker=self.collision_checker
         if checker is None or checker.artifact_sha256!=d['artifacts']['collision_model_sha256']:
             raise ValueError('Commissioned collision checker/model required')
+        step_torque=getattr(getattr(checker,'engine',None),'step_torque',None)
+        if not callable(step_torque):raise ValueError('Collision engine with step_torque required for torque admission')
+        c=d['controller']
         workspace=from_settings(d['workspace'],self.config.config_dir)
         if list(workspace.chain.joint_names)!=d['workspace']['joint_names']:
             raise ValueError('URDF physical joint ordering mismatch')
@@ -152,6 +155,18 @@ class PhysicalDeviceFactory:
                 for i in range(1,d['workspace']['interpolation_steps']+1):
                     checker.check_configuration(tuple(a+(b-a)*i/d['workspace']['interpolation_steps'] for a,b in zip(previous,target)))
                 previous=target
+            # Reject (never clip) rows whose reference step would make the native impedance law request more
+            # raw torque than the command-torque guard allows: row 0 steps from the measured pose, later rows
+            # by one row. Jacobian at the measured pose; transient request, the sent torque stays rate-limited.
+            q=backend.arm.q;limit=[d['acceptance']['predicted_torque_fraction']*v for v in d['guards']['max_command_torque_nm']]
+            previous=q
+            for index,row in enumerate(rows):
+                tau=step_torque(q,[b-a for a,b in zip(previous,row[:7])],c['joint_stiffness'],c['cartesian_stiffness'])
+                over=[i+1 for i,(v,l) in enumerate(zip(tau,limit)) if abs(v)>l]
+                if over:
+                    raise ValueError(f'row {index}: predicted impedance torque {[round(v,1) for v in tau]} N m exceeds '
+                                     f'{d["acceptance"]["predicted_torque_fraction"]} x guard on joints {over}')
+                previous=tuple(row[:7])
         backend.validate_targets=validate_targets
         backend.configuration_sha256=admitted.sha256
         return backend

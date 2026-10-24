@@ -32,7 +32,7 @@ def inputs(tmp_path):
 def test_populated_draft_keeps_tool_identity_and_approval_unknown(tmp_path):
     args=inputs(tmp_path);r=POP(**args)
     c=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json');d=c.data
-    assert r['prefilled']==87 and r['remaining']==18
+    assert r['prefilled']==88 and r['remaining']==18
     assert d['controller']['joint_stiffness']==[40,30,50,25,35,25,10]
     assert d['acceptance']['max_consecutive_row_speed_rad_s']==[2.075]*4+[2.51]*3
     assert d['guards']['max_measured_joint_velocity_rad_s']==[.435]*4+[.522]*3

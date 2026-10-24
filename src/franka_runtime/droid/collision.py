@@ -95,6 +95,9 @@ class SelfCollisionEngine:
         self._fingers = [self.model.joints[self.model.getJointId(n)].idx_q for n in m["finger_joints"]]
         self._finger_position = float(m["finger_position_m"])
         self._flange = self.model.getFrameId(m["flange_frame"])
+        self._tcp = self.model.getFrameId(m.get("tcp_frame", "fr3v2.1_hand_tcp"))
+        if self._tcp >= len(self.model.frames):
+            raise ValueError("Collision model has no TCP frame")
         self._verify_kinematics(workspace_urdf)
 
     def _configuration(self, q):
@@ -123,6 +126,19 @@ class SelfCollisionEngine:
             raise ValueError("Seven finite joint positions required")
         return not self._pin.computeCollisions(self.model, self.data, self.geometry, self.geometry_data,
                                                self._configuration(q), True)
+
+    def step_torque(self, q, error, joint_stiffness, cartesian_stiffness):
+        """Raw hybrid-impedance torque for a target step ``error`` at rest at ``q``:
+        (K_joint + J^T K_cart J) error, J the TCP Jacobian (world-aligned). Reproduces the native
+        controller's raw request at a reference step (D9 2026-10-24 spikes to 0.1 N m)."""
+        import numpy as np
+        pin = self._pin
+        x = self._configuration(q)
+        pin.computeJointJacobians(self.model, self.data, x)
+        pin.framesForwardKinematics(self.model, self.data, x)
+        J = pin.getFrameJacobian(self.model, self.data, self._tcp, pin.ReferenceFrame.LOCAL_WORLD_ALIGNED)[:, self._arm]
+        e = np.asarray(error, dtype=float)
+        return tuple(float(v) for v in np.asarray(joint_stiffness)*e + J.T @ (np.asarray(cartesian_stiffness)*(J @ e)))
 
     def closest_pair(self, q):
         """Diagnostic: (distance_m, first, second) for the closest non-excluded pair."""

@@ -13,7 +13,7 @@ FIELDS = {
  'robot': 'robot_id address model firmware_version fci_version arm_serial control_serial identity_max_age_ns collision_torque_nm collision_force_n',
  'contract': 'allowed_sha256 capability_prefix',
  'joint_bounds': 'lower_rad upper_rad margin_rad',
- 'acceptance': 'max_target_lead_rad max_consecutive_row_speed_rad_s',
+ 'acceptance': 'max_target_lead_rad max_consecutive_row_speed_rad_s predicted_torque_fraction',
  'controller': 'kind joint_stiffness joint_damping cartesian_stiffness cartesian_damping error_clip_rad gain_time_constant_s compensate_coriolis max_delta_nm_per_callback libfranka_limit_rate lowpass_cutoff_hz',
  'guards': 'max_measured_joint_velocity_rad_s max_command_torque_nm max_callback_gap_ns publisher_timeout_ns',
  'stop': 'damping ramp_duration_s rest_velocity_rad_s max_duration_s compensate_coriolis max_delta_nm_per_callback',
@@ -101,7 +101,9 @@ class PhysicalDroidConfig:
         upper=vector(d['joint_bounds']['upper_rad'],7,'upper',signed=True)
         margin=vector(d['joint_bounds']['margin_rad'],7,'margin')
         if any(lo+m>=hi-m for lo,hi,m in zip(lower,upper,margin)):raise ValueError('No usable joint interval')
-        for k,v in d['acceptance'].items():vector(v,7,k,positive=True)
+        for k in ('max_target_lead_rad','max_consecutive_row_speed_rad_s'):vector(d['acceptance'][k],7,k,positive=True)
+        f=number(d['acceptance']['predicted_torque_fraction'],'predicted_torque_fraction',strict=True)
+        if f>1:raise ValueError('predicted_torque_fraction must be in (0, 1]')
         c=d['controller']
         if c['kind']!='droid_hybrid_joint_impedance':raise ValueError('Unknown physical control law')
         for k,n in [('joint_stiffness',7),('joint_damping',7),('cartesian_stiffness',6),('cartesian_damping',6)]:vector(c[k],n,k)

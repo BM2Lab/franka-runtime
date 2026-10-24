@@ -107,3 +107,15 @@ def test_attached_rig_box_is_checked_against_links_that_move_relative_to_it(tmp_
     (m.parent/"bare.json").write_text(json.dumps(bare))
     assert engine(m.parent/"bare.json").check_configuration(RIG_INTO_BASE) is True  # without the rig, the contact is missed
     assert e.check_configuration(RIG_INTO_BASE) is False
+
+
+def test_step_torque_reproduces_the_measured_native_spikes():
+    d = json.loads((ROOT/"configs/fr3/droid-source-review/physical.review.pending.json").read_text())
+    K, C = d["controller"]["joint_stiffness"], d["controller"]["cartesian_stiffness"]
+    e = engine()
+    # D9 episode 2, arm at rest: native raw request (-16.4, 1.4, -12.0, 1.9, -9.9, 5.5, 5.2) N m
+    tau = e.step_torque((0.0, -0.78, 0.0, -2.356, 0.0, 1.571, 0.0), (-0.113, 0.025, -0.031, -0.005, -0.095, 0.099, 0.127), K, C)
+    assert [round(v, 1) for v in tau] == [-16.4, 1.4, -12.0, 1.9, -9.9, 5.5, 5.2]
+    # D9 episode 3 (arm moving, measured joint 5 -18.4 N m): predicted over the 12 N m wrist guard
+    tau = e.step_torque((-0.065, -0.694, -0.107, -2.261, -0.109, 1.667, -0.012), (-0.12, 0.01, -0.102, 0.074, -0.208, 0.056, -0.037), K, C)
+    assert abs(tau[4]) > 12

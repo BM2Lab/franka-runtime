@@ -19,7 +19,7 @@ def complete(tmp_path):
     d['robot'].update(robot_id=SPEC.robot.robot_id,address='test.invalid',model='test',firmware_version='5.9.2',fci_version=10,arm_serial='test-arm',control_serial='test-control',identity_max_age_ns=1_000_000_000)
     d['contract'].update(allowed_sha256=[payload_sha256(SPEC)],capability_prefix='test')
     d['joint_bounds'].update(lower_rad=[-2.]*7,upper_rad=[2.]*7,margin_rad=[.1]*7)
-    d['acceptance']={k:[.5]*7 for k in d['acceptance']}
+    d['acceptance']={k:[.5]*7 for k in d['acceptance']};d['acceptance']['predicted_torque_fraction']=.9
     d['controller'].update(kind='droid_hybrid_joint_impedance',joint_stiffness=[50.]*7,joint_damping=[10.]*7,cartesian_stiffness=[1.]*6,cartesian_damping=[1.]*6,error_clip_rad=[.5]*7,gain_time_constant_s=.1,compensate_coriolis=True,libfranka_limit_rate=True)
     d['guards'].update(max_measured_joint_velocity_rad_s=[1.]*7,max_command_torque_nm=[10.]*7,max_callback_gap_ns=5_000_000,publisher_timeout_ns=50_000_000)
     d['stop'].update(damping=[10.]*7,ramp_duration_s=.2,max_duration_s=2.,rest_velocity_rad_s=.01,compensate_coriolis=True)
@@ -116,7 +116,9 @@ def test_factory_connect_is_passive_until_start_and_refreshes(tmp_path):
     def now():clock[0]+=1;return clock[0]
     def identity(a):
         return dict(**{k:d['robot'][k] for k in ('address','model','firmware_version','fci_version','arm_serial','control_serial')},clock_id='test',observed_ns=clock[0])
-    checker=NS(artifact_sha256=d['artifacts']['collision_model_sha256'],check_configuration=lambda q:None)
+    steps=[]
+    def step_torque(q,e,k,cs):steps.append(list(e));return tuple(1000.*v for v in e)  # synthetic 1000 N m per rad
+    checker=NS(artifact_sha256=d['artifacts']['collision_model_sha256'],check_configuration=lambda q:None,engine=NS(step_torque=step_torque))
     sched=[]
     os_fake=NS(SCHED_OTHER=0,SCHED_FIFO=1,sched_param=lambda p:p,sched_getparam=lambda t:NS(sched_priority=99),
                sched_get_priority_max=lambda p:99,sched_setscheduler=lambda t,pol,prm:sched.append((t,pol,prm)))
@@ -137,6 +139,12 @@ def test_factory_connect_is_passive_until_start_and_refreshes(tmp_path):
     state.I_ee=np.array(d['tool']['I_ee'],dtype=float).reshape(3,3,order='F')
     state.m_load=99
     with pytest.raises(ValueError,match='tool/load'):b.preflight()
+    # Torque admission: row 0 steps from measured q, later rows by one row; limit 0.9 x guard.
+    limit=.9*d['guards']['max_command_torque_nm'][0];q=b.arm.q;ok=limit/1000*.5
+    rows=[(*[v+ok for v in q],0.),(*[v+2*ok for v in q],0.)]
+    b.validate_targets(rows)
+    assert [round(x,6) for x in steps[-2]]==[round(ok,6)]*7 and [round(x,6) for x in steps[-1]]==[round(ok,6)]*7
+    with pytest.raises(ValueError,match='row 1: predicted impedance torque'):b.validate_targets([rows[0],(*[v+4*ok for v in q],0.)])
 
 
 def test_physical_recorder_construction_is_passive_and_bound(tmp_path):
