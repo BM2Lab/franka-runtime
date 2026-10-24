@@ -230,8 +230,8 @@
       "snapshot": "source-evidence/arm_reference_urdf.urdf"
     },
     "operator_decisions": {
-      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-operator-decisions/stop-guard-torque-v4.json",
-      "sha256": "ef3ba58bd1fb05cdc532933e8edf2659d5ec653d846390b7143964fe7942a2bc",
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-operator-decisions/stop-guard-torque-v5.json",
+      "sha256": "4dd0066c474659b1371003788a2ec45a8026f240e16ef57165e3de6a888a5a53",
       "snapshot": "source-evidence/operator_decisions.json"
     },
     "unit_observation": {

@@ -5,7 +5,7 @@
   "status": "reviewed",
   "executable": false,
   "motion_authorized": false,
-  "provenance": "Operator-reviewed candidate bda3fd9e28c1ec91781d2549fd01e587f502d40fd1af237e888b413635379ea3; see approval.json. Not executable and not motion-authorized; motion needs separate per-stage authorization.",
+  "provenance": "Operator-reviewed candidate 9eec14c3a34a38891fc39eba8ffd404aeca2f529777719b2d4a0c5db2a1463a8; see approval.json. Not executable and not motion-authorized; motion needs separate per-stage authorization.",
   "robot": {
     "robot_id": "fr3_01",
     "address": "172.16.0.6",
@@ -127,10 +127,10 @@
   },
   "guards": {
     "max_measured_joint_velocity_rad_s": [
-      1.5,
-      1.5,
-      1.5,
-      1.5,
+      1.8,
+      1.8,
+      1.8,
+      1.8,
       1.8,
       1.8,
       1.8
@@ -377,10 +377,10 @@
   },
   "approval": {
     "approved_by": "Yifan Wang <wangyf@gatech.edu>",
-    "approved_at": "2026-10-24T22:15:23Z",
-    "physical_stop_procedure": "Approved as populated: runtime damping stop per stop.* of candidate bda3fd9e28c1ec91781d2549fd01e587f502d40fd1af237e888b413635379ea3 (ramp 0.01 s, damping 15,20,15,5,1,1,0.5), with Franka safety reflexes and the FR3 external stop/enabling device kept within operator reach; pass criterion for re-qualification: TCP travel during the stop < 3 cm and at rest.",
-    "workspace_review": "Approved as populated: workspace.* of candidate bda3fd9e28c1ec91781d2549fd01e587f502d40fd1af237e888b413635379ea3: operator task box box x 0.12-0.88 m, y +/-0.38 m, top at 1.0 m, table plane z 0.03 m, clearance 0.01 m, FK point checks on TCP + true fingertips (box and table) and rig corners (table only).",
-    "hand_review": "Approved as populated: gripper.* and tool.* (Desk nominal Franka Hand: m_ee 0.73 kg, TCP 0.1034 m, Rz(-45 deg) mount; 250 ms Hand freshness; 1 mm open-width tolerance) of DROID FR3 + Franka Hand candidate bda3fd9e28c1ec91781d2549fd01e587f502d40fd1af237e888b413635379ea3; plus wrist D435i + mount payload 0.123 kg set via libfranka setLoad.",
-    "collision_review": "Approved as populated: franka_description 1.3.0 FR3 v2.1 + Franka Hand mesh self-collision model (manifest 4200dc37...), Franka SRDF exclusions, min clearance 0.02 m, of DROID FR3 + Franka Hand candidate bda3fd9e28c1ec91781d2549fd01e587f502d40fd1af237e888b413635379ea3; plus the wrist rig bounding box attached to the flange and paired with links 0-6 (manifest 486db0a4)."
+    "approved_at": "2026-10-24T22:28:47Z",
+    "physical_stop_procedure": "Approved as populated: runtime damping stop per stop.* of candidate 9eec14c3a34a38891fc39eba8ffd404aeca2f529777719b2d4a0c5db2a1463a8 (ramp 0.01 s, damping 15,20,15,5,1,1,0.5), with Franka safety reflexes and the FR3 external stop/enabling device kept within operator reach; pass criterion for re-qualification: TCP travel during the stop < 3 cm and at rest.",
+    "workspace_review": "Approved as populated: workspace.* of candidate 9eec14c3a34a38891fc39eba8ffd404aeca2f529777719b2d4a0c5db2a1463a8: operator task box box x 0.12-0.88 m, y +/-0.38 m, top at 1.0 m, table plane z 0.03 m, clearance 0.01 m, FK point checks on TCP + true fingertips (box and table) and rig corners (table only).",
+    "hand_review": "Approved as populated: gripper.* and tool.* (Desk nominal Franka Hand: m_ee 0.73 kg, TCP 0.1034 m, Rz(-45 deg) mount; 250 ms Hand freshness; 1 mm open-width tolerance) of DROID FR3 + Franka Hand candidate 9eec14c3a34a38891fc39eba8ffd404aeca2f529777719b2d4a0c5db2a1463a8; plus wrist D435i + mount payload 0.123 kg set via libfranka setLoad.",
+    "collision_review": "Approved as populated: franka_description 1.3.0 FR3 v2.1 + Franka Hand mesh self-collision model (manifest 4200dc37...), Franka SRDF exclusions, min clearance 0.02 m, of DROID FR3 + Franka Hand candidate 9eec14c3a34a38891fc39eba8ffd404aeca2f529777719b2d4a0c5db2a1463a8; plus the wrist rig bounding box attached to the flange and paired with links 0-6 (manifest 486db0a4)."
   }
 }
