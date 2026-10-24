@@ -96,7 +96,7 @@ class MockDroidBackend:
 
 
 class DroidRuntimeService:
-    def __init__(self, config, spec, *, clock=time.monotonic_ns, clock_id=None, token=None, backend_factory=None):
+    def __init__(self, config, spec, *, clock=time.monotonic_ns, clock_id=None, token=None, backend_factory=None, recorder=None):
         settings = config.require_runnable()
         sha = payload_sha256(spec)
         if sha not in settings["allowed_contracts"] or spec.robot.robot_id != settings["robot_id"]:
@@ -108,6 +108,7 @@ class DroidRuntimeService:
             raise ValueError(f"Session token missing; set {settings['token_env']}")
         if settings["open_width_m"] != spec.gripper.open_width_m:
             raise ValueError("Configured gripper width differs from the contract's open_width_m")
+        self.recorder = recorder
         self.settings, self.spec, self.contract_sha256, self._token = settings, spec, sha, token
         self.clock, self.clock_id = clock, clock_id or host_clock_id()
         self.row_period_ns = round(1e9/spec.action.policy_hz)
@@ -124,14 +125,21 @@ class DroidRuntimeService:
             if self.backend.hardware_executed:
                 raise ValueError("Physical DROID selection requires a commissioned physical config/factory")
             self.arm, self.hand = self.backend.arm, self.backend.hand
+        if hasattr(self.backend, "recorder"):
+            self.backend.recorder = recorder
         self.workspace = workspace_from_settings(settings["workspace"], settings["config_dir"])
         self.workspace.check_configuration(self.arm.q, "start pose")
         self.authority = SessionAuthority(self.backend, spec, self._validate_payload, clock_id=self.clock_id,
             command_timeout_ns=settings["command_timeout_ns"], clock=clock, max_lease_ns=settings["max_lease_ns"],
-            capability_prefix=settings["capability_prefix"], robot_id=settings["robot_id"])
+            capability_prefix=settings["capability_prefix"], robot_id=settings["robot_id"],
+            receipt_sink=None if recorder is None else lambda receipt:self._record("receipt",asdict(receipt)))
         self.intent = GripperIntent(spec.gripper, self.hand.width)
         self._lock = threading.RLock()
         self._stop = threading.Event()
+        self._shutdown = threading.Event()
+        self.shutdown_report = None
+        self._shutdown_error = None
+        self._last_stop_evidence = None
         self._session = None
         self._probes = set()
         self._tick = 0
@@ -140,6 +148,14 @@ class DroidRuntimeService:
         self._fault_reported = False
         self.peak_speed = [0.]*7
         self.listener = None
+        if not self._record("service_created",dict(clock_id=self.clock_id,contract=spec.to_dict(),
+                contract_sha256=sha,backend=self.backend.name,configuration=config.data,versions=self._versions())):
+            raise ValueError("Recorder must be started and healthy before service construction")
+
+    def _record(self, kind, payload):
+        if self.recorder is None:
+            return True
+        return self.recorder.emit(kind,payload,timestamp_ns=self.clock())
 
     # ---- payload validation (called by SessionAuthority at submit and again at dispatch)
     def _validate_payload(self, payload):
@@ -158,6 +174,8 @@ class DroidRuntimeService:
     def control_step(self, now_ns, dt_s):
         with self._lock:
             self._tick += 1
+            if self.recorder is not None and self.recorder.fault:
+                self.authority.poll(native_fault=209)
             if self._session and self._session.get("started") and self.authority.fault is None \
                     and not self.authority.stopping and now_ns-self._last_heartbeat > self.settings["heartbeat_timeout_ns"]:
                 self._fault("heartbeat_timeout")
@@ -177,6 +195,8 @@ class DroidRuntimeService:
                             native_sequence=consumed.sequence, native_tick=consumed.tick,
                             timestamp_ns=consumed.timestamp_ns, clock_id=self.clock_id)
                 if self.authority.stopping and update.stop_evidence is not None:
+                    self._last_stop_evidence = dict(update.stop_evidence)
+                    self._record("stop_evidence",self._last_stop_evidence)
                     self.authority.finish_stop(update.stop_evidence)
             except Exception:
                 # Exceptions must latch authority and request stop, not kill the
@@ -184,6 +204,11 @@ class DroidRuntimeService:
                 self.authority.poll(native_fault=208)
                 self.executor.stop("backend_exception")
             self._last_step = step
+            if not self._record("supervisor",dict(tick=self._tick,authority_state=self.authority.state,
+                    fault=None if self.authority.fault is None else asdict(self.authority.fault),
+                    q=list(self.arm.q),dq=list(self.arm.dq),
+                    hand=self.hand.snapshot() if hasattr(self.hand,"snapshot") else dict(width=self.hand.width,moving=self.hand.moving))):
+                self.authority.poll(native_fault=209)
 
     def _fault(self, reason):
         self._fault_reported = True
@@ -233,6 +258,8 @@ class DroidRuntimeService:
         return {"server_clock_id": self.clock_id, "server_receive_ns": received, "server_send_ns": sent}
 
     def _open(self, payload):
+        if self._shutdown.is_set():
+            raise RuntimeError("Service shutdown requested")
         if hasattr(self.backend, "check_session_admission"):
             self.backend.check_session_admission()
         if self._session is not None:
@@ -255,6 +282,9 @@ class DroidRuntimeService:
         ready = DroidSessionReady(lease, self.contract_sha256, self.authority.capability_id,
                                   self.settings["open_width_m"], self.settings["hold_timeout_ns"],
                                   self.settings["max_uncertainty_ns"], self._versions())
+        if not self._record("session_opened",ready.to_dict()):
+            self.authority.poll(native_fault=209)
+            raise RuntimeError("Session recording unavailable")
         return ready.to_dict()
 
     def _session_or_fail(self):
@@ -275,18 +305,29 @@ class DroidRuntimeService:
         estimate = ClockOffsetEstimate.from_probes(probes, max_uncertainty_ns=self.settings["max_uncertainty_ns"])
         with self._lock:
             session["estimate"] = self.backend.estimate = estimate
+        if not self._record("clock_registered",dict(estimate=estimate.to_dict(),probes=[p.to_dict() for p in probes])):
+            self.authority.poll(native_fault=209)
+            raise RuntimeError("Clock recording unavailable")
         return estimate.to_dict()
 
     def _start(self, payload):
         session = self._session_or_fail()
         with self._lock:
+            if self._shutdown.is_set():
+                raise RuntimeError("Service shutdown requested")
+            if not self._record("start_requested",dict(lease=asdict(session["lease"]))):
+                raise RuntimeError("Recording unavailable before start")
             self.authority.start(session["lease"])
             self.intent = GripperIntent(self.spec.gripper, self.hand.width)
             session["started"] = True
             self._last_heartbeat = self.clock()
+            if not self._record("started",dict(q=list(self.arm.q),dq=list(self.arm.dq))):
+                self.authority.poll(native_fault=209)
         return {"state": self.authority.state}
 
     def _submit(self, payload):
+        if self._shutdown.is_set():
+            raise RuntimeError("Service shutdown requested")
         session = self._session_or_fail()
         envelope = CommandEnvelope.from_dict(payload["envelope"])
         chunk = DroidActionChunk.from_dict(payload["chunk"])
@@ -294,6 +335,9 @@ class DroidRuntimeService:
             validate_chunk_command(self.spec, envelope, chunk, lease=session["lease"], estimate=session["estimate"],
                                    now_ns=self.clock(), next_sequence=envelope.sequence,
                                    capability=self.authority.capability_id)
+            if not self._record("command",dict(envelope=envelope.to_dict(),chunk=chunk.to_dict())):
+                self.authority.poll(native_fault=209)
+                raise RuntimeError("Command recording unavailable")
             receipt = self.authority.submit(envelope, chunk.to_dict())
             if receipt.status == "accepted":
                 dispatched = self.authority.dispatch()
@@ -334,7 +378,7 @@ class DroidRuntimeService:
         control = threading.Thread(target=self._control_loop, name="droid-control", daemon=True)
         control.start()
         try:
-            while not self._stop.is_set():
+            while not self._shutdown.is_set():
                 try:
                     connection, peer = self.listener.accept()
                 except socket.timeout:
@@ -344,8 +388,7 @@ class DroidRuntimeService:
                     continue
                 self._serve_client(connection)
         finally:
-            self._stop.set()
-            control.join(2)
+            self.finish_shutdown(control=control)
             self.listener.close()
 
     def _control_loop(self):
@@ -365,7 +408,7 @@ class DroidRuntimeService:
         connection.settimeout(1.0)
         stream = connection.makefile("rwb", buffering=0)
         try:
-            while not self._stop.is_set():
+            while not self._shutdown.is_set():
                 try:
                     request = read_message(stream)
                 except socket.timeout:
@@ -397,15 +440,71 @@ class DroidRuntimeService:
             if self._session is not None and self._session.get("started") \
                     and self.authority.state in ("running", "ready") and not self.authority.stopping:
                 self._fault("client_disconnected")
+            self._record("client_disconnected",dict(authority_state=self.authority.state))
             self._session = None
             self._probes.clear()
 
     def shutdown(self):
-        # Keep supervising an active stop until evidence arrives or the backend
-        # reports its explicit timeout. Do not stop publishing/monitoring silently.
+        """Request shutdown; signal handlers never join control/device/disk threads."""
+        self._shutdown.set()
         with self._lock:
-            if self.authority.state in ("running", "ready") and not self.authority.stopping:
-                self._fault("client_disconnected")
-        if self.backend.hardware_executed:
-            raise RuntimeError("Physical shutdown requires supervised stop/join completion")
+            if self.authority.state in ("running","ready") and not self.authority.stopping:
+                try:
+                    self.authority.release(LeaseRelease(self.authority.lease,self.clock(),"service_shutdown"))
+                except Exception as error:
+                    self._shutdown_error = repr(error)
+
+    def finish_shutdown(self, *, control=None, timeout_s=None, recorder_timeout_s=2.,
+                        wall_clock=time.monotonic, sleep=time.sleep):
+        """Keep supervision alive through stop; report unjoined workers honestly.
+
+        If serve() owns the control thread, it keeps ticking until terminal evidence
+        or the wall deadline. Without it, this method pumps the same control_step.
+        Native watchdog/stop remain independent of Python progress.
+        """
+        if self.shutdown_report is not None:
+            return self.shutdown_report
+        budget = (getattr(self.backend,"stop_timeout",0)/1e9+2.) if timeout_s is None else timeout_s
+        if isinstance(budget,bool) or not isinstance(budget,(int,float)) or not 0<budget<60:
+            raise ValueError("Positive shutdown deadline below 60 seconds required")
+        self.shutdown()
+        deadline=wall_clock()+budget
+        previous=self.clock()
+        try:
+            while self.authority.stopping and wall_clock()<deadline:
+                if control is None or not control.is_alive():
+                    now=self.clock();self.control_step(now,max(0.,(now-previous)/1e9));previous=now
+                sleep(min(.01,max(0.,deadline-wall_clock())))
+        except Exception as error:
+            self._shutdown_error = repr(error)
+            try:
+                self.backend.request_stop('supervisor_failure')
+            except Exception:
+                pass  # No alternate controller or invented successful stop.
         self._stop.set()
+        if control is not None:
+            control.join(max(0.,deadline-wall_clock()))
+        driver=getattr(self.backend,"driver",None)
+        native_started=getattr(self.backend,"_started",False)
+        if driver is None:
+            workers_joined=True  # Mock backend has no native device workers.
+        else:
+            arm_joined=driver.joined if native_started else getattr(driver,"thread",None) is None
+            hand_passive=(not native_started and not getattr(self.backend,"_stopping",False))
+            workers_joined=arm_joined and (hand_passive or self.hand.quiescent)
+        evidence=self._last_stop_evidence
+        stop_ok=(not self.authority.stopping and (evidence is None or
+            (evidence.get("joined") is True and evidence.get("stop_finished") is True and
+             evidence.get("stop_at_rest") is True and evidence.get("stop_fault")==0 and
+             evidence.get("dropped_samples")==0)))
+        stop_ok=stop_ok and (not native_started or evidence is not None)
+        report=dict(shutdown_error=self._shutdown_error,native_control_started=bool(native_started),supervisor_joined=control is None or not control.is_alive(),workers_joined=bool(workers_joined),
+            stop_confirmed=bool(stop_ok),stop_evidence=evidence,authority_state=self.authority.state,
+            fault=None if self.authority.fault is None else asdict(self.authority.fault))
+        report["ok"]=self._shutdown_error is None and report["supervisor_joined"] and report["workers_joined"] and report["stop_confirmed"]
+        if self.recorder is not None:
+            self._record("shutdown",report)
+            report["recording"]=self.recorder.close(report,timeout_s=recorder_timeout_s)
+            report["ok"]=report["ok"] and report["recording"]["sealed"]
+        self.shutdown_report=report
+        return report

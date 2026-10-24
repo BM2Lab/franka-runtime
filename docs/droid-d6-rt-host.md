@@ -435,3 +435,17 @@ handoff/interface descriptions with the selected controller and limit semantics.
 During physical control use a pinned deployment and keep development/IDE/agent
 work off the controlling host. This plan authorizes neither host-network changes
 nor hardware motion, recovery, gripper homing or modified operating limits.
+
+
+### Recording and supervised shutdown implemented (offline, step 6)
+
+See [recording and shutdown](droid-recording-shutdown.md). Bounded non-RT JSONL
+recording now retains native telemetry, commands/receipts, clocks, Hand state and
+stop evidence with fsync and digest validation. Logging failure requests stop and
+prevents unrecorded dispatch. Shutdown keeps supervision running until terminal
+evidence or a deadline, without fabricating rest/join. Physical schema recording
+settings remain null; the physical CLI is still disabled. Native packages and
+frozen baselines were unchanged.
+
+Next: reviewed identity/collision adapters and physical admission composition,
+cross-host mock timing, then authorized per-unit D7/D8/D9 qualification.

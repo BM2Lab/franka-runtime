@@ -24,6 +24,7 @@ FIELDS = {
  'workspace': 'model_urdf model_sha256 base_link flange_link joint_names link_points tool_points_m table_z_m clearance_m box_min_m box_max_m interpolation_steps',
  'network': 'bind_host port allowed_peers token_env',
  'artifacts': 'native_pin native_pin_sha256 collision_model collision_model_sha256',
+ 'recording': 'directory queue_capacity max_record_bytes max_event_bytes min_free_bytes fsync_interval_s close_timeout_s',
  'approval': 'approved_by approved_at physical_stop_procedure workspace_review hand_review collision_review',
 }
 FIELDS={key:tuple(value.split()) for key,value in FIELDS.items()}
@@ -155,6 +156,12 @@ class PhysicalDroidConfig:
         lo=vector(w['box_min_m'],3,'box_min',signed=True);hi=vector(w['box_max_m'],3,'box_max',signed=True)
         if any(a>=b for a,b in zip(lo,hi)):raise ValueError('Invalid workspace box')
         integer(w['interpolation_steps'],'interpolation_steps')
+        log=d['recording']
+        text(log['directory'],'recording.directory')
+        for k in ('queue_capacity','max_record_bytes','max_event_bytes','min_free_bytes'):integer(log[k],'recording.'+k)
+        if log['max_record_bytes']>log['max_event_bytes']:raise ValueError('Record bound exceeds file bound')
+        for k in ('fsync_interval_s','close_timeout_s'):number(log[k],'recording.'+k,strict=True)
+        if log['close_timeout_s']>=60:raise ValueError('Recorder close timeout must be below 60s')
         n=d['network'];text(n['token_env'],'token_env')
         if n['bind_host'] in ('0.0.0.0','::','') or not isinstance(n['bind_host'],str):raise ValueError('Bind a specific dedicated interface')
         integer(n['port'],'port')

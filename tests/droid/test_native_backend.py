@@ -62,7 +62,7 @@ class FakeNativeBackend(NativeDroidBackend):
     hardware_executed=False # Explicit fake device; a real native backend cannot run a mock config.
 
 
-def make_service():
+def make_service(recorder=None):
     clock=Clock();created=[]
     def factory(executor,settings):
         driver=Driver(clock,settings['mock_start_q']);hand=Hand()
@@ -70,7 +70,7 @@ def make_service():
                            consumption_timeout_ns=20_000_000,stop_timeout_ns=200_000_000,state_timeout_ns=30_000_000)
         created.append(b);return b
     config=DroidRuntimeConfig(json.loads((ROOT/'droid.jointpos.mock.json').read_text()),config_dir=ROOT)
-    svc=DroidRuntimeService(config,SPEC,clock=clock,clock_id='rt:boot:CLOCK_MONOTONIC',token='test',backend_factory=factory)
+    svc=DroidRuntimeService(config,SPEC,clock=clock,clock_id='rt:boot:CLOCK_MONOTONIC',token='test',backend_factory=factory,recorder=recorder)
     return svc,created[0],clock
 
 
@@ -229,3 +229,79 @@ def test_startup_uses_startup_deadline_without_valid_feedback_claim():
     assert not svc.state_sample().valid
     b.driver.motion.callback();svc.control_step(c(),.001)
     assert b._fault==0 and svc.state_sample().valid
+
+
+def test_native_recording_preserves_receipts_samples_and_stop(tmp_path):
+    from franka_runtime.droid.recording import SessionRecorder
+    recorder=SessionRecorder(tmp_path/'native',metadata={'test':True},queue_capacity=128,
+        max_record_bytes=16384,max_event_bytes=1_000_000,min_free_bytes=1,fsync_interval_s=.01)
+    recorder.start();svc,b,c=make_service(recorder);estimate=start(svc,b,c);submit(svc,b,c,estimate)
+    c.advance();svc.control_step(c(),.001);c.advance();b.driver.motion.callback();svc.control_step(c(),.001)
+    svc.shutdown();c.advance();b.driver.motion.callback(finished=True,rest=True,consume=False)
+    b.driver.joined=True
+    result=svc.finish_shutdown(timeout_s=.1)
+    assert result['ok'] and result['stop_evidence']['stop_at_rest']
+    events=[json.loads(line) for line in (tmp_path/'native/events.jsonl').read_text().splitlines()]
+    assert {'native_sample','native_status','receipt','command','stop_evidence','shutdown'}<={e['kind'] for e in events}
+    assert [e['payload']['status'] for e in events if e['kind']=='receipt']==['accepted','applied']
+    assert 'test-token' not in (tmp_path/'native/events.jsonl').read_text()
+
+
+def test_recording_failure_stops_before_command_publication(tmp_path):
+    from franka_runtime.droid.recording import SessionRecorder
+    recorder=SessionRecorder(tmp_path/'native',metadata={},queue_capacity=128,
+        max_record_bytes=16384,max_event_bytes=1_000_000,min_free_bytes=1,fsync_interval_s=.01)
+    recorder.start();svc,b,c=make_service(recorder);estimate=start(svc,b,c)
+    recorder._fail('simulated_disk_failure');c.advance();svc.control_step(c(),.001)
+    assert svc.authority.fault.code=='native_fault:209' and b.driver.motion.stop
+    assert not any(row==2 for q,row,expiry in b.driver.motion.sent)
+    b.driver.joined=True;c.advance();b.driver.motion.callback(finished=True,rest=True,consume=False)
+    result=svc.finish_shutdown(timeout_s=.1)
+    assert not result['ok'] and not result['recording']['sealed']
+
+
+def test_shutdown_keeps_supervising_until_actual_stop_evidence():
+    svc,b,c=make_service();start(svc,b,c);ticks=[]
+    def sleep(seconds):
+        c.advance(1_000_000);ticks.append(c())
+        if len(ticks)==3:
+            b.driver.motion.callback(finished=True,rest=True,consume=False);b.driver.joined=True
+    result=svc.finish_shutdown(timeout_s=.2,sleep=sleep)
+    assert len(ticks)>=3 and result['ok'] and result['workers_joined']
+    assert svc.finish_shutdown() is result
+
+
+def test_shutdown_timeout_never_claims_native_join_or_rest():
+    svc,b,c=make_service();start(svc,b,c)
+    result=svc.finish_shutdown(timeout_s=.01)
+    assert not result['ok'] and not result['workers_joined'] and not result['stop_confirmed']
+    assert result['stop_evidence'] is None and b.driver.motion.stop
+
+
+def test_receipt_recording_failure_prevents_dispatch():
+    svc,b,c=make_service();estimate=start(svc,b,c)
+    svc.authority.receipt_sink=lambda receipt:False
+    q=svc.arm.q;rows=tuple((*q,.9) for _ in range(8))
+    chunk=DroidActionChunk(SampleContext('e',0,c(),'monotonic'),SPEC.action,(*q,0.),rows,c()+533333333)
+    envelope=chunk_envelope(svc._session['lease'],1,chunk,estimate,client_now_ns=c(),capability=svc.authority.capability_id)
+    response=svc._submit({'envelope':envelope.to_dict(),'chunk':chunk.to_dict()})
+    assert response['status']=='rejected' and svc.authority.fault.code=='receipt_recording_failed'
+    assert b.driver.motion.stop and not any(row==2 for q,row,expiry in b.driver.motion.sent)
+
+
+def test_shutdown_before_native_start_does_not_fabricate_rest():
+    svc,b,c=make_service()
+    # Mimic an admitted ready lease but no successful native startup.
+    start(svc,b,c);b._started=False;b.driver.joined=False
+    def sleep(seconds):c.advance(100_000_000)
+    result=svc.finish_shutdown(timeout_s=.1,sleep=sleep)
+    assert not result['ok'] and result['stop_evidence']['stop_finished'] is False
+
+
+def test_shutdown_reports_supervision_exception_without_claiming_success():
+    svc,b,c=make_service();start(svc,b,c)
+    def failed_step(*a):raise RuntimeError('simulated_supervision_failure')
+    svc.control_step=failed_step
+    result=svc.finish_shutdown(timeout_s=.1)
+    assert not result['ok'] and 'supervision_failure' in result['shutdown_error']
+    assert b.driver.motion.stop and not result['workers_joined']

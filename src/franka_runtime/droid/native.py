@@ -10,6 +10,7 @@ import threading
 
 from contracts.droid import DroidActionChunk
 from .backend import BackendUpdate, Consumption
+from .recording import native_sample
 
 
 @dataclass
@@ -82,11 +83,12 @@ class NativeDroidBackend:
     name = 'franky-droid-candidate'
 
     def __init__(self, executor, driver, hand, *, clock, startup_timeout_ns,
-                 consumption_timeout_ns, stop_timeout_ns, state_timeout_ns):
+                 consumption_timeout_ns, stop_timeout_ns, state_timeout_ns, recorder=None):
         if any(type(v) is not int or v <= 0 for v in
                (startup_timeout_ns, consumption_timeout_ns, stop_timeout_ns, state_timeout_ns)):
             raise ValueError('Explicit native startup/consumption/stop timeouts required')
         self.executor, self.driver, self.hand, self.clock = executor, driver, hand, clock
+        self.recorder = recorder
         self.state_timeout = state_timeout_ns
         self.startup_timeout = startup_timeout_ns
         self.consumption_timeout, self.stop_timeout = consumption_timeout_ns, stop_timeout_ns
@@ -207,6 +209,16 @@ class NativeDroidBackend:
         motion = self.driver.motion
         samples = motion.drain()
         status = motion.status()
+        if self.recorder is not None:
+            try:
+                for sample in samples:
+                    if not self.recorder.emit('native_sample',native_sample(sample),timestamp_ns=self.clock()):
+                        self._fault = self._fault or 209
+                        break
+                if not self.recorder.emit('native_status',native_sample(status),timestamp_ns=self.clock()):
+                    self._fault = self._fault or 209
+            except Exception:
+                self._fault = self._fault or 209
         # status preserves terminal evidence when the bounded ring overflows.
         observed_ns = self.clock()  # Drain can observe callbacks newer than executor's now_ns.
         for sample in samples:

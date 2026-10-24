@@ -109,3 +109,12 @@ Reconstruction/validation: `~/yifan/droid-deployment/validation/step5.json`,
 `artifacts/runtime-step5/`. Runtime 0.0.4 is distinguished by its wheel hash.
 Historical step 4 artifacts are retained. Only the project Python runtime was
 reinstalled; Franky/libfranka/Ruckig and frozen original stacks were unchanged.
+
+
+## Step 6 update (offline)
+
+[Bounded recording and supervised shutdown](droid-recording-shutdown.md) are now
+implemented and tested with fake devices. This supersedes the earlier code-work
+blocker above, not hardware qualification. The physical selector remains disabled
+until concrete identity/collision adapters, commissioned values, admission
+composition and cross-host/per-unit qualification are complete.

@@ -21,7 +21,7 @@ class SessionAuthority:
     def __init__(self, backend, specification, validate_payload, *, clock_id,
                  command_timeout_ns, clock=None, max_lease_ns=600_000_000_000,
                  receipt_capacity=4096, id_factory=None, expect_application=True, capability_prefix="m4-v1",
-                 robot_id=None):
+                 robot_id=None, receipt_sink=None):
         # Any frozen contract dataclass (M4, PPO, DROID, ...); its hash forms the capability.
         if (not is_dataclass(specification) or isinstance(specification,type)
                 or not specification.__dataclass_params__.frozen or not callable(validate_payload)):
@@ -40,6 +40,7 @@ class SessionAuthority:
             raise ValueError('expect_application must be boolean')
         if not isinstance(capability_prefix,str) or not capability_prefix.strip():
             raise ValueError('Capability prefix required')
+        self.receipt_sink = receipt_sink
         self.expect_application = expect_application
         self.backend, self.specification, self.validate_payload = backend, specification, validate_payload
         self.capability_id = capability_prefix + ':' + payload_sha256(specification)
@@ -77,6 +78,13 @@ class SessionAuthority:
             self.dropped_receipts += 1
             self._latch('receipt_overflow')
         self._receipts.append(receipt)
+        if self.receipt_sink is not None:
+            try:
+                recorded = self.receipt_sink(receipt)
+            except Exception:
+                recorded = False
+            if recorded is not True:
+                self._latch("receipt_recording_failed")
         return receipt
 
     def drain_receipts(self):

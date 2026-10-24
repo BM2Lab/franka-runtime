@@ -134,3 +134,12 @@ factory checks are implemented; commissioning inputs and concrete identity/
 collision adapters remain pending, and the physical CLI stays disabled.
 The native dev67 wheel and all underlying dependencies remain unchanged.
 Step 4 receipts are historical; step 5 has separate runtime artifacts/validation.
+
+
+## Step 6 update (offline)
+
+[Bounded recording and supervised shutdown](droid-recording-shutdown.md) are now
+implemented and tested with fake devices. This supersedes the earlier code-work
+blocker above, not hardware qualification. The physical selector remains disabled
+until concrete identity/collision adapters, commissioned values, admission
+composition and cross-host/per-unit qualification are complete.

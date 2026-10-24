@@ -32,6 +32,7 @@ def complete(tmp_path):
     artifact=tmp_path/'artifact.json';artifact.write_text('{}')
     d['artifacts'].update(native_pin=str(artifact),native_pin_sha256=digest(artifact),collision_model=str(artifact),collision_model_sha256=digest(artifact))
     d['network'].update(bind_host='127.0.0.1',port=12345,allowed_peers=['127.0.0.1'],token_env='TEST_TOKEN')
+    d['recording'].update(directory=str(tmp_path/'recording'),queue_capacity=128,max_record_bytes=16384,max_event_bytes=1_000_000,min_free_bytes=1,fsync_interval_s=.01,close_timeout_s=1.)
     d['approval']={k:'synthetic test fixture' for k in d['approval']}
     d.update(status='reviewed',executable=True,motion_authorized=True)
     return d
@@ -121,3 +122,13 @@ def test_factory_connect_is_passive_until_start_and_refreshes(tmp_path):
     state.q=[.1]*7;b.estimate=object();assert b.preflight()['q']==(.1,)*7
     state.m_load=99
     with pytest.raises(ValueError,match='tool/load'):b.preflight()
+
+
+def test_physical_recorder_construction_is_passive_and_bound(tmp_path):
+    from franka_runtime.droid.recording import from_physical_config
+    c=PhysicalDroidConfig(complete(tmp_path))
+    r=from_physical_config(c,clock_id='test:monotonic',contract_sha256=payload_sha256(SPEC))
+    assert r._thread is None and not r.directory.exists()
+    assert r.metadata['configuration_sha256']==c.sha256
+    with pytest.raises(ValueError,match='contract/clock'):
+        from_physical_config(c,clock_id='test',contract_sha256='f'*64)
