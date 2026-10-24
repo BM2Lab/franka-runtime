@@ -16,6 +16,13 @@ def _matmul(a, b):
     return [[sum(a[i][k]*b[k][j] for k in range(4)) for j in range(4)] for i in range(4)]
 
 
+def _affine(a, b):
+    """a @ b for rigid transforms given as their top three rows (last row 0 0 0 1)."""
+    (b00, b01, b02, b03), (b10, b11, b12, b13), (b20, b21, b22, b23) = b[0], b[1], b[2]
+    return [[r0*b00+r1*b10+r2*b20, r0*b01+r1*b11+r2*b21, r0*b02+r1*b12+r2*b22, r0*b03+r1*b13+r2*b23+r3]
+            for r0, r1, r2, r3 in a[:3]]
+
+
 def _origin(xyz, rpy):
     r, p, y = rpy
     cr, sr, cp, sp, cy, sy = math.cos(r), math.sin(r), math.cos(p), math.sin(p), math.cos(y), math.sin(y)
@@ -60,19 +67,31 @@ class SerialChain:
             raise ValueError("Expected a seven-joint arm chain")
 
     def frames(self, q):
-        """Base-frame transform of every child link, after its joint rotation."""
-        transform, result, i = [[float(i == j) for j in range(4)] for i in range(4)], {}, 0
+        """Base-frame transform of every child link, after its joint rotation.
+
+        Runs on every interpolated configuration of every chunk, under the service lock:
+        rigid transforms multiply as 3x4 affine blocks, and joints about their local z axis
+        (every FR3 joint) rotate two columns in place instead of a full matrix product.
+        """
+        transform, result, i = [[1., 0., 0., 0.], [0., 1., 0., 0.], [0., 0., 1., 0.]], {}, 0
         for link, origin, axis in self.steps:
-            transform = _matmul(transform, origin)
+            transform = _affine(transform, origin)
             if axis is not None:
-                transform = _matmul(transform, _axis_rotation(axis, q[i]))
+                if axis[0] == 0 and axis[1] == 0 and axis[2] > 0:
+                    c, s = math.cos(q[i]), math.sin(q[i])
+                    for row in transform:
+                        x, y = row[0], row[1]
+                        row[0], row[1] = x*c+y*s, y*c-x*s
+                else:
+                    transform = _affine(transform, _axis_rotation(axis, q[i]))
                 i += 1
-            result[link] = transform
+            result[link] = [*transform, [0., 0., 0., 1.]]  # _affine builds fresh rows before any in-place rotation
         return result
 
 
 def _apply(transform, point):
-    return tuple(sum(transform[r][c]*v for c, v in enumerate((*point, 1.)))for r in range(3))
+    x, y, z = point
+    return tuple(r[0]*x+r[1]*y+r[2]*z+r[3] for r in transform[:3])
 
 
 class WorkspaceCheck:

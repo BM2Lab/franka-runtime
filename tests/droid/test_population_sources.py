@@ -223,7 +223,12 @@ def test_operator_workspace_box_replaces_the_historical_box(tmp_path):
     box.write_text(json.dumps(dict(schema_version=1,box_min_m=[.27,-.38,.03],box_max_m=[.88,.38,.53],basis='operator-measured')))
     POP(**inputs(tmp_path),workspace_observation=box)
     w=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json').data['workspace']
-    assert w['box_min_m']==[.27,-.38,.03] and w['box_max_m']==[.88,.38,.53]
+    assert w['box_min_m']==[.27,-.38,.03] and w['box_max_m']==[.88,.38,.53] and w['clearance_m']==.05  # mock table kept
+    table=tmp_path/'table';table.mkdir();box2=table/'box.json'
+    box2.write_text(json.dumps(dict(schema_version=1,box_min_m=[.27,-.38,.03],box_max_m=[.88,.38,.53],table_z_m=.03,clearance_m=.02,basis='operator')))
+    POP(**inputs(table),workspace_observation=box2)
+    w=PhysicalDroidConfig.load(table/'out/physical.review.pending.json').data['workspace']
+    assert (w['table_z_m'],w['clearance_m'])==(.03,.02)
     box.write_text(json.dumps(dict(schema_version=1,box_min_m=[.9,-.38,.03],box_max_m=[.88,.38,.53],basis='x')))
     bad=tmp_path/'bad';bad.mkdir()
     with pytest.raises(ValueError,match='Workspace observation'):POP(**inputs(bad),workspace_observation=box)

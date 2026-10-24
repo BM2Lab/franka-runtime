@@ -179,3 +179,23 @@ def test_workspace_requires_connected_chain(tmp_path):
 def test_cross_host_mock_config_binds_only_the_direct_link():
     settings = DroidRuntimeConfig.load(CONFIGS / "droid.jointpos.mock-link.json").require_runnable()
     assert (settings["bind_host"], settings["port"], settings["allowed_peers"]) == ("10.77.0.2", 47700, ("10.77.0.1",))
+
+
+def test_fast_forward_kinematics_matches_the_reference_matrix_products():
+    import math as m, random
+    from franka_runtime.droid import workspace as w
+    chain = w.SerialChain(Path(__file__).resolve().parents[2]/"tests/parity/fixtures/robot_returned_model.urdf", "link0", "link8")
+    def reference(q):
+        t, out, i = [[float(a == b) for b in range(4)] for a in range(4)], {}, 0
+        for link, origin, axis in chain.steps:
+            t = w._matmul(t, origin)
+            if axis is not None:
+                t = w._matmul(t, w._axis_rotation(axis, q[i])); i += 1
+            out[link] = t
+        return out
+    rng = random.Random(3)
+    for _ in range(200):
+        q = [rng.uniform(-m.pi, m.pi) for _ in range(7)]
+        fast, ref = chain.frames(q), reference(q)
+        assert fast.keys() == ref.keys()
+        assert max(abs(a-b) for k in ref for ra, rb in zip(fast[k], ref[k]) for a, b in zip(ra, rb)) < 1e-12
