@@ -187,3 +187,31 @@ def test_relative_config_paths_resolve_the_workspace_model_once(tmp_path,monkeyp
     data.update(recording_directory=str(tmp_path/'recording'))
     settings=ShadowRuntimeConfig(data,Path('configs/fr3')).require_runnable()
     assert settings['robot_id']
+
+
+REAL_READER = ROOT/'tests/fixtures/droid/readonly-reader-2026-10-24.jsonl'  # 80 packets, FR3 + Franka Hand, read-only
+
+
+def real_source():
+    from franka_runtime.droid.shadow_source import ReadOnlyStateSource
+    return ReadOnlyStateSource('/bin/true','0'*64,'172.16.0.6',stderr_path=Path('/dev/null'))
+
+
+def test_real_hand_counter_stream_is_accepted_and_integrity_checks_remain():
+    rows=[json.loads(line) for line in REAL_READER.read_text().splitlines()]
+    assert len({r['hand_counter_ms'] for r in rows})>5  # the Hand counter is not milliseconds (about 20/s)
+    source=real_source()
+    for row in rows:source._accept(row)
+    assert source.snapshot()['arm_counter_ms']==rows[-1]['arm_counter_ms']
+    stalled=dict(rows[-1],hand_counter_ms=rows[-1]['hand_counter_ms']+1)
+    with pytest.raises(ValueError,match='Hand counter advanced'):source._accept(stalled)
+    lagging=real_source()
+    for row in rows[:2]:lagging._accept(row)
+    late=dict(rows[2],arm_ns=rows[2]['arm_ns']+200_000_000)
+    with pytest.raises(ValueError,match='lags host clock'):lagging._accept(late)
+
+
+@pytest.mark.parametrize('max_width,valid',[(0.0799846276640892,True),(0.0791,True),(0.0789,False),(0.,False)])
+def test_homed_hand_width_tolerance(tmp_path,max_width,valid):
+    svc,src,c=make(tmp_path);start(svc,c);src.sample.update(max_width=max_width,width=min(0.0793,max_width))
+    assert svc.state_sample().valid is valid

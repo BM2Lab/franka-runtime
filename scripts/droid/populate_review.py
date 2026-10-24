@@ -14,7 +14,10 @@ from franka_runtime.droid.commissioning import prepare_review, digest
 from franka_runtime.droid.workspace import SerialChain
 
 
-def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir,recording_dir):
+HAND_FRESHNESS_NS=250_000_000  # measured-period basis below; at least two Hand periods of margin required
+
+
+def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir,recording_dir,hand_timing=None):
     import yaml
     repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir=map(Path,
         (repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir))
@@ -102,8 +105,17 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
     put('gripper.close_width_m',0.,'droid_robot','DROID closure=1 endpoint mapped to zero width; grasp outcome still needs Hand qualification')
     put('gripper.speed_m_s',wrapper['speed'],'droid_robot','Pinned DROID update_gripper speed=0.05 m/s')
     put('gripper.grasp_force_n',mock['gripper']['grasp_force_n'],'mock_link','20 N provisional direct-libfranka force; not blindly copying Polymetis goto(force=0.1)')
+    if hand_timing is not None:
+        timing=load('hand_timing',Path(hand_timing))
+        period_ms=timing['hand']['max_ms']
+        if timing.get('read_only') is not True or not 0<period_ms or 2*period_ms*1e6>=HAND_FRESHNESS_NS:
+            raise ValueError('Hand timing evidence must be read-only and leave two measured periods of margin')
+        put('gripper.max_state_age_ns',HAND_FRESHNESS_NS,'hand_timing',
+            f"Measured read-only Hand state period {timing['hand']['median_ms']} ms median / {period_ms} ms max "
+            f"({timing['hand']['samples']} samples, {timing['captured']}); 250 ms is about 2.5 periods")
     for field,value,basis in [('epsilon_inner_m',.005,'Existing libfranka/Franky grasp default'),('epsilon_outer_m',.005,'Existing libfranka/Franky grasp default'),
-        ('poll_hz',50,'Contract feedback target, not achieved-rate evidence'),('max_state_age_ns',100_000_000,'Runner 100 ms freshness baseline'),
+        ('poll_hz',50,'Contract feedback target, not achieved-rate evidence'),
+        *([] if hand_timing is not None else [('max_state_age_ns',100_000_000,'Runner 100 ms freshness baseline')]),
         ('moving_epsilon_m_s',.001,'Width-change detection threshold'),('cancel_interval_ms',10,'Existing fake-device cancellation test cadence'),
         ('cancel_attempts',20,'Existing fake-device bounded cancellation attempts'),('history_capacity',1024,'Existing serialized Hand worker default')]:
         proposal('gripper.'+field,value,basis)
@@ -172,6 +184,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('repo','m4-run','legacy-reference','droid-sources','mock-link','observed-state','output-dir','recording-dir'):
         p.add_argument('--'+name,type=Path,required=True)
+    p.add_argument('--hand-timing',type=Path,help='read-only Hand timing summary (sets gripper.max_state_age_ns from measurement)')
     args=p.parse_args();print(json.dumps(populate(**vars(args)),indent=2))
 
 

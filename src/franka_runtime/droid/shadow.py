@@ -5,6 +5,10 @@ from types import SimpleNamespace
 from contracts.droid import DroidActionChunk
 from .backend import BackendUpdate
 
+# A homed Franka Hand reports a maximum width slightly below the nominal 0.08 m contract
+# opening (0.07998 m measured 2026-10-24); an unhomed or unconfigured Hand reports ~0.
+HAND_OPEN_WIDTH_TOLERANCE_M=0.001
+
 
 class ShadowHand:
     commands=()
@@ -63,7 +67,7 @@ class ShadowDroidBackend:
             if any(abs(v)>limit for v,limit in zip(self.arm.dq,self.settings['measured_velocity'])):
                 raise ValueError('Measured joint-speed guard exceeded')
             if (isinstance(s['width'],bool) or not math.isfinite(s['width']) or not 0<=s['width']<=s['max_width']
-                    or not math.isfinite(s['max_width']) or s['max_width']<self.settings['open_width_m']
+                    or not math.isfinite(s['max_width']) or s['max_width']<self.settings['open_width_m']-HAND_OPEN_WIDTH_TOLERANCE_M
                     or type(s['grasped']) is not bool):raise ValueError('Invalid/unconfigured measured Hand state')
         except (KeyError,TypeError,ValueError) as error:
             self.feedback_info['validation_error']=str(error)

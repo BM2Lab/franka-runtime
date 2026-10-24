@@ -77,3 +77,28 @@ def test_populated_numeric_settings_validate_with_synthetic_missing_inputs(tmp_p
     d['artifacts'].update(collision_model=str(model),collision_model_sha256=digest(model))
     assert c.validated()['controller']['lowpass_cutoff_hz']==100
     with pytest.raises(ValueError,match='not approved'):c.require_approved()
+
+
+def hand_timing(tmp_path,**changes):
+    summary=dict(captured='2026-10-24',read_only=True,hand=dict(samples=50,median_ms=100.18,max_ms=100.74),
+                 arm=dict(samples=241,median_ms=20.89,max_ms=21.07),hand_counter_per_s=20.05)
+    summary.update(changes);path=tmp_path/'hand-timing.json';path.write_text(json.dumps(summary));return path
+
+
+def test_measured_hand_timing_sets_freshness_with_evidence(tmp_path):
+    args=inputs(tmp_path);POP(**args,hand_timing=hand_timing(tmp_path))
+    out=tmp_path/'out';d=PhysicalDroidConfig.load(out/'physical.review.pending.json').data
+    assert d['gripper']['max_state_age_ns']==250_000_000
+    row=json.loads((out/'provenance.json').read_text())['field_provenance']['gripper.max_state_age_ns']
+    assert 'Measured read-only Hand state period' in row['basis'] and 'PROPOSAL' not in row['basis']
+    assert row['source']['sha256']==digest(out/'source-evidence/hand_timing.json')
+
+
+@pytest.mark.parametrize('changes',[dict(hand=dict(samples=10,median_ms=130.,max_ms=130.)),dict(read_only=False)])
+def test_hand_timing_without_margin_or_read_only_basis_is_refused(tmp_path,changes):
+    with pytest.raises(ValueError,match='Hand timing'):POP(**inputs(tmp_path),hand_timing=hand_timing(tmp_path,**changes))
+
+
+def test_without_hand_timing_the_proposal_baseline_remains(tmp_path):
+    POP(**inputs(tmp_path))
+    assert PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json').data['gripper']['max_state_age_ns']==100_000_000

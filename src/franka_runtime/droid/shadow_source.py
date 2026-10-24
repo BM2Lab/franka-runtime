@@ -28,19 +28,25 @@ class ReadOnlyStateSource:
 
     def _accept(self,value):
         # Counters/timestamps may not be refreshed by replaying old SDK packets.
+        # Only the arm counter is in milliseconds (measured 1000/s); the Hand's SDK
+        # counter is not (measured about 20/s at 10 Hz state, 2026-10-24), so the Hand
+        # gets monotonic/restamp checks here and host-age freshness in the backend.
         for group in ('arm','hand'):
             pair=(value[group+'_counter_ms'],value[group+'_ns'])
             if any(type(x) is not int or x<0 for x in pair):raise ValueError('Invalid SDK counter/time')
+            millisecond_counter=group=='arm'
             anchor=self._anchors.setdefault(group,pair)
-            if (pair[1]-anchor[1])-(pair[0]-anchor[0])*1_000_000>self.max_stream_lag_ns:
+            if millisecond_counter and (pair[1]-anchor[1])-(pair[0]-anchor[0])*1_000_000>self.max_stream_lag_ns:
                 raise ValueError('SDK packet stream lags host clock')
             previous=getattr(self,'_'+group+'_last')
             if previous is not None:
                 if pair[0]<previous[0] or pair[1]<previous[1]:raise ValueError('Regressed read-only state')
                 if pair[0]==previous[0] and pair[1]!=previous[1]:raise ValueError('SDK packet restamped without advancing')
-                if pair[0]>previous[0]:
+                if millisecond_counter and pair[0]>previous[0]:
                     lag=(pair[1]-previous[1])-(pair[0]-previous[0])*1_000_000
                     if lag>100_000_000:raise ValueError('SDK packet stream lags host clock')
+                if not millisecond_counter and pair[0]>previous[0] and pair[1]==previous[1]:
+                    raise ValueError('Hand counter advanced without a new read timestamp')
             setattr(self,'_'+group+'_last',pair)
         with self._lock:self._latest=value
 
