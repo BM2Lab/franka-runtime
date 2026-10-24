@@ -180,13 +180,22 @@ refusal pass. `pip check` passes. Receipt and reconstruction inputs are at
 `~/yifan/droid-deployment/validation/step4.json`, `native-requirements.lock` and
 `artifacts/native-wheelhouse/`.
 
-Next: implement/review the versioned physical config/device factory, including
-fresh unit/tool/geometry state and stop/supervised-shutdown semantics. Qualify the
-hand's measured-state/cancellation behavior: the serialized worker cannot promise
-50 Hz fresh measurements while an SDK call blocks. No pre-start native stop/rest
-evidence is fabricated; that incomplete path fails closed. Add bounded durable
-native recording, then run cross-host mock timing and D7/D8/D9 commissioning in
-order. The robot may remain off for the remaining code/config work.
+### Physical schema and device assembly implemented (offline, step 5)
+
+See [physical configuration and factory](droid-physical-configuration.md). Physical
+schema v2 separates target admission from measured native guards and leaves all
+commissioning values null. The explicit factory checks contract/artifacts,
+identity, tool/load/TCP and geometry, requires an injected collision checker,
+and refreshes measured q/dq/Hand state at preflight. Device construction is
+separately authorized because Franky's Robot constructor sets collision thresholds.
+A concurrent Hand reader/command/cancellation worker replaces the serialized
+feedback limitation for this candidate; measured freshness and actual worker exit
+remain mandatory. Hardware feedback/cancellation timing is not yet qualified.
+
+The physical selector remains disabled. Next: bounded durable recording and
+supervised physical lifecycle, concrete identity/collision adapters, cross-host
+mock timing, then D7/D8/D9 commissioning. No native wheel/dependency or frozen
+baseline changed in step 5; the robot can remain off.
 
 ## 2. Host hygiene (no robot motion)
 

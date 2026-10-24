@@ -1,0 +1,136 @@
+{
+  "schema_version": 2,
+  "runtime": "droid_jointpos_v1",
+  "backend": "franky",
+  "status": "pending_lab_review",
+  "executable": false,
+  "motion_authorized": false,
+  "provenance": "No commissioning values supplied; v1 mock limits are not physical guarantees",
+  "robot": {
+    "robot_id": null,
+    "address": null,
+    "model": null,
+    "firmware_version": null,
+    "fci_version": null,
+    "arm_serial": null,
+    "control_serial": null,
+    "identity_max_age_ns": null,
+    "collision_torque_nm": null,
+    "collision_force_n": null
+  },
+  "contract": {
+    "allowed_sha256": null,
+    "capability_prefix": null
+  },
+  "joint_bounds": {
+    "lower_rad": null,
+    "upper_rad": null,
+    "margin_rad": null
+  },
+  "acceptance": {
+    "max_target_lead_rad": null,
+    "max_consecutive_row_speed_rad_s": null
+  },
+  "controller": {
+    "kind": null,
+    "joint_stiffness": null,
+    "joint_damping": null,
+    "cartesian_stiffness": null,
+    "cartesian_damping": null,
+    "error_clip_rad": null,
+    "gain_time_constant_s": null,
+    "compensate_coriolis": null,
+    "max_delta_nm_per_callback": null,
+    "libfranka_limit_rate": null,
+    "lowpass_cutoff_hz": null
+  },
+  "guards": {
+    "max_measured_joint_velocity_rad_s": null,
+    "max_command_torque_nm": null,
+    "max_callback_gap_ns": null,
+    "publisher_timeout_ns": null
+  },
+  "stop": {
+    "damping": null,
+    "ramp_duration_s": null,
+    "rest_velocity_rad_s": null,
+    "max_duration_s": null,
+    "compensate_coriolis": null,
+    "max_delta_nm_per_callback": null
+  },
+  "timing": {
+    "control_hz": null,
+    "hold_timeout_ms": null,
+    "heartbeat_timeout_ms": null,
+    "command_timeout_ms": null,
+    "max_lease_s": null,
+    "startup_timeout_ns": null,
+    "consumption_timeout_ns": null,
+    "stop_timeout_ns": null,
+    "state_timeout_ns": null,
+    "native_log_capacity": null
+  },
+  "clock": {
+    "max_uncertainty_us": null,
+    "min_probes": null
+  },
+  "gripper": {
+    "open_width_m": null,
+    "close_width_m": null,
+    "speed_m_s": null,
+    "grasp_force_n": null,
+    "epsilon_inner_m": null,
+    "epsilon_outer_m": null,
+    "poll_hz": null,
+    "max_state_age_ns": null,
+    "moving_epsilon_m_s": null,
+    "cancel_interval_ms": null,
+    "cancel_attempts": null,
+    "history_capacity": null
+  },
+  "tool": {
+    "F_T_EE": null,
+    "m_ee": null,
+    "I_ee": null,
+    "F_x_Cee": null,
+    "m_load": null,
+    "I_load": null,
+    "F_x_Cload": null,
+    "scalar_tolerance": null,
+    "transform_tolerance": null
+  },
+  "workspace": {
+    "model_urdf": null,
+    "model_sha256": null,
+    "base_link": null,
+    "flange_link": null,
+    "joint_names": null,
+    "link_points": null,
+    "tool_points_m": null,
+    "table_z_m": null,
+    "clearance_m": null,
+    "box_min_m": null,
+    "box_max_m": null,
+    "interpolation_steps": null
+  },
+  "network": {
+    "bind_host": null,
+    "port": null,
+    "allowed_peers": null,
+    "token_env": null
+  },
+  "artifacts": {
+    "native_pin": null,
+    "native_pin_sha256": null,
+    "collision_model": null,
+    "collision_model_sha256": null
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "physical_stop_procedure": null,
+    "workspace_review": null,
+    "hand_review": null,
+    "collision_review": null
+  }
+}

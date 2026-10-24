@@ -24,7 +24,7 @@ class FrankyArmDriver:
     motion_factory creates a fresh DroidJointImpedanceMotion. robot.move executes
     on a dedicated worker; no automatic recovery, robot.stop or fallback motion.
     """
-    def __init__(self, robot, motion_factory, initial_q, *, initial_timestamp_ns, limit_rate, cutoff_hz):
+    def __init__(self, robot, motion_factory, initial_q, *, initial_timestamp_ns, initial_dq, limit_rate, cutoff_hz, refresh=None):
         if (type(limit_rate) is not bool or isinstance(cutoff_hz, bool)
                 or not math.isfinite(cutoff_hz) or cutoff_hz <= 0
                 or type(initial_timestamp_ns) is not int or initial_timestamp_ns <= 0):
@@ -32,11 +32,21 @@ class FrankyArmDriver:
         self.robot, self.motion_factory = robot, motion_factory
         self.initial_timestamp_ns = initial_timestamp_ns
         self.initial_q = tuple(initial_q)
+        self.initial_dq = tuple(initial_dq)
+        self._refresh = refresh
+        if len(self.initial_dq) != 7 or not all(math.isfinite(x) for x in self.initial_dq):
+            raise ValueError("Seven measured initial velocities required")
         if len(self.initial_q) != 7 or not all(math.isfinite(x) for x in self.initial_q):
             raise ValueError('Seven measured initial positions required')
         self.limit_rate, self.cutoff_hz = limit_rate, cutoff_hz
         self.motion = self.thread = None
         self.error = None
+
+    def refresh(self):
+        if self.thread is not None:
+            raise RuntimeError("Cannot refresh a started native driver")
+        if self._refresh is not None:
+            self.initial_q, self.initial_dq, self.initial_timestamp_ns = self._refresh()
 
     def prepare(self):
         if self.thread is not None and self.thread.is_alive():
@@ -80,7 +90,7 @@ class NativeDroidBackend:
         self.state_timeout = state_timeout_ns
         self.startup_timeout = startup_timeout_ns
         self.consumption_timeout, self.stop_timeout = consumption_timeout_ns, stop_timeout_ns
-        self.arm = EncoderState(tuple(driver.initial_q), (0.,)*7)
+        self.arm = EncoderState(tuple(driver.initial_q), tuple(getattr(driver, 'initial_dq', (0.,)*7)))
         self.estimate = None
         self._native = 1
         self.execution = (None, None)
@@ -103,14 +113,31 @@ class NativeDroidBackend:
     def preflight(self):
         if self.estimate is None or self._fault:
             raise RuntimeError('Registered clock and fault-free backend required')
+        if hasattr(self.driver, 'refresh'):
+            self.driver.refresh()
+            self.arm.q, self.arm.dq = tuple(self.driver.initial_q), tuple(self.driver.initial_dq)
+        if hasattr(self.hand, 'prime'):
+            self.hand.prime()
         self.validate_state()
         return {'q': self.arm.q}
 
+    @property
+    def awaiting_feedback(self):
+        return bool(self._started and self._last_status is None and not self._stopping and self._pending
+                    and self._pending[0] == 1 and self.clock()-self._pending[1] < self.startup_timeout)
+
     def validate_state(self):
+        if hasattr(self.hand, "fresh") and not self.hand.fresh:
+            if self._started and not self._stopping:
+                self._fault = self._fault or 205
+            raise ValueError("Hand feedback is stale or faulted")
+        if self._started and self._last_status is None and not self._stopping and self._pending and self._pending[0] == 1:
+            if self.clock()-self._pending[1] < self.startup_timeout:
+                raise ValueError('Waiting for first native encoder sample')
         stamp = self._last_status.monotonic_ns if self._last_status else self.driver.initial_timestamp_ns
         now = self.clock()
         if not 0 <= now-stamp <= self.state_timeout:
-            if not self._stopping:
+            if self._started and not self._stopping:
                 self._fault = self._fault or 207
             raise ValueError('Native encoder state is stale or from a future clock')
 
@@ -212,14 +239,15 @@ class NativeDroidBackend:
                         acknowledgements.append(Consumption(sequence, receipt.tick, receipt.monotonic_ns))
         if self.driver.error is not None:
             self._fault = self._fault or 201
-        if self.hand.fault:
+        if self.hand.fault or (hasattr(self.hand, 'fresh') and not self.hand.fresh and not self._stopping):
             self._fault = self._fault or 205
-        if not self._stopping:
+        starting = self._last_status is None and self._pending and self._pending[0] == 1
+        if not self._stopping and not starting:
             try:
                 self.validate_state()
             except ValueError:
                 pass
-        if not self._stopping and self._pending and now_ns-self._pending[1] >= self.consumption_timeout:
+        if not self._stopping and self._pending and now_ns-self._pending[1] >= (self.startup_timeout if self._pending[0] == 1 else self.consumption_timeout):
             self._fault = self._fault or 203
         if not self._stopping and not self._fault and not step.stop_reason:
             if step.sequence is not None:

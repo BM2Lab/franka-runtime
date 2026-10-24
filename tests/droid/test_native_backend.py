@@ -167,10 +167,11 @@ def test_unknown_native_row_identity_latches_fault():
 
 def test_startup_consumption_can_arrive_after_first_executor_tick():
     svc,b,c=make_service();estimate=start(svc,b,c,consume_startup=False)
-    submit(svc,b,c,estimate);c.advance();svc.control_step(c(),.001)
+    c.advance();svc.control_step(c(),.001)
     assert not svc.authority.fault
     assert b.driver.motion.sent[-1][1]==1
     c.advance();b.driver.motion.callback();svc.control_step(c(),.001)
+    submit(svc,b,c,estimate);c.advance();svc.control_step(c(),.001)
     assert not svc.authority.fault and b.driver.motion.sent[-1][1]==2
 
 
@@ -219,3 +220,12 @@ def test_stop_before_native_start_fails_closed_without_hanging_or_fake_evidence(
     assert update.stop_evidence['joined'] is False
     assert update.stop_evidence['stop_finished'] is False
     assert update.stop_evidence['stop_fault']!=0
+
+
+def test_startup_uses_startup_deadline_without_valid_feedback_claim():
+    svc,b,c=make_service();start(svc,b,c,consume_startup=False)
+    c.advance(40_000_000);svc.control_step(c(),.04)
+    assert b._fault==0
+    assert not svc.state_sample().valid
+    b.driver.motion.callback();svc.control_step(c(),.001)
+    assert b._fault==0 and svc.state_sample().valid

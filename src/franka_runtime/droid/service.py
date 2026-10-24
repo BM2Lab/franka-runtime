@@ -150,6 +150,8 @@ class DroidRuntimeService:
             raise ValueError("Chunk incompatible with the contract")
         peak = check_rows(chunk.values, self.arm.q, self.settings, self.row_period_ns)
         self.workspace.check_rows(chunk.values, self.arm.q)
+        if hasattr(self.backend, "validate_targets"):
+            self.backend.validate_targets(chunk.values)
         self.peak_speed = [max(a, b) for a, b in zip(self.peak_speed, peak)]
 
     # ---- control loop
@@ -197,7 +199,8 @@ class DroidRuntimeService:
                     self.backend.validate_state()
                 except ValueError:
                     feedback_valid = False
-                    if self.authority.state == "running" and not self.authority.stopping:
+                    if (self.authority.state == "running" and not self.authority.stopping
+                            and not getattr(self.backend, "awaiting_feedback", False)):
                         self.authority.poll(native_fault=207)
             fault = self.authority.fault
             lease = self._session["lease"].lease_id if self._session else None
@@ -278,6 +281,7 @@ class DroidRuntimeService:
         session = self._session_or_fail()
         with self._lock:
             self.authority.start(session["lease"])
+            self.intent = GripperIntent(self.spec.gripper, self.hand.width)
             session["started"] = True
             self._last_heartbeat = self.clock()
         return {"state": self.authority.state}

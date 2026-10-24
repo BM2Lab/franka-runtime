@@ -123,3 +123,14 @@ without converting a completed clean session into a new tracking fault. A stop
 requested before native startup has no native rest/join evidence: the adapter
 reports failure by its deadline rather than hanging or fabricating a mock success.
 The physical session factory must resolve that admission/stop lifecycle before use.
+
+
+## Step 5 update: physical assembly and concurrent Hand (offline)
+
+[Physical configuration and factory](droid-physical-configuration.md) supersedes
+the serialized Hand limitation above for the new physical candidate. The old
+serialized worker remains available for tests/adapters. Physical schema v2 and
+factory checks are implemented; commissioning inputs and concrete identity/
+collision adapters remain pending, and the physical CLI stays disabled.
+The native dev67 wheel and all underlying dependencies remain unchanged.
+Step 4 receipts are historical; step 5 has separate runtime artifacts/validation.
