@@ -102,5 +102,8 @@ def test_attached_rig_box_is_checked_against_links_that_move_relative_to_it(tmp_
                 for p in e.geometry.collisionPairs if rig in (p.first, p.second)}
     assert partners == {f"fr3v2.1_link{i}_0" for i in range(7)}
     assert e.check_configuration(HOME) is True
-    assert engine().check_configuration(RIG_INTO_BASE) is True  # without the rig, the model misses this contact
+    bare = json.loads(m.read_text())
+    bare.update(attached_boxes=[], collision_pairs=44)
+    (m.parent/"bare.json").write_text(json.dumps(bare))
+    assert engine(m.parent/"bare.json").check_configuration(RIG_INTO_BASE) is True  # without the rig, the contact is missed
     assert e.check_configuration(RIG_INTO_BASE) is False
