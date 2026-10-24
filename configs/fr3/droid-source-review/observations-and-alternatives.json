@@ -250,8 +250,8 @@
       "snapshot": "source-evidence/fresh_state.json"
     },
     "payload": {
-      "path": "/home/chen-lab/franka-runtime/configs/fr3/payloads/wrist-d435i-mount.json",
-      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
+      "path": "/home/chen-lab/franka-runtime/configs/fr3/payloads/wrist-d435i-mount-v2.json",
+      "sha256": "780388e1a3792b674362c3a187e5bd4dd1d3dcdd6182e1500b01c0ecc56a1927",
       "snapshot": "source-evidence/payload.json"
     },
     "collision_manifest": {

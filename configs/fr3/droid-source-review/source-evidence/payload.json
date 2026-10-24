@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "name": "wrist-d435i-mount-rig-2026-10-24",
+  "name": "wrist-d435i-mount-rig-v2-2026-10-24",
   "m_load": 0.123,
   "F_x_Cload": [
-    -0.098995,
-    0.042426,
+    -0.090717,
+    0.034148,
     0.0334
   ],
   "I_load": [
@@ -29,7 +29,7 @@
     }
   ],
   "com_tcp_m": [
-    -0.1,
+    -0.088293,
     -0.04,
     -0.07
   ],
@@ -128,5 +128,5 @@
       ]
     ]
   },
-  "basis": "Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
+  "basis": "Wrist camera repositioned 2026-10-24 (after D9 trial 2): camera COM at TCP (-80, -40, -70) mm, mount COM unchanged at (-100, -40, -70) mm, mass-weighted combined COM; weights (72 g, 51 g) and rig bounding box (TCP X -120..0, Y +/-75, Z -100..-50 mm) unchanged per the operator"
 }

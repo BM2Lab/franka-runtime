@@ -458,19 +458,19 @@
       "field": "tool.m_load",
       "value": 0.123,
       "source": "source-evidence/payload.json",
-      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
-      "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
+      "sha256": "780388e1a3792b674362c3a187e5bd4dd1d3dcdd6182e1500b01c0ecc56a1927",
+      "basis": "Operator-measured payload wrist-d435i-mount-rig-v2-2026-10-24 set by the runtime at connect: Wrist camera repositioned 2026-10-24 (after D9 trial 2): camera COM at TCP (-80, -40, -70) mm, mount COM unchanged at (-100, -40, -70) mm, mass-weighted combined COM; weights (72 g, 51 g) and rig bounding box (TCP X -120..0, Y +/-75, Z -100..-50 mm) unchanged per the operator"
     },
     {
       "field": "tool.F_x_Cload",
       "value": [
-        -0.098995,
-        0.042426,
+        -0.090717,
+        0.034148,
         0.0334
       ],
       "source": "source-evidence/payload.json",
-      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
-      "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
+      "sha256": "780388e1a3792b674362c3a187e5bd4dd1d3dcdd6182e1500b01c0ecc56a1927",
+      "basis": "Operator-measured payload wrist-d435i-mount-rig-v2-2026-10-24 set by the runtime at connect: Wrist camera repositioned 2026-10-24 (after D9 trial 2): camera COM at TCP (-80, -40, -70) mm, mount COM unchanged at (-100, -40, -70) mm, mass-weighted combined COM; weights (72 g, 51 g) and rig bounding box (TCP X -120..0, Y +/-75, Z -100..-50 mm) unchanged per the operator"
     },
     {
       "field": "tool.I_load",
@@ -486,8 +486,8 @@
         5.235e-05
       ],
       "source": "source-evidence/payload.json",
-      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
-      "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
+      "sha256": "780388e1a3792b674362c3a187e5bd4dd1d3dcdd6182e1500b01c0ecc56a1927",
+      "basis": "Operator-measured payload wrist-d435i-mount-rig-v2-2026-10-24 set by the runtime at connect: Wrist camera repositioned 2026-10-24 (after D9 trial 2): camera COM at TCP (-80, -40, -70) mm, mount COM unchanged at (-100, -40, -70) mm, mass-weighted combined COM; weights (72 g, 51 g) and rig bounding box (TCP X -120..0, Y +/-75, Z -100..-50 mm) unchanged per the operator"
     },
     {
       "field": "artifacts.collision_model",
@@ -690,8 +690,8 @@
         ]
       ],
       "source": "source-evidence/payload.json",
-      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
-      "basis": "8 corners of the operator-measured rig bounding box of payload wrist-d435i-mount-rig-2026-10-24; table plane only"
+      "sha256": "780388e1a3792b674362c3a187e5bd4dd1d3dcdd6182e1500b01c0ecc56a1927",
+      "basis": "8 corners of the operator-measured rig bounding box of payload wrist-d435i-mount-rig-v2-2026-10-24; table plane only"
     },
     {
       "field": "workspace.joint_names",

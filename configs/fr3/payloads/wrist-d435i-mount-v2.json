@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "name": "wrist-d435i-mount-rig-v2-2026-10-24",
+  "m_load": 0.123,
+  "F_x_Cload": [
+    -0.090717,
+    0.034148,
+    0.0334
+  ],
+  "I_load": [
+    7.5e-06,
+    0.0,
+    0.0,
+    0.0,
+    5.235e-05,
+    0.0,
+    0.0,
+    0.0,
+    5.235e-05
+  ],
+  "components": [
+    {
+      "name": "RealSense D435i (wrist, serial 152122071116)",
+      "mass_kg": 0.072
+    },
+    {
+      "name": "camera mount",
+      "mass_kg": 0.051
+    }
+  ],
+  "com_tcp_m": [
+    -0.088293,
+    -0.04,
+    -0.07
+  ],
+  "inertia_model": {
+    "box_m": [
+      0.09,
+      0.025,
+      0.025
+    ],
+    "component": "RealSense D435i (wrist, serial 152122071116)",
+    "frame": "flange axes"
+  },
+  "F_T_EE_source": {
+    "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-fresh-state/robot_state_20261024T184702Z.json",
+    "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751"
+  },
+  "bounding_box": {
+    "frame": "TCP",
+    "min_m": [
+      -0.12,
+      -0.075,
+      -0.1
+    ],
+    "max_m": [
+      0.0,
+      0.075,
+      -0.05
+    ],
+    "size_m": [
+      0.12,
+      0.15,
+      0.05
+    ],
+    "center_flange_m": [
+      -0.042426,
+      0.042426,
+      0.0284
+    ],
+    "rotation_flange": [
+      [
+        0.707107,
+        0.707107,
+        0
+      ],
+      [
+        -0.707107,
+        0.707107,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "corners_flange_m": [
+      [
+        -0.137886,
+        0.03182,
+        0.0034
+      ],
+      [
+        -0.137886,
+        0.03182,
+        0.0534
+      ],
+      [
+        -0.03182,
+        0.137886,
+        0.0034
+      ],
+      [
+        -0.03182,
+        0.137886,
+        0.0534
+      ],
+      [
+        -0.053033,
+        -0.053033,
+        0.0034
+      ],
+      [
+        -0.053033,
+        -0.053033,
+        0.0534
+      ],
+      [
+        0.053033,
+        0.053033,
+        0.0034
+      ],
+      [
+        0.053033,
+        0.053033,
+        0.0534
+      ]
+    ]
+  },
+  "basis": "Wrist camera repositioned 2026-10-24 (after D9 trial 2): camera COM at TCP (-80, -40, -70) mm, mount COM unchanged at (-100, -40, -70) mm, mass-weighted combined COM; weights (72 g, 51 g) and rig bounding box (TCP X -120..0, Y +/-75, Z -100..-50 mm) unchanged per the operator"
+}
