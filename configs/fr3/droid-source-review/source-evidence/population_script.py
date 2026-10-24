@@ -18,7 +18,7 @@ HAND_FRESHNESS_NS=250_000_000  # measured-period basis below; at least two Hand 
 
 
 def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir,recording_dir,hand_timing=None,
-             fresh_state=None,collision_bundle=None,unit_observation=None,payload=None):
+             fresh_state=None,collision_bundle=None,unit_observation=None,payload=None,workspace_observation=None):
     import yaml
     repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir=map(Path,
         (repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir))
@@ -179,8 +179,16 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
     else:
         proposal('workspace.body_points_m',[],'No rig geometry beyond the Hand declared')
     put('workspace.joint_names',logical,'mock_link','Logical contract aliases for the seven reference-model joints; explicit ordered rename recorded')
-    for field,key in [('box_min_m','workspace_lower'),('box_max_m','workspace_upper')]:
-        put('workspace.'+field,m4['limits'][key],'completed_m4_config','Historical circle-task box; may reject DROID task targets and must be reviewed for the new scene')
+    if workspace_observation is not None:
+        box=load('workspace_observation',Path(workspace_observation))
+        lo,hi=box.get('box_min_m'),box.get('box_max_m')
+        if (box.get('schema_version')!=1 or not box.get('basis') or not isinstance(lo,list) or not isinstance(hi,list)
+                or len(lo)!=3 or len(hi)!=3 or any(a>=b for a,b in zip(lo,hi))):
+            raise ValueError('Workspace observation needs schema 1, basis and box_min_m < box_max_m (3 each)')
+        for field,value in (('box_min_m',lo),('box_max_m',hi)):put('workspace.'+field,value,'workspace_observation',box['basis'])
+    else:
+        for field,key in [('box_min_m','workspace_lower'),('box_max_m','workspace_upper')]:
+            put('workspace.'+field,m4['limits'][key],'completed_m4_config','Historical circle-task box; may reject DROID task targets and must be reviewed for the new scene')
     for field,value in mock['network'].items():put('network.'+field,value,'mock_link','Recorded direct-link test configuration; no network changes performed')
     proposal('recording.directory',str(Path(recording_dir).resolve()),'New per-run recording directory; parent must exist and directory must not be reused')
     for field,value,basis in [('queue_capacity',4096,'Match historical native logging capacity; writer must keep up'),('max_record_bytes',65536,'64 KiB per-event bound'),
@@ -247,6 +255,7 @@ def main():
     p.add_argument('--collision-bundle',type=Path,help='directory with manifest.json from build_collision_manifest.py')
     p.add_argument('--unit-observation',type=Path,help='operator/observation evidence JSON with the robot address')
     p.add_argument('--payload',type=Path,help='per-rig payload file from build_payload.py (tool.m_load/F_x_Cload/I_load)')
+    p.add_argument('--workspace-observation',type=Path,help='operator-measured task box in the base frame (workspace.box_*)')
     args=p.parse_args();print(json.dumps(populate(**vars(args)),indent=2))
 
 

@@ -1,0 +1,2 @@
+{"schema_version": 1, "frame": "robot base (link0)", "box_min_m": [0.27, -0.38, 0.03], "box_max_m": [0.88, 0.38, 0.53],
+ "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, bottom 3 cm above the mounting plane, face nearest the robot 27 cm from the base YZ plane"}
