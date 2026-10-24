@@ -185,3 +185,16 @@ This is not physical-speed qualification. The previous transfer archive is a
 historical pre-update snapshot; use the updated repository candidate for new
 workstation comparisons. The policy's position contract defines no speed ceiling.
 The earlier test total included external contracts tests, not missing runtime tests.
+
+
+## D7 shadow implementation — 2026-10-24
+
+The read-only FCI shadow backend is implemented separately from mock and native
+control. See [D7 shadow](droid-d7-shadow.md) for runner behavior, source validity,
+recording scope and the RT launch command. Backend identity starts with `shadow`;
+application receipts are disabled. Real measured q drives admission/workspace
+checks while execution is virtual. No arm/Hand commands are available.
+
+Offline verification does not qualify physical timing, collision geometry, tool
+configuration, controller stop or Hand cancellation. No FCI connection was made
+during this implementation. Existing physical admission blockers remain.

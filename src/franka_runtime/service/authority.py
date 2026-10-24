@@ -271,6 +271,8 @@ class SessionAuthority:
             ok=(evidence.get('joined') is True and evidence.get('stop_finished') is True and
                 evidence.get('stop_at_rest') is True and evidence.get('stop_fault')==0 and
                 evidence.get('dropped_samples')==0)
+            if not self.expect_application and evidence.get('mode')=='shadow_readonly':
+                ok=evidence.get('source_joined') is True and evidence.get('no_commands_sent') is True
             if not ok:self._latch('stop_failed')
             if self.fault is not None:
                 self.fault=replace(self.fault,stop_state='complete' if ok else 'timeout')

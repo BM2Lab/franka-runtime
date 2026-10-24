@@ -31,6 +31,7 @@ import franka_runtime
 from ..service.authority import AuthorityError, SessionAuthority
 from .backend import BackendUpdate, Consumption
 from .admission import _AdmittedPhysicalConfig
+from .shadow_config import ShadowRuntimeConfig
 from .checks import check_rows
 from .executor import UNDERRUN, ChunkExecutor
 from .gripper import GripperIntent
@@ -99,8 +100,9 @@ class MockDroidBackend:
 class DroidRuntimeService:
     def __init__(self, config, spec, *, clock=time.monotonic_ns, clock_id=None, token=None, backend_factory=None, recorder=None):
         physical = isinstance(config,_AdmittedPhysicalConfig)
+        shadow = isinstance(config,ShadowRuntimeConfig)
         settings = config.require_runnable()
-        if physical and (backend_factory is None or recorder is None or recorder.fault):
+        if (physical or shadow) and (backend_factory is None or recorder is None or recorder.fault):
             raise ValueError("Physical composition requires backend and healthy started recording")
         sha = payload_sha256(spec)
         if sha not in settings["allowed_contracts"] or spec.robot.robot_id != settings["robot_id"]:
@@ -130,6 +132,11 @@ class DroidRuntimeService:
                 raise ValueError("Physical DROID selection requires a commissioned physical config/factory")
             if physical and not self.backend.hardware_executed:
                 raise ValueError("Physical composition cannot substitute a mock backend")
+            if shadow and (not getattr(self.backend,"shadow",False) or self.backend.hardware_executed
+                    or getattr(self.backend,"expect_application",True) is not False):
+                raise ValueError("Shadow must use read-only backend without application receipts")
+            if getattr(self.backend,"shadow",False) and not shadow:
+                raise ValueError("Shadow backend requires explicit shadow configuration")
             self.arm, self.hand = self.backend.arm, self.backend.hand
         if hasattr(self.backend, "recorder"):
             self.backend.recorder = recorder
@@ -137,7 +144,7 @@ class DroidRuntimeService:
         self.workspace.check_configuration(self.arm.q, "start pose")
         self.authority = SessionAuthority(self.backend, spec, self._validate_payload, clock_id=self.clock_id,
             command_timeout_ns=settings["command_timeout_ns"], clock=clock, max_lease_ns=settings["max_lease_ns"],
-            capability_prefix=settings["capability_prefix"], robot_id=settings["robot_id"],
+            capability_prefix=settings["capability_prefix"], robot_id=settings["robot_id"],expect_application=not shadow,
             receipt_sink=None if recorder is None else lambda receipt:self._record("receipt",asdict(receipt)))
         self.intent = GripperIntent(spec.gripper, self.hand.width)
         self._lock = threading.RLock()
@@ -165,16 +172,32 @@ class DroidRuntimeService:
 
     # ---- payload validation (called by SessionAuthority at submit and again at dispatch)
     def _validate_payload(self, payload):
-        if hasattr(self.backend, "validate_state"):
-            self.backend.validate_state()
-        chunk = DroidActionChunk.from_dict(payload)
-        if chunk.action_spec != self.spec.action or len(chunk.values) > self.spec.open_loop_horizon:
-            raise ValueError("Chunk incompatible with the contract")
-        peak = check_rows(chunk.values, self.arm.q, self.settings, self.row_period_ns)
-        self.workspace.check_rows(chunk.values, self.arm.q)
-        if hasattr(self.backend, "validate_targets"):
-            self.backend.validate_targets(chunk.values)
-        self.peak_speed = [max(a, b) for a, b in zip(self.peak_speed, peak)]
+        stage="state"
+        try:
+            if hasattr(self.backend, "validate_state"):
+                self.backend.validate_state()
+            stage="contract"
+            chunk = DroidActionChunk.from_dict(payload)
+            if chunk.action_spec != self.spec.action or len(chunk.values) > self.spec.open_loop_horizon:
+                raise ValueError("Chunk incompatible with the contract")
+            stage="row_limits"
+            peak = check_rows(chunk.values, self.arm.q, self.settings, self.row_period_ns)
+            stage="workspace"
+            self.workspace.check_rows(chunk.values, self.arm.q)
+            if hasattr(self.backend, "validate_targets"):
+                stage="backend_geometry"
+                self.backend.validate_targets(chunk.values)
+            self.peak_speed = [max(a, b) for a, b in zip(self.peak_speed, peak)]
+        except Exception as error:
+            if getattr(self.backend,"shadow",False):
+                self._record("shadow_acceptance_check",dict(passed=False,stage=stage,reason=str(error),
+                    measured_q=list(self.arm.q),chunk_sha256=payload_sha256(payload),feedback=self.backend.feedback_info))
+            raise
+        if getattr(self.backend,"shadow",False):
+            if not self._record("shadow_acceptance_check",dict(passed=True,stage="complete",workspace_passed=True,
+                    measured_q=list(self.arm.q),chunk_sha256=payload_sha256(payload),feedback=self.backend.feedback_info)):
+                self.authority.poll(native_fault=209)
+                raise ValueError("Shadow acceptance recording unavailable")
 
     # ---- control loop
     def control_step(self, now_ns, dt_s):
@@ -190,7 +213,11 @@ class DroidRuntimeService:
                 if step.row_started and step.closure is not None:
                     action = self.intent.update(step.closure)
                     if action:
-                        self.hand.command(action)
+                        if getattr(self.backend,"shadow",False):
+                            if not self._record("shadow_would_gripper_command",dict(action=action,commands_sent=False)):
+                                raise RuntimeError("Shadow intent recording failed")
+                        else:
+                            self.hand.command(action)
                 if step.stop_reason == UNDERRUN and not self._fault_reported:
                     self._fault(UNDERRUN)
                 update = self.backend.update(now_ns, dt_s, step, self._tick)
@@ -496,7 +523,7 @@ class DroidRuntimeService:
         driver=getattr(self.backend,"driver",None)
         native_started=getattr(self.backend,"_started",False)
         if driver is None:
-            workers_joined=True  # Mock backend has no native device workers.
+            workers_joined=bool(getattr(self.backend,"workers_joined",True)) # Shadow also joins read-only workers.
         else:
             arm_joined=driver.joined if native_started else getattr(driver,"thread",None) is None
             hand_passive=(not native_started and not getattr(self.backend,"_stopping",False))
@@ -506,6 +533,10 @@ class DroidRuntimeService:
             (evidence.get("joined") is True and evidence.get("stop_finished") is True and
              evidence.get("stop_at_rest") is True and evidence.get("stop_fault")==0 and
              evidence.get("dropped_samples")==0)))
+        if getattr(self.backend,"shadow",False):
+            stop_ok=(not self.authority.stopping and (evidence is None or
+                (evidence.get("mode")=="shadow_readonly" and evidence.get("source_joined") is True
+                 and evidence.get("no_commands_sent") is True)))
         stop_ok=stop_ok and (not native_started or evidence is not None)
         report=dict(shutdown_error=self._shutdown_error,native_control_started=bool(native_started),supervisor_joined=control is None or not control.is_alive(),workers_joined=bool(workers_joined),
             stop_confirmed=bool(stop_ok),stop_evidence=evidence,cancellation_evidence=getattr(self.backend,"cancellation_evidence",None),authority_state=self.authority.state,
