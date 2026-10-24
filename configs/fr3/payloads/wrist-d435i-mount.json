@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "name": "wrist-d435i-mount-2026-10-24",
+  "m_load": 0.123,
+  "F_x_Cload": [
+    -0.098995,
+    0.042426,
+    0.0334
+  ],
+  "I_load": [
+    7.5e-06,
+    0.0,
+    0.0,
+    0.0,
+    5.235e-05,
+    0.0,
+    0.0,
+    0.0,
+    5.235e-05
+  ],
+  "components": [
+    {
+      "name": "RealSense D435i (wrist, serial 152122071116)",
+      "mass_kg": 0.072
+    },
+    {
+      "name": "camera mount",
+      "mass_kg": 0.051
+    }
+  ],
+  "com_tcp_m": [
+    -0.1,
+    -0.04,
+    -0.07
+  ],
+  "inertia_model": {
+    "box_m": [
+      0.09,
+      0.025,
+      0.025
+    ],
+    "component": "RealSense D435i (wrist, serial 152122071116)",
+    "frame": "flange axes"
+  },
+  "F_T_EE_source": {
+    "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-fresh-state/robot_state_20261024T184702Z.json",
+    "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751"
+  },
+  "basis": "Operator-weighed components (camera 72 g, mount 51 g) and operator-measured camera offset from the TCP frame (-100, -40, -70) mm, 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
+}
