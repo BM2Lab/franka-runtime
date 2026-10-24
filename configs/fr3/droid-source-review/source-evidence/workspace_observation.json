@@ -1,3 +1,3 @@
-{"schema_version": 1, "frame": "robot base (link0)", "box_min_m": [0.27, -0.38, 0.03], "box_max_m": [0.88, 0.38, 0.53],
+{"schema_version": 1, "frame": "robot base (link0)", "box_min_m": [0.27, -0.38, 0.03], "box_max_m": [0.88, 0.38, 1.0],
  "table_z_m": 0.03, "clearance_m": 0.02,
- "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"}
+ "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 cm in X x Y in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; bottom (the table plane) 3 cm above the mounting plane; top extended to 1.0 m by the operator (ample headroom); 2 cm table clearance"}

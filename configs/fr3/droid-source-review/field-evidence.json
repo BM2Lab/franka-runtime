@@ -248,21 +248,6 @@
       "basis": "Pinned DROID 100 Hz filter; preserves Franky slew before libfranka filtering"
     },
     {
-      "field": "guards.max_measured_joint_velocity_rad_s",
-      "value": [
-        0.435,
-        0.435,
-        0.435,
-        0.435,
-        0.522,
-        0.522,
-        0.522
-      ],
-      "source": "source-evidence/completed_m4_config.yaml",
-      "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4",
-      "basis": "Historical M4 guard, not DROID clamp semantics and not Hand qualification"
-    },
-    {
       "field": "guards.max_command_torque_nm",
       "value": [
         40.0,
@@ -290,28 +275,6 @@
       "source": "source-evidence/completed_m4_config.yaml",
       "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4",
       "basis": "Historical native time guard; remains provisional for this runtime"
-    },
-    {
-      "field": "stop.damping",
-      "value": [
-        2.0,
-        2.0,
-        2.0,
-        1.0,
-        1.0,
-        1.0,
-        0.5
-      ],
-      "source": "source-evidence/completed_m4_config.yaml",
-      "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4",
-      "basis": "Completed archived smooth stop; bare-flange history does not qualify the mounted Hand"
-    },
-    {
-      "field": "stop.ramp_duration_s",
-      "value": 0.2,
-      "source": "source-evidence/completed_m4_config.yaml",
-      "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4",
-      "basis": "Completed archived smooth stop; bare-flange history does not qualify the mounted Hand"
     },
     {
       "field": "stop.rest_velocity_rad_s",
@@ -380,21 +343,21 @@
       "field": "timing.startup_timeout_ns",
       "value": 5000000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s admission allowance, inspired by DROID policy-start wait; not a measured native startup bound"
     },
     {
       "field": "timing.consumption_timeout_ns",
       "value": 50000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 50 ms first-consumption allowance; choose after timing tests"
     },
     {
       "field": "timing.stop_timeout_ns",
       "value": 2500000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: native stop maximum plus 0.5 s for telemetry/worker join"
     },
     {
@@ -573,77 +536,77 @@
       "field": "gripper.epsilon_inner_m",
       "value": 0.005,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     {
       "field": "gripper.epsilon_outer_m",
       "value": 0.005,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     {
       "field": "gripper.poll_hz",
       "value": 50,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Contract feedback target, not achieved-rate evidence"
     },
     {
       "field": "gripper.moving_epsilon_m_s",
       "value": 0.001,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Width-change detection threshold"
     },
     {
       "field": "gripper.cancel_interval_ms",
       "value": 10,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device cancellation test cadence"
     },
     {
       "field": "gripper.cancel_attempts",
       "value": 20,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device bounded cancellation attempts"
     },
     {
       "field": "gripper.history_capacity",
       "value": 1024,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing serialized Hand worker default"
     },
     {
       "field": "tool.scalar_tolerance",
       "value": 1e-06,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured-value comparison tolerance; not physical calibration accuracy"
     },
     {
       "field": "tool.transform_tolerance",
       "value": 1e-06,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured matrix comparison tolerance; not physical calibration accuracy"
     },
     {
       "field": "workspace.model_urdf",
       "value": "assets/arm-contract-names.reference.urdf",
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Copied arm-only URDF with joint labels aliased in order; no Hand geometry added"
     },
     {
       "field": "workspace.model_sha256",
       "value": "8c16cace888871113ba8fd6dc4e3d750a97fb5cfa1740ba5421bacd0f717168d",
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Hash of the exact derived reference asset"
     },
     {
@@ -775,33 +738,33 @@
         0.03
       ],
       "source": "source-evidence/workspace_observation.json",
-      "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821",
-      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"
+      "sha256": "f2d52cf6ea37a02cb7a10c4d8c30b947ea4c60a7a3c34aec5185efecbf043a5b",
+      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 cm in X x Y in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; bottom (the table plane) 3 cm above the mounting plane; top extended to 1.0 m by the operator (ample headroom); 2 cm table clearance"
     },
     {
       "field": "workspace.box_max_m",
       "value": [
         0.88,
         0.38,
-        0.53
+        1.0
       ],
       "source": "source-evidence/workspace_observation.json",
-      "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821",
-      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"
+      "sha256": "f2d52cf6ea37a02cb7a10c4d8c30b947ea4c60a7a3c34aec5185efecbf043a5b",
+      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 cm in X x Y in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; bottom (the table plane) 3 cm above the mounting plane; top extended to 1.0 m by the operator (ample headroom); 2 cm table clearance"
     },
     {
       "field": "workspace.table_z_m",
       "value": 0.03,
       "source": "source-evidence/workspace_observation.json",
-      "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821",
-      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"
+      "sha256": "f2d52cf6ea37a02cb7a10c4d8c30b947ea4c60a7a3c34aec5185efecbf043a5b",
+      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 cm in X x Y in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; bottom (the table plane) 3 cm above the mounting plane; top extended to 1.0 m by the operator (ample headroom); 2 cm table clearance"
     },
     {
       "field": "workspace.clearance_m",
       "value": 0.02,
       "source": "source-evidence/workspace_observation.json",
-      "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821",
-      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"
+      "sha256": "f2d52cf6ea37a02cb7a10c4d8c30b947ea4c60a7a3c34aec5185efecbf043a5b",
+      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 cm in X x Y in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; bottom (the table plane) 3 cm above the mounting plane; top extended to 1.0 m by the operator (ample headroom); 2 cm table clearance"
     },
     {
       "field": "network.bind_host",
@@ -837,50 +800,87 @@
       "field": "recording.directory",
       "value": "/home/chen-lab/yifan/droid-deployment/sessions/droid-first",
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: New per-run recording directory; parent must exist and directory must not be reused"
     },
     {
       "field": "recording.queue_capacity",
       "value": 4096,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Match historical native logging capacity; writer must keep up"
     },
     {
       "field": "recording.max_record_bytes",
       "value": 65536,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 64 KiB per-event bound"
     },
     {
       "field": "recording.max_event_bytes",
       "value": 1073741824,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 GiB event budget; session faults on exhaustion"
     },
     {
       "field": "recording.min_free_bytes",
       "value": 1073741824,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Additional 1 GiB free-space reserve"
     },
     {
       "field": "recording.fsync_interval_s",
       "value": 1.0,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 s target durability interval"
     },
     {
       "field": "recording.close_timeout_s",
       "value": 5.0,
       "source": "source-evidence/population_script.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s bounded writer close"
+    },
+    {
+      "field": "stop.ramp_duration_s",
+      "value": 0.01,
+      "source": "source-evidence/operator_decisions.json",
+      "sha256": "4a10b7e1421488eb71753f5a2c06bf1c130247b99f2462977ce0a549f7e38bad",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits"
+    },
+    {
+      "field": "stop.damping",
+      "value": [
+        5.0,
+        5.0,
+        5.0,
+        2.0,
+        1.0,
+        1.0,
+        0.5
+      ],
+      "source": "source-evidence/operator_decisions.json",
+      "sha256": "4a10b7e1421488eb71753f5a2c06bf1c130247b99f2462977ce0a549f7e38bad",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits"
+    },
+    {
+      "field": "guards.max_measured_joint_velocity_rad_s",
+      "value": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.2,
+        1.2,
+        1.2
+      ],
+      "source": "source-evidence/operator_decisions.json",
+      "sha256": "4a10b7e1421488eb71753f5a2c06bf1c130247b99f2462977ce0a549f7e38bad",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits"
     }
   ]
 }

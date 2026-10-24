@@ -229,6 +229,11 @@
       "sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
       "snapshot": "source-evidence/arm_reference_urdf.urdf"
     },
+    "operator_decisions": {
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-operator-decisions/stop-guard.json",
+      "sha256": "4a10b7e1421488eb71753f5a2c06bf1c130247b99f2462977ce0a549f7e38bad",
+      "snapshot": "source-evidence/operator_decisions.json"
+    },
     "unit_observation": {
       "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-unit-identity/unit-observation.json",
       "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17",
@@ -236,7 +241,7 @@
     },
     "population_script": {
       "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
-      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
+      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
       "snapshot": "source-evidence/population_script.py"
     },
     "fresh_state": {
@@ -260,8 +265,8 @@
       "snapshot": "source-evidence/hand_timing.json"
     },
     "workspace_observation": {
-      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-workspace-box/workspace-box-table.json",
-      "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821",
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-workspace-box/workspace-box-table-1m.json",
+      "sha256": "f2d52cf6ea37a02cb7a10c4d8c30b947ea4c60a7a3c34aec5185efecbf043a5b",
       "snapshot": "source-evidence/workspace_observation.json"
     }
   }
