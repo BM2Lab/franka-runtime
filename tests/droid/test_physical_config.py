@@ -115,8 +115,14 @@ def test_factory_connect_is_passive_until_start_and_refreshes(tmp_path):
     def identity(a):
         return dict(**{k:d['robot'][k] for k in ('address','model','firmware_version','fci_version','arm_serial','control_serial')},clock_id='test',observed_ns=clock[0])
     checker=NS(artifact_sha256=d['artifacts']['collision_model_sha256'],check_configuration=lambda q:None)
-    f=PhysicalDeviceFactory(c,clock=now,clock_id='test',identity_reader=identity,collision_checker=checker,artifact_verifier=lambda p:sdk)
+    sched=[]
+    os_fake=NS(SCHED_OTHER=0,SCHED_FIFO=1,sched_param=lambda p:p,sched_getparam=lambda t:NS(sched_priority=99),
+               sched_get_priority_max=lambda p:99,sched_setscheduler=lambda t,pol,prm:sched.append((t,pol,prm)))
+    f=PhysicalDeviceFactory(c,clock=now,clock_id='test',identity_reader=identity,collision_checker=checker,artifact_verifier=lambda p:sdk,
+                            control_cpu=3,scheduler=os_fake)
     b=f.connect(None,spec=SPEC,authorize_device_setup=True)
+    # Robot() raised the constructing thread to FIFO max; it is demoted before any worker thread exists.
+    assert sched==[(0,0,0)] and b.driver.realtime==dict(cpu=3,priority=99)
     assert b.driver.thread is None and b.hand._thread is None and b.arm.dq==(.01,)*7
     assert calls==[dict(default_torque_threshold=1,default_force_threshold=1,realtime_config='enforce')]
     state.q=[.1]*7;b.estimate=object();assert b.preflight()['q']==(.1,)*7

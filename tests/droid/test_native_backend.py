@@ -317,3 +317,23 @@ def test_preflight_reads_arm_after_blocking_hand_prime():
                         consumption_timeout_ns=20_000_000,stop_timeout_ns=200_000_000,state_timeout_ns=30_000_000)
     b.estimate=object()
     assert b.preflight()['q']==(.1,)*7
+
+
+def test_control_thread_raises_and_pins_itself_before_move(monkeypatch):
+    import franka_runtime.droid.native as native
+    import os
+    calls=[];moved=[]
+    monkeypatch.setattr(os,'sched_setaffinity',lambda t,c:calls.append(('affinity',t,set(c))))
+    monkeypatch.setattr(os,'sched_setscheduler',lambda t,p,prm:calls.append(('fifo',t,p,prm.sched_priority)))
+    monkeypatch.setattr(os,'sched_getaffinity',lambda t:{3})
+    monkeypatch.setattr(os,'sched_getscheduler',lambda t:os.SCHED_FIFO)
+    monkeypatch.setattr(os,'sched_getparam',lambda t:os.sched_param(99))
+    reports=[]
+    robot=type('R',(),{'move':lambda self,m,**kw:moved.append(list(calls))})()
+    d=native.FrankyArmDriver(robot,lambda:object(),(0.,)*7,initial_timestamp_ns=1,initial_dq=(0.,)*7,limit_rate=True,cutoff_hz=100.,
+                             realtime=dict(cpu=3,priority=99),report=lambda k,v:reports.append((k,v)))
+    d.prepare();d.start();d.thread.join(1)
+    assert d.error is None and moved==[[('affinity',0,{3}),('fifo',0,os.SCHED_FIFO,99)]]
+    assert reports[0][0]=='native_thread' and reports[0][1]['cpus']==[3] and reports[0][1]['priority']==99
+    with pytest.raises(ValueError,match='cpu/priority'):
+        native.FrankyArmDriver(robot,lambda:object(),(0.,)*7,initial_timestamp_ns=1,initial_dq=(0.,)*7,limit_rate=True,cutoff_hz=100.,realtime=dict(cpu=3))

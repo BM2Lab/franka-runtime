@@ -35,8 +35,13 @@ def build_motion(sdk, config):
 
 
 class PhysicalDeviceFactory:
-    def __init__(self,config,*,clock,clock_id,identity_reader,collision_checker,artifact_verifier=verify_native_artifact):
+    def __init__(self,config,*,clock,clock_id,identity_reader,collision_checker,artifact_verifier=verify_native_artifact,
+                 control_cpu=None,scheduler=None):
         self.config,self.clock,self.clock_id=config,clock,clock_id
+        self.control_cpu=control_cpu
+        if scheduler is None:
+            import os;scheduler=os
+        self.scheduler=scheduler
         self.identity_reader,self.collision_checker=identity_reader,collision_checker
         self.artifact_verifier=artifact_verifier
 
@@ -105,6 +110,11 @@ class PhysicalDeviceFactory:
             return q,dq,stamp
 
         q,dq,stamp=read_arm();gripper=sdk.Gripper(r['address']);g=d['gripper']
+        # libfranka's Robot constructor made THIS thread SCHED_FIFO max; threads it creates would
+        # inherit that and compete with the 1 kHz loop. Demote it; the control thread raises itself.
+        os=self.scheduler;priority=os.sched_getparam(0).sched_priority
+        os.sched_setscheduler(0,os.SCHED_OTHER,os.sched_param(0))
+        record('thread_scheduling',dict(constructor_thread_priority=priority,demoted_to='SCHED_OTHER',control_cpu=self.control_cpu))
         def read_hand():
             s=gripper.state
             return dict(width=float(s.width),moving=False,grasped=bool(s.is_grasped),message_id=int(s.time.to_msec()))
@@ -116,7 +126,8 @@ class PhysicalDeviceFactory:
             cancel_interval_s=g['cancel_interval_ms']/1000,cancel_attempts=g['cancel_attempts'],history_capacity=g['history_capacity'],
             cancelled_exception=lambda e:isinstance(e,sdk.CommandException) and 'Command aborted!' in str(e))
         driver=FrankyArmDriver(robot,lambda:build_motion(sdk,admitted),q,initial_dq=dq,initial_timestamp_ns=stamp,
-            refresh=read_arm,limit_rate=d['controller']['libfranka_limit_rate'],cutoff_hz=d['controller']['lowpass_cutoff_hz'])
+            refresh=read_arm,limit_rate=d['controller']['libfranka_limit_rate'],cutoff_hz=d['controller']['lowpass_cutoff_hz'],
+            realtime=dict(cpu=self.control_cpu,priority=os.sched_get_priority_max(os.SCHED_FIFO)),report=record)
         backend=NativeDroidBackend(executor,driver,hand,clock=self.clock,
             **{key:d['timing'][key] for key in ('startup_timeout_ns','consumption_timeout_ns','stop_timeout_ns','state_timeout_ns')})
         def validate_targets(rows):

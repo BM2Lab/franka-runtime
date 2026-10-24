@@ -25,7 +25,8 @@ class FrankyArmDriver:
     motion_factory creates a fresh DroidJointImpedanceMotion. robot.move executes
     on a dedicated worker; no automatic recovery, robot.stop or fallback motion.
     """
-    def __init__(self, robot, motion_factory, initial_q, *, initial_timestamp_ns, initial_dq, limit_rate, cutoff_hz, refresh=None):
+    def __init__(self, robot, motion_factory, initial_q, *, initial_timestamp_ns, initial_dq, limit_rate, cutoff_hz, refresh=None,
+                 realtime=None, report=None):
         if (type(limit_rate) is not bool or isinstance(cutoff_hz, bool)
                 or not math.isfinite(cutoff_hz) or cutoff_hz <= 0
                 or type(initial_timestamp_ns) is not int or initial_timestamp_ns <= 0):
@@ -40,6 +41,12 @@ class FrankyArmDriver:
         if len(self.initial_q) != 7 or not all(math.isfinite(x) for x in self.initial_q):
             raise ValueError('Seven measured initial positions required')
         self.limit_rate, self.cutoff_hz = limit_rate, cutoff_hz
+        # libfranka raises only the thread that constructs Robot; the control thread sets its own.
+        if realtime is not None and (set(realtime) != {'cpu', 'priority'} or type(realtime['priority']) is not int
+                                     or (realtime['cpu'] is not None and type(realtime['cpu']) is not int)):
+            raise ValueError('Explicit control-thread cpu/priority required')
+        self.realtime, self.report = realtime, report
+        self.thread_info = None
         self.motion = self.thread = None
         self.error = None
 
@@ -60,6 +67,15 @@ class FrankyArmDriver:
     def start(self):
         def run():
             try:
+                if self.realtime is not None:
+                    import os
+                    if self.realtime['cpu'] is not None:
+                        os.sched_setaffinity(0, {self.realtime['cpu']})
+                    os.sched_setscheduler(0, os.SCHED_FIFO, os.sched_param(self.realtime['priority']))
+                    self.thread_info = dict(native_id=threading.get_native_id(), cpus=sorted(os.sched_getaffinity(0)),
+                                            policy=os.sched_getscheduler(0), priority=os.sched_getparam(0).sched_priority)
+                    if self.report is not None:
+                        self.report('native_thread', self.thread_info)
                 self.robot.move(self.motion, asynchronous=False, limit_rate=self.limit_rate,
                                 cutoff_frequency=self.cutoff_hz)
             except Exception as error:
