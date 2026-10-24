@@ -4,8 +4,8 @@ Rows of the active chunk start on a fixed grid (``row_period_ns``). An accepted 
 waits as the single pending chunk and replaces the current chunk's not-yet-started
 rows at the next row boundary (immediately when idle or holding). No row starts at or
 after its chunk's runtime deadline. When rows run out, the last target is held for at
-most ``hold_timeout_ns``; then the executor requests a stop. The native 1 kHz
-interpolation between row targets belongs to the backend.
+most ``hold_timeout_ns``; then the executor requests a stop. The backend owns native
+execution; the hybrid impedance candidate does not interpolate row targets.
 """
 from dataclasses import dataclass
 from typing import Optional

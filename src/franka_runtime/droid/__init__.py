@@ -1,6 +1,6 @@
-"""DROID joint-position chunk runtime (D4): config, checks, executor, gripper intent,
-mock backends and the network service. Standard library + contracts only.
+"""DROID executor/service and offline native-backend candidates.
 
-Importing this package opens no socket, starts no thread and imports no vendor
-library. The only backend implemented is the mock; the Franky backend is D6.
+The public CLI remains mock-only. Imports open no devices/sockets, start no
+threads and import no optional vendor libraries. Physical selection/qualification
+is intentionally separate from dependency injection used by offline tests.
 """

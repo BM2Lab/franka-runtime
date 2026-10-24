@@ -195,3 +195,10 @@ Tests: 45 passed, 2 skipped (M4/PPO).
   the FR3 links and the Franka Hand (e.g. from franka_description). None is invented here.
   The workspace check above is point-based with clearances, not geometric collision checking.
 - **Transport security beyond the minimum:** TLS, and token rotation.
+
+
+The native D6 controller/artifact and injected backend candidates are now tested
+offline; see [DROID backend integration](droid-backend-integration.md) and the
+[current RT-host handoff](droid-d6-rt-host.md). These supersede the earlier future
+motion-generator proposal. The public CLI/config remain mock-only until the
+physical commissioning/schema/device-factory work is complete.

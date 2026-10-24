@@ -5,8 +5,8 @@ measured state. Rejects, never clips:
 - every row inside the joint range reduced by margins;
 - row 0 leading the measured state by at most ``max_target_lead_rad`` per joint;
 - consecutive rows implying at most ``max_joint_velocity_rad_s`` at the row period.
-How fast the arm approaches a leading setpoint is limited by the motion generator
-(velocity and acceleration limits), not by this acceptance check.
+These are target-admission checks, not measured velocity/acceleration guarantees.
+The mock has a braking model; the native impedance candidate has separate guards.
 """
 
 
