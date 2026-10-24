@@ -485,3 +485,12 @@ unit/tool/collision/approval fields**. See
 copies distinguish completed M4 evidence, pinned DROID defaults, mock baselines
 and engineering proposals. The prior all-null review remains historical.
 No robot/network operation or new motion approval occurred.
+
+
+## Cross-host mock completed, 2026-10-24
+
+See [cross-host results](droid-crosshost-mock-results.md): clean 10/30-step mock
+episodes, 339 µs clock uncertainty and ~110 ms capture-to-receipt p95. The mock
+was stopped afterward. The non-executable target-admission bound now uses pinned
+DROID ceilings, while measured-speed guards remain unchanged. Native timing and
+physical unit/tool/collision/stop qualification are still outstanding.

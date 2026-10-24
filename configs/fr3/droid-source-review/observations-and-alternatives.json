@@ -225,7 +225,7 @@
     },
     "archived_d6_summary": {
       "path": "/home/chen-lab/franka-runtime/docs/droid-d6-rt-host.md",
-      "sha256": "336cc903a4e1cd4ecd6bf94694fdcce6392802b34a666549a1b9ea6fa3ce1d98",
+      "sha256": "1c77b70fe5c2ffa6aa2481ea66bcc7c340fed2a92f875e418e815f8d2cd2f7f0",
       "snapshot": "source-evidence/archived_d6_summary.md"
     },
     "arm_reference_urdf": {
@@ -235,7 +235,7 @@
     },
     "population_script": {
       "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
-      "sha256": "5271b5650d7d8c9627a5a3e16b12a03ccccebca8c824bdf20bbcc8d024dad443",
+      "sha256": "6bcbf5b06b61bf59bb3fd1d35091c9c8e13cb44540e44555dbfecefb9d126b6a",
       "snapshot": "source-evidence/population_script.py"
     }
   }

@@ -61,7 +61,7 @@ generator should be updated accordingly; they still describe the mock separately
 | Constructor collision thresholds | 20 Nm / 30 N | Historical completed M4 run, not DROID's 40/40 |
 | Measured joint speed guard | 0.435 rad/s J1–4, 0.522 J5–7 | Historical completed M4 run |
 | Raw command torque guard | 40 Nm J1–4, 8 Nm J5–7 | Historical M4 guard; **not** DROID's 86/11.5 Nm clamp |
-| Target row-speed limit | Same 0.435 / 0.522 | Conservative reuse proposal, distinct from measured speed |
+| Target row-speed limit | 2.075 rad/s J1–4, 2.51 J5–7 | Pinned DROID ceilings; target admission only; updated after cross-host replay |
 | Row-0 target lead | 0.3 rad per joint | Existing D5/mock baseline |
 | Stop D | 2, 2, 2, 1, 1, 1, 0.5 | Completed archived smooth stop |
 | Stop ramp/rest/max | 0.2 s / 0.02 rad/s / 2 s | Same historical stop |
@@ -156,7 +156,7 @@ D8 hold/stop/Hand qualification and D9 trials remain separately authorized work.
 
 ## Validation and transfer
 
-Offline regression: **230 passed, 2 skipped**. The skips are the pinned upstream
+Offline regression: **163 runtime tests + 67 external contracts tests = 230 passed, 2 runtime skips**. The skips are the pinned upstream
 contracts' missing M4/PPO modules. Population tests verify archived successful-run
 config hashes, source hashes, effective joint bounds, unchanged FK after joint
 aliasing, copied artifact hashes, the 18 deliberate omissions, and schema validity
@@ -173,3 +173,15 @@ Apply the source patch only to a clean checkout of the recorded base (check with
 `git apply --check runtime.patch` first). Do not overwrite unrelated workstation
 changes or install the RT native environment on the inference host. The patch
 has not been pushed to GitHub by this task.
+
+
+## Cross-host follow-up, 2026-10-24
+
+[Cross-host results and test-count reconciliation](droid-crosshost-mock-results.md)
+record the successful 10/30-step episodes and stopped mock. The candidate target
+row-speed bound now uses DROID 2.075/2.51 rad/s; measured guards remain unchanged.
+Offline replay reduces target-speed rejections from 13/37 accepted chunks to 0/37.
+This is not physical-speed qualification. The previous transfer archive is a
+historical pre-update snapshot; use the updated repository candidate for new
+workstation comparisons. The policy's position contract defines no speed ceiling.
+The earlier test total included external contracts tests, not missing runtime tests.

@@ -34,6 +34,8 @@ def test_populated_draft_keeps_tool_identity_and_approval_unknown(tmp_path):
     c=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json');d=c.data
     assert r['prefilled']==86 and r['remaining']==18
     assert d['controller']['joint_stiffness']==[40,30,50,25,35,25,10]
+    assert d['acceptance']['max_consecutive_row_speed_rad_s']==[2.075]*4+[2.51]*3
+    assert d['guards']['max_measured_joint_velocity_rad_s']==[.435]*4+[.522]*3
     assert d['robot']['arm_serial'] is None and d['tool']['m_ee'] is None and d['tool']['F_T_EE'] is None
     assert d['gripper']['grasp_force_n']==20 and d['gripper']['speed_m_s']==.05
     assert d['stop']['max_duration_s']==2 and d['timing']['stop_timeout_ns']==2_500_000_000
