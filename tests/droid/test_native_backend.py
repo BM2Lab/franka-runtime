@@ -305,3 +305,15 @@ def test_shutdown_reports_supervision_exception_without_claiming_success():
     result=svc.finish_shutdown(timeout_s=.1)
     assert not result['ok'] and 'supervision_failure' in result['shutdown_error']
     assert b.driver.motion.stop and not result['workers_joined']
+
+
+def test_preflight_reads_arm_after_blocking_hand_prime():
+    # Measured FR3 Hand: a state read blocks until the next 10 Hz packet (~100 ms),
+    # longer than the 30-40 ms arm freshness bound.
+    clock=Clock();driver=Driver(clock,(0.,)*7);hand=Hand()
+    def refresh():driver.initial_q,driver.initial_dq,driver.initial_timestamp_ns=(.1,)*7,(0.,)*7,clock()
+    driver.refresh=refresh;driver.initial_dq=(0.,)*7;hand.prime=lambda:clock.advance(100_000_000)
+    b=FakeNativeBackend(None,driver,hand,clock=clock,startup_timeout_ns=1_000_000_000,
+                        consumption_timeout_ns=20_000_000,stop_timeout_ns=200_000_000,state_timeout_ns=30_000_000)
+    b.estimate=object()
+    assert b.preflight()['q']==(.1,)*7

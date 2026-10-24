@@ -117,11 +117,13 @@ class NativeDroidBackend:
     def preflight(self):
         if self.estimate is None or self._fault:
             raise RuntimeError('Registered clock and fault-free backend required')
+        # Prime the Hand first: its read blocks until the next Hand packet (100 ms at 10 Hz),
+        # which would age the arm snapshot past state_timeout before validation.
+        if hasattr(self.hand, 'prime'):
+            self.hand.prime()
         if hasattr(self.driver, 'refresh'):
             self.driver.refresh()
             self.arm.q, self.arm.dq = tuple(self.driver.initial_q), tuple(self.driver.initial_dq)
-        if hasattr(self.hand, 'prime'):
-            self.hand.prime()
         self.validate_state()
         return {'q': self.arm.q}
 
