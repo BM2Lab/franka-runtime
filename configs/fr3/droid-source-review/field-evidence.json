@@ -328,21 +328,21 @@
       "field": "timing.startup_timeout_ns",
       "value": 5000000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s admission allowance, inspired by DROID policy-start wait; not a measured native startup bound"
     },
     {
       "field": "timing.consumption_timeout_ns",
       "value": 50000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 50 ms first-consumption allowance; choose after timing tests"
     },
     {
       "field": "timing.stop_timeout_ns",
       "value": 2500000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: native stop maximum plus 0.5 s for telemetry/worker join"
     },
     {
@@ -521,77 +521,77 @@
       "field": "gripper.epsilon_inner_m",
       "value": 0.005,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     {
       "field": "gripper.epsilon_outer_m",
       "value": 0.005,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     {
       "field": "gripper.poll_hz",
       "value": 50,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Contract feedback target, not achieved-rate evidence"
     },
     {
       "field": "gripper.moving_epsilon_m_s",
       "value": 0.001,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Width-change detection threshold"
     },
     {
       "field": "gripper.cancel_interval_ms",
       "value": 10,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device cancellation test cadence"
     },
     {
       "field": "gripper.cancel_attempts",
       "value": 20,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device bounded cancellation attempts"
     },
     {
       "field": "gripper.history_capacity",
       "value": 1024,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing serialized Hand worker default"
     },
     {
       "field": "tool.scalar_tolerance",
       "value": 1e-06,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured-value comparison tolerance; not physical calibration accuracy"
     },
     {
       "field": "tool.transform_tolerance",
       "value": 1e-06,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured matrix comparison tolerance; not physical calibration accuracy"
     },
     {
       "field": "workspace.model_urdf",
       "value": "assets/arm-contract-names.reference.urdf",
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Copied arm-only URDF with joint labels aliased in order; no Hand geometry added"
     },
     {
       "field": "workspace.model_sha256",
       "value": "8c16cace888871113ba8fd6dc4e3d750a97fb5cfa1740ba5421bacd0f717168d",
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Hash of the exact derived reference asset"
     },
     {
@@ -785,57 +785,57 @@
       "field": "recording.directory",
       "value": "/home/chen-lab/yifan/droid-deployment/sessions/droid-first",
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: New per-run recording directory; parent must exist and directory must not be reused"
     },
     {
       "field": "recording.queue_capacity",
       "value": 4096,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Match historical native logging capacity; writer must keep up"
     },
     {
       "field": "recording.max_record_bytes",
       "value": 65536,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 64 KiB per-event bound"
     },
     {
       "field": "recording.max_event_bytes",
       "value": 1073741824,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 GiB event budget; session faults on exhaustion"
     },
     {
       "field": "recording.min_free_bytes",
       "value": 1073741824,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Additional 1 GiB free-space reserve"
     },
     {
       "field": "recording.fsync_interval_s",
       "value": 1.0,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 s target durability interval"
     },
     {
       "field": "recording.close_timeout_s",
       "value": 5.0,
       "source": "source-evidence/population_script.py",
-      "sha256": "f7b93f9b8a0f75af881df2a649cd537340d30477f791060af09beacfe1d70385",
+      "sha256": "d1413ed91734df745faa79dbbb029a56f006dd28da4a92eddaa944e32c093413",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s bounded writer close"
     },
     {
       "field": "stop.ramp_duration_s",
       "value": 0.01,
       "source": "source-evidence/operator_decisions.json",
-      "sha256": "c61fbb9267e9ba797f509f7e46ccf5553817e1a844ce0b29bb1e893146722cb1",
-      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m"
+      "sha256": "2ee5109d1dbedb4edc1d7397543ae62f008242faf9ff3714eddfbd1374b0bed9",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m; operator chose torque admission (option A) after D9 episode 3 (0.2 rad wrist reversal requested 18.4 N m): reject chunks whose predicted reference-step torque exceeds 0.9 x the command-torque guard (fraction proposed by the engineer)"
     },
     {
       "field": "stop.damping",
@@ -849,8 +849,8 @@
         0.5
       ],
       "source": "source-evidence/operator_decisions.json",
-      "sha256": "c61fbb9267e9ba797f509f7e46ccf5553817e1a844ce0b29bb1e893146722cb1",
-      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m"
+      "sha256": "2ee5109d1dbedb4edc1d7397543ae62f008242faf9ff3714eddfbd1374b0bed9",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m; operator chose torque admission (option A) after D9 episode 3 (0.2 rad wrist reversal requested 18.4 N m): reject chunks whose predicted reference-step torque exceeds 0.9 x the command-torque guard (fraction proposed by the engineer)"
     },
     {
       "field": "guards.max_measured_joint_velocity_rad_s",
@@ -864,8 +864,8 @@
         1.8
       ],
       "source": "source-evidence/operator_decisions.json",
-      "sha256": "c61fbb9267e9ba797f509f7e46ccf5553817e1a844ce0b29bb1e893146722cb1",
-      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m"
+      "sha256": "2ee5109d1dbedb4edc1d7397543ae62f008242faf9ff3714eddfbd1374b0bed9",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m; operator chose torque admission (option A) after D9 episode 3 (0.2 rad wrist reversal requested 18.4 N m): reject chunks whose predicted reference-step torque exceeds 0.9 x the command-torque guard (fraction proposed by the engineer)"
     },
     {
       "field": "guards.max_command_torque_nm",
@@ -879,8 +879,15 @@
         12.0
       ],
       "source": "source-evidence/operator_decisions.json",
-      "sha256": "c61fbb9267e9ba797f509f7e46ccf5553817e1a844ce0b29bb1e893146722cb1",
-      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m"
+      "sha256": "2ee5109d1dbedb4edc1d7397543ae62f008242faf9ff3714eddfbd1374b0bed9",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m; operator chose torque admission (option A) after D9 episode 3 (0.2 rad wrist reversal requested 18.4 N m): reject chunks whose predicted reference-step torque exceeds 0.9 x the command-torque guard (fraction proposed by the engineer)"
+    },
+    {
+      "field": "acceptance.predicted_torque_fraction",
+      "value": 0.9,
+      "source": "source-evidence/operator_decisions.json",
+      "sha256": "2ee5109d1dbedb4edc1d7397543ae62f008242faf9ff3714eddfbd1374b0bed9",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms; after D9 episode 2 retry (TCP 7.1 cm during stop, joint 2 decay 0.21 s): big-joint stop damping (15,20,15,5) from fitted effective inertias (0.68, 1.04, 0.66 kg m^2) for ~0.05 s decay; operator asked to relax the measured-speed guard further: 1.5 / 1.8 rad/s (~70% of the Panda limits), damping torque at guard speed <= 30 N m; operator chose torque admission (option A) after D9 episode 3 (0.2 rad wrist reversal requested 18.4 N m): reject chunks whose predicted reference-step torque exceeds 0.9 x the command-torque guard (fraction proposed by the engineer)"
     }
   ]
 }
