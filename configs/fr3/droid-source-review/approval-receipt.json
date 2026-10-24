@@ -1,9 +1,0 @@
-{
-  "schema_version": 1,
-  "reviewed_candidate_sha256": "9ae69b0031d174c2d1069589e9e99f95998547605dad990ce82a15d6bc36dfa9",
-  "approved_candidate_sha256": "1a08bc1f1d7c4fcd86f2e70e9a260363e57535076fd585680369f976f8db7a63",
-  "approval_sha256": "2d93c504218629137d83fb947e20ae2a408691e7c390e4c258bc69654ed59f76",
-  "executable": false,
-  "motion_authorized": false,
-  "hardware_accessed": false
-}

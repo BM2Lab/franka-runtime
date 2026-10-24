@@ -380,21 +380,21 @@
       "field": "timing.startup_timeout_ns",
       "value": 5000000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s admission allowance, inspired by DROID policy-start wait; not a measured native startup bound"
     },
     {
       "field": "timing.consumption_timeout_ns",
       "value": 50000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 50 ms first-consumption allowance; choose after timing tests"
     },
     {
       "field": "timing.stop_timeout_ns",
       "value": 2500000000,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: native stop maximum plus 0.5 s for telemetry/worker join"
     },
     {
@@ -517,8 +517,8 @@
       "field": "tool.m_load",
       "value": 0.123,
       "source": "source-evidence/payload.json",
-      "sha256": "7506351461e12b0196b73776821a74da5c4ebeeaae8334cc7f0de40ee1dbdccd",
-      "basis": "Operator-measured payload wrist-d435i-mount-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g) and operator-measured camera offset from the TCP frame (-100, -40, -70) mm, 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
+      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
+      "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
     },
     {
       "field": "tool.F_x_Cload",
@@ -528,8 +528,8 @@
         0.0334
       ],
       "source": "source-evidence/payload.json",
-      "sha256": "7506351461e12b0196b73776821a74da5c4ebeeaae8334cc7f0de40ee1dbdccd",
-      "basis": "Operator-measured payload wrist-d435i-mount-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g) and operator-measured camera offset from the TCP frame (-100, -40, -70) mm, 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
+      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
+      "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
     },
     {
       "field": "tool.I_load",
@@ -545,21 +545,21 @@
         5.235e-05
       ],
       "source": "source-evidence/payload.json",
-      "sha256": "7506351461e12b0196b73776821a74da5c4ebeeaae8334cc7f0de40ee1dbdccd",
-      "basis": "Operator-measured payload wrist-d435i-mount-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g) and operator-measured camera offset from the TCP frame (-100, -40, -70) mm, 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
+      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
+      "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
     },
     {
       "field": "artifacts.collision_model",
       "value": "assets/collision/manifest.json",
       "source": "source-evidence/collision_manifest.json",
-      "sha256": "4200dc3753fda20a51941e3698065a21382f780e6e830482a51e0dd295dbe9af",
+      "sha256": "486db0a4d5f0077232753e32e2f0fffd10ce0587c48537396314e829ded05201",
       "basis": "Bundled franka_description FR3 v2.1 + Franka Hand mesh collision model (manifest-pinned files)"
     },
     {
       "field": "artifacts.collision_model_sha256",
-      "value": "4200dc3753fda20a51941e3698065a21382f780e6e830482a51e0dd295dbe9af",
+      "value": "486db0a4d5f0077232753e32e2f0fffd10ce0587c48537396314e829ded05201",
       "source": "source-evidence/collision_manifest.json",
-      "sha256": "4200dc3753fda20a51941e3698065a21382f780e6e830482a51e0dd295dbe9af",
+      "sha256": "486db0a4d5f0077232753e32e2f0fffd10ce0587c48537396314e829ded05201",
       "basis": "SHA-256 of the collision manifest, which pins every model file"
     },
     {
@@ -573,77 +573,77 @@
       "field": "gripper.epsilon_inner_m",
       "value": 0.005,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     {
       "field": "gripper.epsilon_outer_m",
       "value": 0.005,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     {
       "field": "gripper.poll_hz",
       "value": 50,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Contract feedback target, not achieved-rate evidence"
     },
     {
       "field": "gripper.moving_epsilon_m_s",
       "value": 0.001,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Width-change detection threshold"
     },
     {
       "field": "gripper.cancel_interval_ms",
       "value": 10,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device cancellation test cadence"
     },
     {
       "field": "gripper.cancel_attempts",
       "value": 20,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device bounded cancellation attempts"
     },
     {
       "field": "gripper.history_capacity",
       "value": 1024,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing serialized Hand worker default"
     },
     {
       "field": "tool.scalar_tolerance",
       "value": 1e-06,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured-value comparison tolerance; not physical calibration accuracy"
     },
     {
       "field": "tool.transform_tolerance",
       "value": 1e-06,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured matrix comparison tolerance; not physical calibration accuracy"
     },
     {
       "field": "workspace.model_urdf",
       "value": "assets/arm-contract-names.reference.urdf",
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Copied arm-only URDF with joint labels aliased in order; no Hand geometry added"
     },
     {
       "field": "workspace.model_sha256",
       "value": "8c16cace888871113ba8fd6dc4e3d750a97fb5cfa1740ba5421bacd0f717168d",
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Hash of the exact derived reference asset"
     },
     {
@@ -675,29 +675,6 @@
       "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
     },
     {
-      "field": "workspace.tool_points_m",
-      "value": [
-        [
-          0.0,
-          0.0,
-          0.1034
-        ],
-        [
-          0.0,
-          0.04,
-          0.1034
-        ],
-        [
-          0.0,
-          -0.04,
-          0.1034
-        ]
-      ],
-      "source": "source-evidence/mock_link.json",
-      "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025",
-      "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
-    },
-    {
       "field": "workspace.table_z_m",
       "value": 0.0,
       "source": "source-evidence/mock_link.json",
@@ -717,6 +694,77 @@
       "source": "source-evidence/mock_link.json",
       "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025",
       "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
+    },
+    {
+      "field": "workspace.tool_points_m",
+      "value": [
+        [
+          0.0,
+          0.0,
+          0.1034
+        ],
+        [
+          0.028284,
+          0.028284,
+          0.1034
+        ],
+        [
+          -0.028284,
+          -0.028284,
+          0.1034
+        ]
+      ],
+      "source": "source-evidence/fresh_state.json",
+      "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751",
+      "basis": "Flange-frame TCP and open-Hand fingertips at +/-0.04 m along the TCP y axis of the recorded Hand mount"
+    },
+    {
+      "field": "workspace.body_points_m",
+      "value": [
+        [
+          -0.137886,
+          0.03182,
+          0.0034
+        ],
+        [
+          -0.137886,
+          0.03182,
+          0.0534
+        ],
+        [
+          -0.03182,
+          0.137886,
+          0.0034
+        ],
+        [
+          -0.03182,
+          0.137886,
+          0.0534
+        ],
+        [
+          -0.053033,
+          -0.053033,
+          0.0034
+        ],
+        [
+          -0.053033,
+          -0.053033,
+          0.0534
+        ],
+        [
+          0.053033,
+          0.053033,
+          0.0034
+        ],
+        [
+          0.053033,
+          0.053033,
+          0.0534
+        ]
+      ],
+      "source": "source-evidence/payload.json",
+      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
+      "basis": "8 corners of the operator-measured rig bounding box of payload wrist-d435i-mount-rig-2026-10-24; table plane only"
     },
     {
       "field": "workspace.joint_names",
@@ -789,49 +837,49 @@
       "field": "recording.directory",
       "value": "/home/chen-lab/yifan/droid-deployment/sessions/droid-first",
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: New per-run recording directory; parent must exist and directory must not be reused"
     },
     {
       "field": "recording.queue_capacity",
       "value": 4096,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Match historical native logging capacity; writer must keep up"
     },
     {
       "field": "recording.max_record_bytes",
       "value": 65536,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 64 KiB per-event bound"
     },
     {
       "field": "recording.max_event_bytes",
       "value": 1073741824,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 GiB event budget; session faults on exhaustion"
     },
     {
       "field": "recording.min_free_bytes",
       "value": 1073741824,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Additional 1 GiB free-space reserve"
     },
     {
       "field": "recording.fsync_interval_s",
       "value": 1.0,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 s target durability interval"
     },
     {
       "field": "recording.close_timeout_s",
       "value": 5.0,
       "source": "source-evidence/population_script.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s bounded writer close"
     }
   ]

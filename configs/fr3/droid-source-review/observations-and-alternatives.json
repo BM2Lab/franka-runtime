@@ -236,7 +236,7 @@
     },
     "population_script": {
       "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
-      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
+      "sha256": "773ad7300d8014785def524b93ca6d0085c8b47d90ed68fbc8caa90ffef9943b",
       "snapshot": "source-evidence/population_script.py"
     },
     "fresh_state": {
@@ -246,12 +246,12 @@
     },
     "payload": {
       "path": "/home/chen-lab/franka-runtime/configs/fr3/payloads/wrist-d435i-mount.json",
-      "sha256": "7506351461e12b0196b73776821a74da5c4ebeeaae8334cc7f0de40ee1dbdccd",
+      "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8",
       "snapshot": "source-evidence/payload.json"
     },
     "collision_manifest": {
-      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-collision-model/bundle-manifested/manifest.json",
-      "sha256": "4200dc3753fda20a51941e3698065a21382f780e6e830482a51e0dd295dbe9af",
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-collision-model/bundle-rig/manifest.json",
+      "sha256": "486db0a4d5f0077232753e32e2f0fffd10ce0587c48537396314e829ded05201",
       "snapshot": "source-evidence/collision_manifest.json"
     },
     "hand_timing": {

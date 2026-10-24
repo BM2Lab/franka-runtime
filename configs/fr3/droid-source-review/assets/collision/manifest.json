@@ -33,7 +33,52 @@
     "franka_description/meshes/robot_arms/fr3v2.1/collision/link7.stl": "f0001986a733293afb0a8142eadf5adc582397cfc05e538e60963fc3bb2b6e41",
     "franka_description/meshes/robot_ee/franka_hand_white/collision/hand.stl": "94493e94f30fe940f2c8ca2f155c3bbe67bbff406d3edf5e261670d2f0f6e2ed"
   },
-  "collision_pairs": 44,
+  "collision_pairs": 51,
+  "attached_boxes": [
+    {
+      "name": "rig",
+      "parent_frame": "fr3v2.1_link8",
+      "size_m": [
+        0.12,
+        0.15,
+        0.05
+      ],
+      "center_flange_m": [
+        -0.042426,
+        0.042426,
+        0.0284
+      ],
+      "rotation_flange": [
+        [
+          0.707107,
+          0.707107,
+          0
+        ],
+        [
+          -0.707107,
+          0.707107,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "exclude_links": [
+        "fr3v2.1_link7",
+        "fr3v2.1_link8",
+        "fr3v2.1_hand",
+        "fr3v2.1_hand_tcp",
+        "fr3v2.1_leftfinger",
+        "fr3v2.1_rightfinger"
+      ],
+      "source": {
+        "path": "/home/chen-lab/franka-runtime/configs/fr3/payloads/wrist-d435i-mount.json",
+        "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8"
+      }
+    }
+  ],
   "arm_joints": [
     "fr3v2.1_joint1",
     "fr3v2.1_joint2",

@@ -2,7 +2,7 @@
 
 This is a non-executable review draft. No robot was accessed and no approval was generated.
 
-98 fields have sourced candidate values; 6 fields remain unset.
+99 fields have sourced candidate values; 6 fields remain unset.
 
 DROID gains have been populated as unapproved candidate values from the pinned implementation; see per-field provenance and controller.reference.json.
 
