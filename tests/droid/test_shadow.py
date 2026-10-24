@@ -102,7 +102,8 @@ def test_virtual_hold_and_underrun_are_logged_without_commands(tmp_path):
     svc,src,c=make(tmp_path);estimate=start(svc,c);N['submit'](svc,svc.backend,c,estimate)
     c.advance();svc.control_step(c(),.001)
     for delta in (534_000_000,svc.settings['hold_timeout_ns']+1_000_000):  # past the rows, then past the hold
-        c.advance(delta);src.sample.update(arm_ns=c(),hand_ns=c());svc.control_step(c(),delta/1e9)
+        c.advance(delta);svc._last_heartbeat=c()  # the client keeps heartbeating through the hold
+        src.sample.update(arm_ns=c(),hand_ns=c());svc.control_step(c(),delta/1e9)
     assert svc.authority.fault.code=='native_fault:101' and src.stopped and svc.hand.commands==()
     svc.finish_shutdown(timeout_s=.1)
     events=[json.loads(line) for line in (tmp_path/'recording/events.jsonl').read_text().splitlines()]
