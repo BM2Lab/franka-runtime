@@ -7,7 +7,7 @@
   "read_only": true,
   "physical_candidate": "droid-source-review/physical.review.pending.json",
   "source": {
-    "address": "172.16.0.1",
+    "address": "172.16.0.6",
     "helper": "/home/chen-lab/yifan/droid-deployment/artifacts/d7-state-reader/droid_readonly_state",
     "helper_sha256": "4de8b88598ecd2fbb829fddbbafb3a9eac5aca02e224d365b215d49f45323d14",
     "poll_hz": 50,
