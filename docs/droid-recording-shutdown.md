@@ -101,3 +101,15 @@ lacks the local M4/PPO modules). Passive imports, pending-config refusal, pinned
 native artifact verification/status serialization, streaming recording integrity
 and `pip check` pass. The API recording smoke test contains only an unstarted
 motion snapshot and explicitly marks hardware access/control as false.
+
+
+## Step 7 update: physical admission composition (offline)
+
+[Physical admission](droid-physical-admission.md) now ties reviewed physical
+settings, device checks, recording and the existing service/protocol to supervised
+shutdown. Ready-lease cancellation records that control never started instead of
+fabricating native rest evidence. Explicit recorded-identity and collision-engine
+binding adapters are available; neither supplies missing per-unit data nor
+qualifies an engine or live identity procedure. The inspection CLI has no execution
+option; the mock CLI cannot select physical devices. Real providers/commissioning
+values and cross-host/D7/D8/D9 qualification remain outstanding.

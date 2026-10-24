@@ -241,6 +241,17 @@ class SessionAuthority:
             if not isinstance(request,LeaseRelease) or request.lease!=self.lease:
                 raise AuthorityError('Release must match current lease')
             self._active(request.lease)
+            if self.state=='ready' and callable(getattr(self.backend,'cancel_before_start',None)):
+                try:
+                    evidence=self.backend.cancel_before_start()
+                    if (evidence.get('control_never_started') is not True or
+                            evidence.get('workers_never_started') is not True):
+                        raise AuthorityError('Pre-start cancellation unconfirmed')
+                except Exception:
+                    self._latch('prestart_cancel_failed');raise
+                self._reject_outstanding('Cancelled before native control started')
+                self.state='complete'
+                return
             self._stopping=True;self.state='stopping'
             try:self.backend.request_stop(request.reason)
             except Exception:

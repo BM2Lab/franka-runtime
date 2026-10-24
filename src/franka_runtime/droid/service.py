@@ -30,6 +30,7 @@ from contracts.wire import PROTOCOL_VERSION, read_message, write_message
 import franka_runtime
 from ..service.authority import AuthorityError, SessionAuthority
 from .backend import BackendUpdate, Consumption
+from .admission import _AdmittedPhysicalConfig
 from .checks import check_rows
 from .executor import UNDERRUN, ChunkExecutor
 from .gripper import GripperIntent
@@ -97,7 +98,10 @@ class MockDroidBackend:
 
 class DroidRuntimeService:
     def __init__(self, config, spec, *, clock=time.monotonic_ns, clock_id=None, token=None, backend_factory=None, recorder=None):
+        physical = isinstance(config,_AdmittedPhysicalConfig)
         settings = config.require_runnable()
+        if physical and (backend_factory is None or recorder is None or recorder.fault):
+            raise ValueError("Physical composition requires backend and healthy started recording")
         sha = payload_sha256(spec)
         if sha not in settings["allowed_contracts"] or spec.robot.robot_id != settings["robot_id"]:
             raise ValueError("Contract is not allow-listed for this robot")
@@ -122,8 +126,10 @@ class DroidRuntimeService:
             self.backend = backend_factory(self.executor, settings)
             # A mock config must never be a route to real hardware. The production
             # physical selector/schema/commissioning path is deliberately still closed.
-            if self.backend.hardware_executed:
+            if self.backend.hardware_executed and not physical:
                 raise ValueError("Physical DROID selection requires a commissioned physical config/factory")
+            if physical and not self.backend.hardware_executed:
+                raise ValueError("Physical composition cannot substitute a mock backend")
             self.arm, self.hand = self.backend.arm, self.backend.hand
         if hasattr(self.backend, "recorder"):
             self.backend.recorder = recorder
@@ -360,6 +366,9 @@ class DroidRuntimeService:
         session = self._session_or_fail()
         with self._lock:
             self.authority.release(LeaseRelease(session["lease"], self.clock(), str(payload.get("reason", "release"))))
+        if not self._record("released",dict(authority_state=self.authority.state,
+                cancellation_evidence=getattr(self.backend,"cancellation_evidence",None))):
+            self.authority.poll(native_fault=209)
         return {"authority_state": self.authority.state}
 
     HANDLERS = {"hello": "_hello", "clock_probe": "_clock_probe", "open": "_open", "clock_register": "_clock_register",
@@ -454,7 +463,7 @@ class DroidRuntimeService:
                 except Exception as error:
                     self._shutdown_error = repr(error)
 
-    def finish_shutdown(self, *, control=None, timeout_s=None, recorder_timeout_s=2.,
+    def finish_shutdown(self, *, control=None, timeout_s=None, recorder_timeout_s=None,
                         wall_clock=time.monotonic, sleep=time.sleep):
         """Keep supervision alive through stop; report unjoined workers honestly.
 
@@ -499,12 +508,13 @@ class DroidRuntimeService:
              evidence.get("dropped_samples")==0)))
         stop_ok=stop_ok and (not native_started or evidence is not None)
         report=dict(shutdown_error=self._shutdown_error,native_control_started=bool(native_started),supervisor_joined=control is None or not control.is_alive(),workers_joined=bool(workers_joined),
-            stop_confirmed=bool(stop_ok),stop_evidence=evidence,authority_state=self.authority.state,
+            stop_confirmed=bool(stop_ok),stop_evidence=evidence,cancellation_evidence=getattr(self.backend,"cancellation_evidence",None),authority_state=self.authority.state,
             fault=None if self.authority.fault is None else asdict(self.authority.fault))
         report["ok"]=self._shutdown_error is None and report["supervisor_joined"] and report["workers_joined"] and report["stop_confirmed"]
         if self.recorder is not None:
             self._record("shutdown",report)
-            report["recording"]=self.recorder.close(report,timeout_s=recorder_timeout_s)
+            report["recording"]=self.recorder.close(report,timeout_s=(self.settings.get("recorder_close_timeout_s",2.)
+                if recorder_timeout_s is None else recorder_timeout_s))
             report["ok"]=report["ok"] and report["recording"]["sealed"]
         self.shutdown_report=report
         return report

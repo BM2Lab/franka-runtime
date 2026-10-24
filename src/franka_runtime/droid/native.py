@@ -98,6 +98,8 @@ class NativeDroidBackend:
         self.execution = (None, None)
         self._started = self._stopping = False
         self._fault = 0
+        self._cancelled = False
+        self.cancellation_evidence = None
         self._row_id = 0
         self._row_key = None
         self._row_target = None
@@ -188,8 +190,20 @@ class NativeDroidBackend:
             except Exception:
                 self._fault = self._fault or 205
 
+    def cancel_before_start(self):
+        if self._started or self._stopping or getattr(self.driver,'thread',None) is not None:
+            raise RuntimeError('Native control may have started; stop evidence required')
+        if any(getattr(self.hand,name,None) is not None for name in ('_thread','_reader','_canceller')):
+            raise RuntimeError('Hand workers already created; stop/join evidence required')
+        if getattr(self.hand,'commands',()):
+            raise RuntimeError('Hand work already requested')
+        self._cancelled = True
+        self.executor.stop('cancelled_before_start')
+        self.cancellation_evidence = dict(control_never_started=True,workers_never_started=True)
+        return dict(self.cancellation_evidence)
+
     def check_session_admission(self):
-        if self._started or self._fault:
+        if self._started or self._fault or self._cancelled:
             raise ValueError('Native backend is single-session; no fault reset or stale-state reuse')
 
     def reset_session(self, executor):

@@ -118,3 +118,15 @@ implemented and tested with fake devices. This supersedes the earlier code-work
 blocker above, not hardware qualification. The physical selector remains disabled
 until concrete identity/collision adapters, commissioned values, admission
 composition and cross-host/per-unit qualification are complete.
+
+
+## Step 7 update: physical admission composition (offline)
+
+[Physical admission](droid-physical-admission.md) now ties reviewed physical
+settings, device checks, recording and the existing service/protocol to supervised
+shutdown. Ready-lease cancellation records that control never started instead of
+fabricating native rest evidence. Explicit recorded-identity and collision-engine
+binding adapters are available; neither supplies missing per-unit data nor
+qualifies an engine or live identity procedure. The inspection CLI has no execution
+option; the mock CLI cannot select physical devices. Real providers/commissioning
+values and cross-host/D7/D8/D9 qualification remain outstanding.
