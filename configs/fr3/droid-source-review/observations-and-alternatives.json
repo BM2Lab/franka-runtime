@@ -236,13 +236,18 @@
     },
     "population_script": {
       "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
-      "sha256": "53f11ca1bc736f336ff2f49166fa1880f453322026e3bb93034597ba1b019504",
+      "sha256": "a898392a8e3d43216b0f4a69cabb537b79d47869184927d0c0497857fc2e12eb",
       "snapshot": "source-evidence/population_script.py"
     },
     "fresh_state": {
       "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-fresh-state/robot_state_20261024T184702Z.json",
       "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751",
       "snapshot": "source-evidence/fresh_state.json"
+    },
+    "payload": {
+      "path": "/home/chen-lab/franka-runtime/configs/fr3/payloads/wrist-d435i-mount.json",
+      "sha256": "7506351461e12b0196b73776821a74da5c4ebeeaae8334cc7f0de40ee1dbdccd",
+      "snapshot": "source-evidence/payload.json"
     },
     "collision_manifest": {
       "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-collision-model/bundle-manifested/manifest.json",

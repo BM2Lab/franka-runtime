@@ -18,7 +18,7 @@ HAND_FRESHNESS_NS=250_000_000  # measured-period basis below; at least two Hand 
 
 
 def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir,recording_dir,hand_timing=None,
-             fresh_state=None,collision_bundle=None,unit_observation=None):
+             fresh_state=None,collision_bundle=None,unit_observation=None,payload=None):
     import yaml
     repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir=map(Path,
         (repo,m4_run,legacy_reference,droid_sources,mock_link,observed_state,output_dir))
@@ -124,7 +124,15 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
         basis=('Read-only echo_robot_state with the Franka Hand configured in Desk; Desk nominal Hand '
                'parameters as reported by the controller, not a per-unit calibration')
         put('tool.F_T_EE',mount,'fresh_state',basis)
-        for key in ('m_ee','I_ee','F_x_Cee','m_load','I_load','F_x_Cload'):put('tool.'+key,st[key],'fresh_state',basis)
+        load_keys=() if payload is not None else ('m_load','I_load','F_x_Cload')
+        for key in ('m_ee','I_ee','F_x_Cee',*load_keys):put('tool.'+key,st[key],'fresh_state',basis)
+    if payload is not None:
+        load_value=load('payload',Path(payload))
+        if (load_value.get('schema_version')!=1 or not load_value.get('basis') or not 0<load_value['m_load']<3
+                or len(load_value['F_x_Cload'])!=3 or len(load_value['I_load'])!=9):
+            raise ValueError('Payload needs schema 1, basis, 0 < m_load < 3 kg, F_x_Cload[3], I_load[9]')
+        for key in ('m_load','F_x_Cload','I_load'):
+            put('tool.'+key,load_value[key],'payload',f"Operator-measured payload {load_value['name']} set by the runtime at connect: {load_value['basis']}")
     collision_manifest=None
     if collision_bundle is not None:
         collision_bundle=Path(collision_bundle)
@@ -226,6 +234,7 @@ def main():
     p.add_argument('--fresh-state',type=Path,help='read-only robot state JSON with the Hand configured (tool fields)')
     p.add_argument('--collision-bundle',type=Path,help='directory with manifest.json from build_collision_manifest.py')
     p.add_argument('--unit-observation',type=Path,help='operator/observation evidence JSON with the robot address')
+    p.add_argument('--payload',type=Path,help='per-rig payload file from build_payload.py (tool.m_load/F_x_Cload/I_load)')
     args=p.parse_args();print(json.dumps(populate(**vars(args)),indent=2))
 
 
