@@ -216,3 +216,14 @@ def test_rig_box_and_true_fingertips_become_workspace_tool_points(tmp_path):
     assert len(pts)==3 and pts[0]==[0.,0.,.1034] and len(body)==8
     assert [round(v,4) for v in pts[1]]==[.0283,.0283,.1034]  # fingertip along the TCP y axis, not the flange y axis
     assert min(p[2] for p in body)==pytest.approx(.0034,abs=1e-6)
+
+
+def test_operator_workspace_box_replaces_the_historical_box(tmp_path):
+    box=tmp_path/'box.json'
+    box.write_text(json.dumps(dict(schema_version=1,box_min_m=[.27,-.38,.03],box_max_m=[.88,.38,.53],basis='operator-measured')))
+    POP(**inputs(tmp_path),workspace_observation=box)
+    w=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json').data['workspace']
+    assert w['box_min_m']==[.27,-.38,.03] and w['box_max_m']==[.88,.38,.53]
+    box.write_text(json.dumps(dict(schema_version=1,box_min_m=[.9,-.38,.03],box_max_m=[.88,.38,.53],basis='x')))
+    bad=tmp_path/'bad';bad.mkdir()
+    with pytest.raises(ValueError,match='Workspace observation'):POP(**inputs(bad),workspace_observation=box)
