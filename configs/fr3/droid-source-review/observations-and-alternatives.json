@@ -1,0 +1,242 @@
+{
+  "archived_state": {
+    "path": "/tmp/franka-echo-server10/robot_state_20261023T215631Z.json",
+    "sha256": "ba738116413b7a892771cd0349eb972f11ed96bb57c63fb884b79015d9e12fae",
+    "snapshot": "source-evidence/archived_state.json"
+  },
+  "reported_tool": {
+    "F_T_EE": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "m_ee": 0,
+    "I_ee": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "F_x_Cee": [
+      0,
+      0,
+      0
+    ],
+    "m_load": 0,
+    "I_load": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "F_x_Cload": [
+      0,
+      0,
+      0
+    ]
+  },
+  "note": "Archived Desk state has zero EE mass/identity flange tool transform despite documented mounted Hand. Not promoted to usable tool parameters.",
+  "joint_aliases": {
+    "joint1": "panda_joint1",
+    "joint2": "panda_joint2",
+    "joint3": "panda_joint3",
+    "joint4": "panda_joint4",
+    "joint5": "panda_joint5",
+    "joint6": "panda_joint6",
+    "joint7": "panda_joint7"
+  },
+  "geometry_note": "Arm reference only; transformed joint names do not add Hand geometry or self-collision qualification.",
+  "droid_alternatives": {
+    "joint_limits": {
+      "cartesian_pos_upper": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cartesian_pos_lower": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "joint_pos_upper": [
+        2.65,
+        1.68,
+        2.8,
+        -0.16,
+        2.7,
+        4.4,
+        2.9
+      ],
+      "joint_pos_lower": [
+        -2.65,
+        -1.68,
+        -2.8,
+        -2.95,
+        -2.7,
+        0.45,
+        -2.9
+      ],
+      "joint_vel": [
+        2.075,
+        2.075,
+        2.075,
+        2.075,
+        2.51,
+        2.51,
+        2.51
+      ],
+      "elbow_vel": 2.075,
+      "joint_torques": [
+        86.0,
+        86.0,
+        86.0,
+        86.0,
+        11.5,
+        11.5,
+        11.5
+      ]
+    },
+    "collision_behavior": {
+      "lower_torque": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "upper_torque": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "lower_force": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "upper_force": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ]
+    },
+    "gripper_wrapper_force_argument": 0.1
+  },
+  "remaining": [
+    "robot.arm_serial",
+    "robot.control_serial",
+    "robot.identity_max_age_ns",
+    "tool.F_T_EE",
+    "tool.m_ee",
+    "tool.I_ee",
+    "tool.F_x_Cee",
+    "tool.m_load",
+    "tool.I_load",
+    "tool.F_x_Cload",
+    "artifacts.collision_model",
+    "artifacts.collision_model_sha256",
+    "approval.approved_by",
+    "approval.approved_at",
+    "approval.physical_stop_procedure",
+    "approval.workspace_review",
+    "approval.hand_review",
+    "approval.collision_review"
+  ],
+  "sources": {
+    "completed_report": {
+      "path": "/home/chen-lab/franka_ros2_ws/hardware_inventory/2026-10-12/m4/tracking.20261012T142902Z/report.json",
+      "sha256": "4acb4418258a454a284d4f96c3bd0623a20761d511e73e9d58ae91bbb77cdb36",
+      "snapshot": "source-evidence/completed_report.json"
+    },
+    "completed_m4_config": {
+      "path": "/home/chen-lab/franka_ros2_ws/hardware_inventory/2026-10-12/m4/tracking.20261012T142902Z/config.yaml",
+      "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4",
+      "snapshot": "source-evidence/completed_m4_config.yaml"
+    },
+    "legacy_reference": {
+      "path": "/home/chen-lab/yifan/franka-rl/deployment/franky_runtime/config/reference.pending.yaml",
+      "sha256": "e395c1705255235a0b90af4ca051c262a0367a0bf19330053d9e9e26d80f2efc",
+      "snapshot": "source-evidence/legacy_reference.yaml"
+    },
+    "ppo_candidate": {
+      "path": "/home/chen-lab/franka-runtime/configs/fr3/ppo.velocity-impedance.pending.yaml",
+      "sha256": "94e9c81ce7e916a69bd55aa6b09249a8eb7cf211b2d856728d32d11cc1cf0080",
+      "snapshot": "source-evidence/ppo_candidate.yaml"
+    },
+    "mock_link": {
+      "path": "/home/chen-lab/franka-runtime/configs/fr3/droid.jointpos.mock-link.json",
+      "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025",
+      "snapshot": "source-evidence/mock_link.json"
+    },
+    "archived_state": {
+      "path": "/tmp/franka-echo-server10/robot_state_20261023T215631Z.json",
+      "sha256": "ba738116413b7a892771cd0349eb972f11ed96bb57c63fb884b79015d9e12fae",
+      "snapshot": "source-evidence/archived_state.json"
+    },
+    "droid_source_manifest": {
+      "path": "/home/chen-lab/yifan/droid-deployment/artifacts/controller-audit/sources.json",
+      "sha256": "0040c5655bd087791d2821c5185c89dc5fb4d5d676f62fb1d6f0675bc2429188",
+      "snapshot": "source-evidence/droid_source_manifest.json"
+    },
+    "droid_fr3": {
+      "path": "/home/chen-lab/yifan/droid-deployment/artifacts/controller-audit/droid/config/fr3/franka_hardware.yaml",
+      "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920",
+      "snapshot": "source-evidence/droid_fr3.yaml"
+    },
+    "droid_robot": {
+      "path": "/home/chen-lab/yifan/droid-deployment/artifacts/controller-audit/droid/droid/franka/robot.py",
+      "sha256": "25f2edf095b13f590371a4c53c8fbf0b8948d5c08b42600542a579917442ec38",
+      "snapshot": "source-evidence/droid_robot.py"
+    },
+    "archived_d6_summary": {
+      "path": "/home/chen-lab/franka-runtime/docs/droid-d6-rt-host.md",
+      "sha256": "336cc903a4e1cd4ecd6bf94694fdcce6392802b34a666549a1b9ea6fa3ce1d98",
+      "snapshot": "source-evidence/archived_d6_summary.md"
+    },
+    "arm_reference_urdf": {
+      "path": "/home/chen-lab/franka-runtime/tests/parity/fixtures/robot_returned_model.urdf",
+      "sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3",
+      "snapshot": "source-evidence/arm_reference_urdf.urdf"
+    },
+    "population_script": {
+      "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
+      "sha256": "5271b5650d7d8c9627a5a3e16b12a03ccccebca8c824bdf20bbcc8d024dad443",
+      "snapshot": "source-evidence/population_script.py"
+    }
+  }
+}

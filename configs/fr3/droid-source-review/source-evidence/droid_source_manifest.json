@@ -1,0 +1,42 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/droid-dataset/droid/33ae6a67274f36d2e29525b86f23a56616ef43a7/droid/franka/robot.py",
+    "sha256": "25f2edf095b13f590371a4c53c8fbf0b8948d5c08b42600542a579917442ec38",
+    "file": "droid/droid/franka/robot.py"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/droid-dataset/droid/33ae6a67274f36d2e29525b86f23a56616ef43a7/config/fr3/franka_hardware.yaml",
+    "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920",
+    "file": "droid/config/fr3/franka_hardware.yaml"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/droid-dataset/droid/33ae6a67274f36d2e29525b86f23a56616ef43a7/.gitmodules",
+    "sha256": "db380818fe4059ad79e99f3bd43256da89ba2b4d362185b82ea2599880fc2d94",
+    "file": "droid/.gitmodules"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/facebookresearch/fairo/0a01a7fa7a7c65b2f9a3aebf5e79040940daf9d2/polymetis/polymetis/python/torchcontrol/modules/feedback.py",
+    "sha256": "1a2afcb7afc89512d435348f9cb209e10275875d77b643f3a3ab847f59ba3acb",
+    "file": "fairo/polymetis/polymetis/python/torchcontrol/modules/feedback.py"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/facebookresearch/fairo/0a01a7fa7a7c65b2f9a3aebf5e79040940daf9d2/polymetis/polymetis/python/torchcontrol/policies/impedance.py",
+    "sha256": "931392d148aeccb034412b0669a0416564c8368a6b640327903278db0e2356da",
+    "file": "fairo/polymetis/polymetis/python/torchcontrol/policies/impedance.py"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/facebookresearch/fairo/0a01a7fa7a7c65b2f9a3aebf5e79040940daf9d2/polymetis/polymetis/python/torchcontrol/modules/feedforward.py",
+    "sha256": "9df8fa612061b99209b4c2d674286a130a8f32db2c56b8bafc95fed32b1dd18f",
+    "file": "fairo/polymetis/polymetis/python/torchcontrol/modules/feedforward.py"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/facebookresearch/fairo/0a01a7fa7a7c65b2f9a3aebf5e79040940daf9d2/polymetis/polymetis/src/clients/franka_panda_client/franka_panda_client.cpp",
+    "sha256": "94c3b2a439167eb1ac41795e88ddf642939c842c39eef27983bd29f6f7d39635",
+    "file": "fairo/polymetis/polymetis/src/clients/franka_panda_client/franka_panda_client.cpp"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/facebookresearch/fairo/0a01a7fa7a7c65b2f9a3aebf5e79040940daf9d2/polymetis/polymetis/python/polymetis/robot_interface.py",
+    "sha256": "47e528d6ec96c1153a4c1f829f5695b772302e1bb952450bcb08376311662bbc",
+    "file": "fairo/polymetis/polymetis/python/polymetis/robot_interface.py"
+  }
+]

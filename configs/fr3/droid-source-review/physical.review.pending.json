@@ -1,0 +1,290 @@
+{
+  "schema_version": 2,
+  "runtime": "droid_jointpos_v1",
+  "backend": "franky",
+  "status": "pending_lab_review",
+  "executable": false,
+  "motion_authorized": false,
+  "provenance": "Offline review draft; see provenance.json. No unit approval, fresh identity, or geometry qualification implied.",
+  "robot": {
+    "robot_id": "fr3_01",
+    "address": "172.16.0.1",
+    "model": "fr3v2.1",
+    "firmware_version": "5.9.2",
+    "fci_version": 10,
+    "arm_serial": null,
+    "control_serial": null,
+    "identity_max_age_ns": null,
+    "collision_torque_nm": 20.0,
+    "collision_force_n": 30.0
+  },
+  "contract": {
+    "allowed_sha256": [
+      "46b22083d8cf18e669ff06e35a4f759806140ae4e074712dd480ba85a3f239fc"
+    ],
+    "capability_prefix": "droid-jointpos-v1"
+  },
+  "joint_bounds": {
+    "lower_rad": [
+      -2.9007400166666666,
+      -1.8360900166666667,
+      -2.9007400166666666,
+      -3.077020016666667,
+      -2.87630335,
+      0.43982265,
+      -3.05083335
+    ],
+    "upper_rad": [
+      2.9007400166666666,
+      1.8360900166666667,
+      2.9007400166666666,
+      -0.11693708333333333,
+      2.87630335,
+      4.62163335,
+      3.05083335
+    ],
+    "margin_rad": [
+      0.2900740016666667,
+      0.1836090016666667,
+      0.2900740016666667,
+      0.1480041466666667,
+      0.287630335,
+      0.209090535,
+      0.305083335
+    ]
+  },
+  "acceptance": {
+    "max_target_lead_rad": [
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3
+    ],
+    "max_consecutive_row_speed_rad_s": [
+      0.435,
+      0.435,
+      0.435,
+      0.435,
+      0.522,
+      0.522,
+      0.522
+    ]
+  },
+  "controller": {
+    "kind": "droid_hybrid_joint_impedance",
+    "joint_stiffness": [
+      40,
+      30,
+      50,
+      25,
+      35,
+      25,
+      10
+    ],
+    "joint_damping": [
+      4,
+      6,
+      5,
+      5,
+      3,
+      2,
+      1
+    ],
+    "cartesian_stiffness": [
+      400,
+      400,
+      400,
+      15,
+      15,
+      15
+    ],
+    "cartesian_damping": [
+      37,
+      37,
+      37,
+      2,
+      2,
+      2
+    ],
+    "error_clip_rad": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "gain_time_constant_s": 0.1,
+    "compensate_coriolis": true,
+    "max_delta_nm_per_callback": 1.0,
+    "libfranka_limit_rate": true,
+    "lowpass_cutoff_hz": 100
+  },
+  "guards": {
+    "max_measured_joint_velocity_rad_s": [
+      0.435,
+      0.435,
+      0.435,
+      0.435,
+      0.522,
+      0.522,
+      0.522
+    ],
+    "max_command_torque_nm": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      8.0,
+      8.0,
+      8.0
+    ],
+    "max_callback_gap_ns": 10000000,
+    "publisher_timeout_ns": 100000000
+  },
+  "stop": {
+    "damping": [
+      2.0,
+      2.0,
+      2.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5
+    ],
+    "ramp_duration_s": 0.2,
+    "rest_velocity_rad_s": 0.02,
+    "max_duration_s": 2.0,
+    "compensate_coriolis": true,
+    "max_delta_nm_per_callback": 1.0
+  },
+  "timing": {
+    "control_hz": 250,
+    "hold_timeout_ms": 200,
+    "heartbeat_timeout_ms": 1500,
+    "command_timeout_ms": 700,
+    "max_lease_s": 600,
+    "startup_timeout_ns": 5000000000,
+    "consumption_timeout_ns": 50000000,
+    "stop_timeout_ns": 2500000000,
+    "state_timeout_ns": 40000000,
+    "native_log_capacity": 4096
+  },
+  "clock": {
+    "max_uncertainty_us": 2000,
+    "min_probes": 4
+  },
+  "gripper": {
+    "open_width_m": 0.08,
+    "close_width_m": 0.0,
+    "speed_m_s": 0.05,
+    "grasp_force_n": 20.0,
+    "epsilon_inner_m": 0.005,
+    "epsilon_outer_m": 0.005,
+    "poll_hz": 50,
+    "max_state_age_ns": 100000000,
+    "moving_epsilon_m_s": 0.001,
+    "cancel_interval_ms": 10,
+    "cancel_attempts": 20,
+    "history_capacity": 1024
+  },
+  "tool": {
+    "F_T_EE": null,
+    "m_ee": null,
+    "I_ee": null,
+    "F_x_Cee": null,
+    "m_load": null,
+    "I_load": null,
+    "F_x_Cload": null,
+    "scalar_tolerance": 1e-06,
+    "transform_tolerance": 1e-06
+  },
+  "workspace": {
+    "model_urdf": "assets/arm-contract-names.reference.urdf",
+    "model_sha256": "8c16cace888871113ba8fd6dc4e3d750a97fb5cfa1740ba5421bacd0f717168d",
+    "base_link": "link0",
+    "flange_link": "link8",
+    "joint_names": [
+      "panda_joint1",
+      "panda_joint2",
+      "panda_joint3",
+      "panda_joint4",
+      "panda_joint5",
+      "panda_joint6",
+      "panda_joint7"
+    ],
+    "link_points": [
+      "link3",
+      "link4",
+      "link5",
+      "link6",
+      "link7",
+      "link8"
+    ],
+    "tool_points_m": [
+      [
+        0.0,
+        0.0,
+        0.1034
+      ],
+      [
+        0.0,
+        0.04,
+        0.1034
+      ],
+      [
+        0.0,
+        -0.04,
+        0.1034
+      ]
+    ],
+    "table_z_m": 0.0,
+    "clearance_m": 0.05,
+    "box_min_m": [
+      0.276891,
+      -0.18,
+      0.17
+    ],
+    "box_max_m": [
+      0.505,
+      0.18,
+      0.620282
+    ],
+    "interpolation_steps": 4
+  },
+  "network": {
+    "bind_host": "10.77.0.2",
+    "port": 47700,
+    "allowed_peers": [
+      "10.77.0.1"
+    ],
+    "token_env": "FRANKA_DROID_TOKEN"
+  },
+  "artifacts": {
+    "native_pin": "native-pin.json",
+    "native_pin_sha256": "1d6fa08b997f4513e24a11edcae1974c14e6616f7f8282dc456245b1c8890df7",
+    "collision_model": null,
+    "collision_model_sha256": null
+  },
+  "recording": {
+    "directory": "/home/chen-lab/yifan/droid-deployment/sessions/droid-first",
+    "queue_capacity": 4096,
+    "max_record_bytes": 65536,
+    "max_event_bytes": 1073741824,
+    "min_free_bytes": 1073741824,
+    "fsync_interval_s": 1.0,
+    "close_timeout_s": 5.0
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "physical_stop_procedure": null,
+    "workspace_review": null,
+    "hand_review": null,
+    "collision_review": null
+  }
+}

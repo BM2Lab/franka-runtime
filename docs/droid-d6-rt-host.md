@@ -461,3 +461,27 @@ binding adapters are available; neither supplies missing per-unit data nor
 qualifies an engine or live identity procedure. The inspection CLI has no execution
 option; the mock CLI cannot select physical devices. Real providers/commissioning
 values and cross-host/D7/D8/D9 qualification remain outstanding.
+
+
+## Commissioning review preparation (offline, 2026-10-24)
+
+[Commissioning review instructions](droid-commissioning-review.md) describe the
+source-bound, non-executable draft package at
+`~/yifan/droid-deployment/commissioning/2026-10-24-review/`. Known contract/native
+bindings are prefilled; audited gains remain separate suggestions. Real unit/tool
+evidence, reviewed geometry and operator decisions remain required for physical
+operation. Physical timing margins can follow cross-host mock measurements;
+physical commissioning does not block the separate mock timing test. No robot
+access, fresh identity capture, approval or cross-host test occurred here.
+
+
+## Sourced candidate and inference-workstation handoff, 2026-10-24
+
+The operator requested population from archived hardware pipelines and DROID.
+The resulting non-executable draft has **86 populated fields and 18 unresolved
+unit/tool/collision/approval fields**. See
+[inference workstation handoff](droid-inference-workstation-handoff.md) and
+`configs/fr3/droid-source-review/`. Per-field source hashes and retained source
+copies distinguish completed M4 evidence, pinned DROID defaults, mock baselines
+and engineering proposals. The prior all-null review remains historical.
+No robot/network operation or new motion approval occurred.

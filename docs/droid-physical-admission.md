@@ -116,3 +116,15 @@ with fake native consumption/receipts and supervised stop, constructor-failure
 recording, cancellation before startup and provider binding/rejection. Passive
 imports, pending-config refusal, offline inspection, pinned native artifact/API
 checks, durable recording audit and `pip check` pass.
+
+
+## Commissioning review preparation (offline, 2026-10-24)
+
+[Commissioning review instructions](droid-commissioning-review.md) describe the
+source-bound, non-executable draft package at
+`~/yifan/droid-deployment/commissioning/2026-10-24-review/`. Known contract/native
+bindings are prefilled; audited gains remain separate suggestions. Real unit/tool
+evidence, reviewed geometry and operator decisions remain required for physical
+operation. Physical timing margins can follow cross-host mock measurements;
+physical commissioning does not block the separate mock timing test. No robot
+access, fresh identity capture, approval or cross-host test occurred here.

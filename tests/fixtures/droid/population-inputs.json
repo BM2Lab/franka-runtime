@@ -1,0 +1,429 @@
+{
+  "scope": "Test-only archived source subsets; tests create synthetic completed-run receipts, never hardware",
+  "m4": {
+    "robot": {
+      "host": "172.16.0.6",
+      "expected_franky_version": "2.0.1.dev63+gm4baseline.libfranka.0.21.2",
+      "collision_torque_nm": 20.0,
+      "collision_force_n": 30.0,
+      "max_start_velocity_rad_s": 0.02
+    },
+    "limits": {
+      "joint_lower": [
+        -2.610666015,
+        -1.652481015,
+        -2.610666015,
+        -2.92901587,
+        -2.588673015,
+        0.648913185,
+        -2.745750015
+      ],
+      "joint_upper": [
+        2.610666015,
+        1.652481015,
+        2.610666015,
+        -0.26494123,
+        2.588673015,
+        4.412542815,
+        2.745750015
+      ],
+      "joint_velocity": [
+        0.435,
+        0.435,
+        0.435,
+        0.435,
+        0.522,
+        0.522,
+        0.522
+      ],
+      "external_torque": [
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0
+      ],
+      "command_torque": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        8.0,
+        8.0,
+        8.0
+      ],
+      "workspace_lower": [
+        0.276891,
+        -0.18,
+        0.17
+      ],
+      "workspace_upper": [
+        0.505,
+        0.18,
+        0.620282
+      ],
+      "reference_timeout_s": 0.1,
+      "callback_gap_s": 0.01,
+      "position_error_m": 0.03,
+      "orientation_error_rad": 0.2,
+      "linear_speed_m_s": 0.1,
+      "angular_speed_rad_s": 0.5,
+      "minimum_jacobian_singular_value": 0.02,
+      "minimum_command_success_rate": 0.95,
+      "abort_on_contact": true
+    },
+    "stop": {
+      "damping": [
+        2.0,
+        2.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5
+      ],
+      "ramp_duration": 0.2,
+      "velocity_epsilon": 0.02,
+      "max_duration": 2.0,
+      "compensate_coriolis": true,
+      "max_delta_tau": 1.0
+    },
+    "log_capacity": 4096
+  },
+  "legacy": {
+    "robot": {
+      "host": "172.16.0.6",
+      "model": "fr3v2.1",
+      "arm_revision": "Arm3Rv2_02.01",
+      "end_effector": "none",
+      "external_load_kg": 0.0,
+      "require_identity_f_t_ee": true,
+      "control_interface": "torque",
+      "controller_mode": "franky_joint_impedance_tracking",
+      "expected_franky_version": "2.0.1.dev58+gf88f0e9b.libfranka.0.21.2",
+      "ee_feedback": {
+        "source": "measured_joint_encoder_libfranka_fk",
+        "joint_signal": "q",
+        "base_frame": "fr3_link0",
+        "frame": "fr3_flange",
+        "model_frame": "Frame.Flange",
+        "reported_pose_role": "audit_only"
+      },
+      "impedance_controller": {
+        "stiffness_nm_rad": [
+          24.0,
+          24.0,
+          24.0,
+          24.0,
+          10.0,
+          6.0,
+          2.0
+        ],
+        "damping_nms_rad": [
+          2.0,
+          2.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0,
+          0.5
+        ],
+        "compensate_coriolis": true,
+        "constant_torque_offset_nm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_delta_tau_nm_per_ms": 1.0,
+        "gains_time_constant_s": 0.1,
+        "expected_error_clip_rad": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "joint_limit_activation_distance_rad": 0.1,
+        "joint_limit_stiffness_nm": 4.0,
+        "joint_limit_damping_nms_rad": 1.0,
+        "joint_limit_max_torque_nm": 5.0,
+        "friction": {
+          "coulomb_nm": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "viscous_nms_rad": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max_torque_nm": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "velocity_epsilon_rad_s": 0.03
+        }
+      },
+      "torque_stop": {
+        "damping_nms_rad": [
+          2.0,
+          2.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0,
+          0.5
+        ],
+        "ramp_duration_s": 0.2,
+        "velocity_epsilon_rad_s": 0.02,
+        "max_duration_s": 2.0,
+        "compensate_coriolis": true,
+        "max_delta_tau_nm_per_ms": 1.0
+      },
+      "constructor_collision_behavior": {
+        "acknowledged": true,
+        "joint_torque_threshold_nm": 20.0,
+        "cartesian_force_threshold_n": 30.0
+      }
+    },
+    "safety": {
+      "reference_derivative_limit_factor": 0.2,
+      "joint_lower_rad": [
+        -2.9007400166666666,
+        -1.8360900166666667,
+        -2.9007400166666666,
+        -3.077020016666667,
+        -2.87630335,
+        0.43982265,
+        -3.05083335
+      ],
+      "joint_upper_rad": [
+        2.9007400166666666,
+        1.8360900166666667,
+        2.9007400166666666,
+        -0.11693708333333333,
+        2.87630335,
+        4.62163335,
+        3.05083335
+      ],
+      "position_margin_rad": [
+        0.2900740016666667,
+        0.1836090016666667,
+        0.2900740016666667,
+        0.1480041466666667,
+        0.287630335,
+        0.209090535,
+        0.305083335
+      ],
+      "start_tolerance_rad": [
+        0.5801480033333334,
+        0.3672180033333334,
+        0.5801480033333334,
+        0.2960082933333334,
+        0.57526067,
+        0.41818107,
+        0.61016667
+      ],
+      "max_start_velocity_rad_s": [
+        0.10875,
+        0.10875,
+        0.10875,
+        0.10875,
+        0.1305,
+        0.1305,
+        0.1305
+      ],
+      "max_tracking_error_rad": [
+        0.5801480033333334,
+        0.3672180033333334,
+        0.5801480033333334,
+        0.2960082933333334,
+        0.57526067,
+        0.41818107,
+        0.61016667
+      ]
+    }
+  },
+  "droid": {
+    "hz": 1000,
+    "use_real_time": true,
+    "exec": "franka_panda_client",
+    "robot_client": {
+      "_target_": "polymetis.robot_client.executable_robot_client.ExecutableRobotClient",
+      "use_real_time": "${use_real_time}",
+      "metadata_cfg": {
+        "_target_": "polymetis.robot_client.metadata.RobotClientMetadata",
+        "default_Kq": [
+          40,
+          30,
+          50,
+          25,
+          35,
+          25,
+          10
+        ],
+        "default_Kqd": [
+          4,
+          6,
+          5,
+          5,
+          3,
+          2,
+          1
+        ],
+        "default_Kx": [
+          400,
+          400,
+          400,
+          15,
+          15,
+          15
+        ],
+        "default_Kxd": [
+          37,
+          37,
+          37,
+          2,
+          2,
+          2
+        ],
+        "hz": "${hz}",
+        "robot_model_cfg": "${robot_model}"
+      },
+      "executable_cfg": {
+        "robot_ip": "172.16.0.1",
+        "control_ip": "${ip}",
+        "control_port": "${port}",
+        "readonly": false,
+        "mock": false,
+        "use_real_time": "${use_real_time}",
+        "hz": "${hz}",
+        "num_dofs": "${robot_model.num_dofs}",
+        "exec": "${exec}",
+        "robot_client_metadata_path": "???",
+        "limit_rate": true,
+        "lpf_cutoff_frequency": 100,
+        "limits": {
+          "cartesian_pos_upper": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cartesian_pos_lower": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "joint_pos_upper": [
+            2.65,
+            1.68,
+            2.8,
+            -0.16,
+            2.7,
+            4.4,
+            2.9
+          ],
+          "joint_pos_lower": [
+            -2.65,
+            -1.68,
+            -2.8,
+            -2.95,
+            -2.7,
+            0.45,
+            -2.9
+          ],
+          "joint_vel": [
+            2.075,
+            2.075,
+            2.075,
+            2.075,
+            2.51,
+            2.51,
+            2.51
+          ],
+          "elbow_vel": 2.075,
+          "joint_torques": [
+            86.0,
+            86.0,
+            86.0,
+            86.0,
+            11.5,
+            11.5,
+            11.5
+          ]
+        },
+        "collision_behavior": {
+          "lower_torque": [
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0
+          ],
+          "upper_torque": [
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0
+          ],
+          "lower_force": [
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0
+          ],
+          "upper_force": [
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0,
+            40.0
+          ]
+        },
+        "safety_controller": {
+          "is_active": true,
+          "margins": {
+            "cartesian_pos": 0.05,
+            "joint_pos": 0.2,
+            "joint_vel": 0.5
+          },
+          "stiffness": {
+            "cartesian_pos": 200.0,
+            "joint_pos": 50.0,
+            "joint_vel": 20.0
+          }
+        }
+      }
+    }
+  }
+}

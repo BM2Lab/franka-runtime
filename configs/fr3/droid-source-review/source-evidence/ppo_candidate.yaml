@@ -1,0 +1,221 @@
+schema_version: 1
+runtime: franky_joint_velocity_impedance_tracking_v1
+status: pending_lab_review
+executable: false
+motion_authorized: false
+approval:
+  approved_by: null
+  approved_at: null
+  physical_stop_procedure: null
+  workspace_review: null
+robot:
+  model: fr3v2.1
+  arm_revision: Arm3Rv2_02.01
+  end_effector: none
+  external_load_kg: 0.0
+  require_identity_f_t_ee: true
+  control_interface: torque
+  controller_mode: franky_joint_velocity_impedance_tracking
+  expected_franky_version: 2.0.1.dev66+gm4comparefix.libfranka.0.21.2
+  impedance_controller:
+    stiffness_nm_rad:
+    - 100.0
+    - 100.0
+    - 100.0
+    - 100.0
+    - 100.0
+    - 100.0
+    - 100.0
+    damping_nms_rad:
+    - 20.0
+    - 20.0
+    - 20.0
+    - 20.0
+    - 20.0
+    - 20.0
+    - 20.0
+    compensate_coriolis: true
+    constant_torque_offset_nm:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    - 0.0
+    max_delta_tau_nm_per_ms: 1.0
+    command_filter_cutoff_hz: 100.0
+    gains_time_constant_s: 0.1
+    expected_error_clip_rad:
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    - 0.5
+    joint_limit_activation_distance_rad: 0.1
+    joint_limit_stiffness_nm: 4.0
+    joint_limit_damping_nms_rad: 1.0
+    joint_limit_max_torque_nm: 5.0
+    friction:
+      coulomb_nm:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      viscous_nms_rad:
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      max_torque_nm:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      velocity_epsilon_rad_s: 0.03
+  torque_stop:
+    damping_nms_rad:
+    - 2.0
+    - 2.0
+    - 2.0
+    - 1.0
+    - 1.0
+    - 1.0
+    - 0.5
+    ramp_duration_s: 0.2
+    velocity_epsilon_rad_s: 0.02
+    max_duration_s: 2.0
+    compensate_coriolis: true
+    max_delta_tau_nm_per_ms: 1.0
+  constructor_collision_behavior:
+    acknowledged: true
+    joint_torque_threshold_nm: 20.0
+    cartesian_force_threshold_n: 30.0
+  ee_feedback:
+    source: measured_joint_encoder_libfranka_fk
+    joint_signal: q
+    base_frame: fr3_link0
+    frame: fr3_flange
+    model_frame: Frame.Flange
+    reported_pose_role: audit_only
+action_mapping:
+  type: normalized_joint_velocity
+  policy_joint_count: 6
+  controlled_joint_names:
+  - fr3_joint1
+  - fr3_joint2
+  - fr3_joint3
+  - fr3_joint4
+  - fr3_joint5
+  - fr3_joint6
+  held_joint_names:
+  - fr3_joint7
+  normalized_lower: -1.0
+  normalized_upper: 1.0
+  integration: controller_1khz_forward_euler
+  initial_reference: measured_start_position
+  max_reference_velocity_rad_s:
+  - 0.435
+  - 0.435
+  - 0.435
+  - 0.435
+  - 0.522
+  - 0.522
+  soft_limit_projection: true
+timing:
+  command_hz: 50
+  state_timeout_ms: 40.0
+  callback_gap_ms: 40.0
+  command_watchdog_ms: 50.0
+  inference_timeout_ms: 15.0
+safety:
+  reference_derivative_limit_factor: 0.2
+  joint_lower_rad:
+  - -2.9007400166666666
+  - -1.8360900166666667
+  - -2.9007400166666666
+  - -3.077020016666667
+  - -2.87630335
+  - 0.43982265
+  - -3.05083335
+  joint_upper_rad:
+  - 2.9007400166666666
+  - 1.8360900166666667
+  - 2.9007400166666666
+  - -0.11693708333333333
+  - 2.87630335
+  - 4.62163335
+  - 3.05083335
+  position_margin_rad:
+  - 0.2900740016666667
+  - 0.1836090016666667
+  - 0.2900740016666667
+  - 0.1480041466666667
+  - 0.287630335
+  - 0.209090535
+  - 0.305083335
+  start_tolerance_rad:
+  - 0.005
+  - 0.005
+  - 0.005
+  - 0.005
+  - 0.005
+  - 0.005
+  - 0.005
+  max_start_velocity_rad_s:
+  - 0.10875
+  - 0.10875
+  - 0.10875
+  - 0.10875
+  - 0.1305
+  - 0.1305
+  - 0.1305
+  max_tracking_error_rad:
+  - 0.08
+  - 0.08
+  - 0.08
+  - 0.08
+  - 0.06
+  - 0.06
+  - 0.04
+  soft_lower_rad:
+  - -2.610666015
+  - -1.652481015
+  - -2.610666015
+  - -2.92901587
+  - -2.588673015
+  - 0.648913185
+  - -2.745750015
+  soft_upper_rad:
+  - 2.610666015
+  - 1.652481015
+  - 2.610666015
+  - -0.26494123
+  - 2.588673015
+  - 4.412542815
+  - 2.745750015
+controller:
+  kind: joint_velocity-impedance
+dependencies:
+  libfranka-bfc9e82d.so.0.21.2: d98ea587aa59104cb5e9d8780a96820800d567e49d872a42f3289e65ea4d5136
+profile_note: Offline extraction example; policy-contract reference bounds. No hardware
+  motion approval.
+policy_start_position_rad:
+- 0.0
+- -0.7853981633974483
+- 0.0
+- -2.356194490192345
+- 0.0
+- 1.5707963267948966
+- 0.0

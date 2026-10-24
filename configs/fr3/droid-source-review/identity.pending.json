@@ -1,0 +1,12 @@
+{
+  "address": null,
+  "arm_serial": null,
+  "clock_id": null,
+  "control_serial": null,
+  "fci_version": null,
+  "firmware_version": null,
+  "model": null,
+  "observed_ns": null,
+  "schema_version": 1,
+  "source": null
+}

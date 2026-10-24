@@ -1,0 +1,10 @@
+{
+  "hardware_executed": true,
+  "terminal_state": "complete",
+  "terminal_reason": "",
+  "config_sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4",
+  "bundle_manifest_sha256": "79c3ea84734761e46bc4954320555f5c8bf70a4b14060f43c621aec972938816",
+  "smooth_stop_ok": true,
+  "native_fault": 0,
+  "dropped_samples": 0
+}
