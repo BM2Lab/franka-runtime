@@ -248,21 +248,6 @@
       "basis": "Pinned DROID 100 Hz filter; preserves Franky slew before libfranka filtering"
     },
     {
-      "field": "guards.max_command_torque_nm",
-      "value": [
-        40.0,
-        40.0,
-        40.0,
-        40.0,
-        8.0,
-        8.0,
-        8.0
-      ],
-      "source": "source-evidence/completed_m4_config.yaml",
-      "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4",
-      "basis": "Historical M4 guard, not DROID clamp semantics and not Hand qualification"
-    },
-    {
       "field": "guards.max_callback_gap_ns",
       "value": 10000000,
       "source": "source-evidence/completed_m4_config.yaml",
@@ -849,8 +834,8 @@
       "field": "stop.ramp_duration_s",
       "value": 0.01,
       "source": "source-evidence/operator_decisions.json",
-      "sha256": "4a10b7e1421488eb71753f5a2c06bf1c130247b99f2462977ce0a549f7e38bad",
-      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits"
+      "sha256": "cf500838ae0976ba9ed8d59f3c526a4f1d413fad0aa315d3aac2fd5f8a54d239",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms"
     },
     {
       "field": "stop.damping",
@@ -864,8 +849,8 @@
         0.5
       ],
       "source": "source-evidence/operator_decisions.json",
-      "sha256": "4a10b7e1421488eb71753f5a2c06bf1c130247b99f2462977ce0a549f7e38bad",
-      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits"
+      "sha256": "cf500838ae0976ba9ed8d59f3c526a4f1d413fad0aa315d3aac2fd5f8a54d239",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms"
     },
     {
       "field": "guards.max_measured_joint_velocity_rad_s",
@@ -879,8 +864,23 @@
         1.2
       ],
       "source": "source-evidence/operator_decisions.json",
-      "sha256": "4a10b7e1421488eb71753f5a2c06bf1c130247b99f2462977ce0a549f7e38bad",
-      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits"
+      "sha256": "cf500838ae0976ba9ed8d59f3c526a4f1d413fad0aa315d3aac2fd5f8a54d239",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms"
+    },
+    {
+      "field": "guards.max_command_torque_nm",
+      "value": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "source": "source-evidence/operator_decisions.json",
+      "sha256": "cf500838ae0976ba9ed8d59f3c526a4f1d413fad0aa315d3aac2fd5f8a54d239",
+      "basis": "Operator decision: Operator-approved 2026-10-24 after D9 trial 1: the 0.2 s stop ramp kept the last impedance torque and the arm accelerated (joint 6 to 1.64 rad/s, TCP 11.4 cm during the stop); ramp 0.01 s and stronger big-joint damping from fitted effective inertias (decay ~0.05 s); measured-speed guard relaxed from 20% to ~45% of the Panda limits; wrist command-torque guard 8 -> 12 N m (FR3 rated wrist torque): the first-row target step of normal DROID chunks requests transient raw impedance torque up to 8.5 N m on the wrist (76 D7 chunks, 8 would trip at 8 N m) and 9.9 N m in D9 episode 2; the sent torque is rate-limited to 1 N m per ms"
     }
   ]
 }
