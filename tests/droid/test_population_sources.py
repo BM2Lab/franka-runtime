@@ -135,3 +135,47 @@ def test_collision_bundle_with_a_different_hand_mount_is_refused(tmp_path):
     fresh=tmp_path/'fresh.json';fresh.write_text(json.dumps(state))
     with pytest.raises(ValueError,match='Hand mount'):POP(**inputs(tmp_path),fresh_state=fresh,collision_bundle=BUNDLE)
     assert not (tmp_path/'out').exists()
+
+
+APPROVE=runpy.run_path(str(ROOT/'scripts/droid/record_approval.py'))['record']
+NEVER=2**63-1
+
+
+def full_unit_observation(tmp_path):
+    path=tmp_path/'unit.json'
+    path.write_text(json.dumps(dict(schema_version=1,address='172.16.0.6',basis='Read-only FCI connection',
+        arm_serial='synthetic-arm',basis_arm_serial='Operator-read label',control_serial='synthetic-control',
+        basis_control_serial='Operator-read label',identity_max_age_ns=NEVER,basis_identity_max_age_ns='Operator decision')))
+    return path
+
+
+def approval(tmp_path,**changes):
+    a=dict(schema_version=1,statement='synthetic',approved_by='tester',approved_at='2026-10-24T00:00:00Z',
+           physical_stop_procedure='synthetic',workspace_review='synthetic',hand_review='synthetic',collision_review='synthetic')
+    a.update(changes);path=tmp_path/'approval.json';path.write_text(json.dumps(a));return path
+
+
+def test_unit_identity_then_explicit_approval_marks_reviewed_but_not_executable(tmp_path):
+    r=POP(**inputs(tmp_path),fresh_state=FRESH,collision_bundle=BUNDLE,unit_observation=full_unit_observation(tmp_path))
+    out=tmp_path/'out';assert r['remaining']==6 and all(f.startswith('approval.') for f in r['missing'])
+    c=PhysicalDroidConfig.load(out/'physical.review.pending.json')
+    assert c.data['robot']['identity_max_age_ns']==NEVER and c.data['robot']['arm_serial']=='synthetic-arm'
+    with pytest.raises(ValueError,match='reviewed hash'):APPROVE(candidate_dir=out,approval=approval(tmp_path),expected_sha256='0'*64)
+    receipt=APPROVE(candidate_dir=out,approval=approval(tmp_path),expected_sha256=c.sha256)
+    d=PhysicalDroidConfig.load(out/'physical.review.pending.json')
+    assert d.data['status']=='reviewed' and d.data['approval']['approved_by']=='tester' and not d.missing()
+    assert receipt['approved_candidate_sha256']==d.sha256 and not receipt['motion_authorized']
+    with pytest.raises(ValueError,match='not approved/executable'):d.require_approved()
+    with pytest.raises(ValueError,match='unapproved review draft'):
+        APPROVE(candidate_dir=out,approval=approval(tmp_path),expected_sha256=d.sha256)
+
+
+def test_approval_refuses_incomplete_candidate_or_record(tmp_path):
+    POP(**inputs(tmp_path));out=tmp_path/'out';c=PhysicalDroidConfig.load(out/'physical.review.pending.json')
+    with pytest.raises(ValueError,match='Uncommissioned'):APPROVE(candidate_dir=out,approval=approval(tmp_path),expected_sha256=c.sha256)
+    full=tmp_path/'full';full.mkdir()
+    POP(**{**inputs(full),'output_dir':full/'out'},fresh_state=FRESH,collision_bundle=BUNDLE,unit_observation=full_unit_observation(full))
+    c=PhysicalDroidConfig.load(full/'out/physical.review.pending.json')
+    with pytest.raises(ValueError,match='nonempty'):
+        APPROVE(candidate_dir=full/'out',approval=approval(tmp_path,hand_review=' '),expected_sha256=c.sha256)
+    assert PhysicalDroidConfig.load(full/'out/physical.review.pending.json').data['status']=='pending_lab_review'
