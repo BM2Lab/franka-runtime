@@ -40,6 +40,8 @@ from .workspace import from_settings as workspace_from_settings
 
 # Integer native fault codes reported through SessionAuthority.poll(native_fault=...).
 FAULT_CODES = {UNDERRUN: 101, "heartbeat_timeout": 102, "client_disconnected": 103}
+# Periodic state samples are recorded at this rate; every authority/fault change is always recorded.
+TELEMETRY_PERIOD_NS = 100_000_000
 MOCK_STOP_EVIDENCE = {"joined": True, "stop_finished": True, "stop_at_rest": True, "stop_fault": 0, "dropped_samples": 0}
 
 
@@ -156,6 +158,7 @@ class DroidRuntimeService:
         self._session = None
         self._probes = set()
         self._tick = 0
+        self._telemetry_key = self._telemetry_ns = None
         self._sample_sequence = 0
         self._last_heartbeat = None
         self._fault_reported = False
@@ -237,11 +240,18 @@ class DroidRuntimeService:
                 self.authority.poll(native_fault=208)
                 self.executor.stop("backend_exception")
             self._last_step = step
-            if not self._record("supervisor",dict(tick=self._tick,authority_state=self.authority.state,
-                    fault=None if self.authority.fault is None else asdict(self.authority.fault),
-                    q=list(self.arm.q),dq=list(self.arm.dq),
-                    hand=self.hand.snapshot() if hasattr(self.hand,"snapshot") else dict(width=self.hand.width,moving=self.hand.moving))):
-                self.authority.poll(native_fault=209)
+            fault = self.authority.fault
+            key = (self.authority.state, None if fault is None else fault.code, self.authority.stopping)
+            changed = key != self._telemetry_key
+            if changed or self._telemetry_ns is None or now_ns-self._telemetry_ns >= TELEMETRY_PERIOD_NS:
+                payload = dict(tick=self._tick, authority_state=self.authority.state, q=list(self.arm.q), dq=list(self.arm.dq),
+                    hand=self.hand.snapshot() if hasattr(self.hand,"snapshot") else dict(width=self.hand.width,moving=self.hand.moving))
+                if changed:
+                    payload.update(change=True, stopping=self.authority.stopping,
+                                   fault=None if fault is None else asdict(fault))
+                if not self._record("supervisor", payload):
+                    self.authority.poll(native_fault=209)
+                self._telemetry_key, self._telemetry_ns = key, now_ns
 
     def _fault(self, reason):
         self._fault_reported = True

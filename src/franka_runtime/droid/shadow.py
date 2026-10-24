@@ -8,6 +8,7 @@ from .backend import BackendUpdate
 # A homed Franka Hand reports a maximum width slightly below the nominal 0.08 m contract
 # opening (0.07998 m measured 2026-10-24); an unhomed or unconfigured Hand reports ~0.
 HAND_OPEN_WIDTH_TOLERANCE_M=0.001
+TELEMETRY_PERIOD_NS=100_000_000  # periodic measured-state journal rate; changes are always recorded
 
 
 class ShadowHand:
@@ -94,14 +95,30 @@ class ShadowDroidBackend:
         self.executor.stop(reason);self._stopping=True
         self.source.stop() # Process/thread teardown only. No device stop command exists.
 
+    def _record_virtual_step(self,now_ns,step):
+        """Event-driven, compact journal: changes always, measured state at TELEMETRY_PERIOD_NS.
+
+        The full raw reader packet is recorded once (first sample); afterwards only its
+        compact feedback fields are kept.
+        """
+        sample=self._sample or {}
+        status={k:sample.get(k) for k in ('robot_mode','errors','contact','grasped')}
+        key=(step.sequence,step.row,step.holding,step.stop_reason,step.started,step.dropped,
+             self.feedback_info.get('validation_error'),tuple(status.values()),self._fault)
+        changed=key!=getattr(self,'_journal_key',None)
+        if not (changed or now_ns-getattr(self,'_journal_ns',-TELEMETRY_PERIOD_NS)>=TELEMETRY_PERIOD_NS):return
+        payload=dict(change=changed,step=asdict(step),measured_q=list(self.arm.q),measured_dq=list(self.arm.dq),
+                     feedback=self.feedback_info,width=sample.get('width'),status=status,commands_sent=False)
+        if not getattr(self,'_journal_first_sample',False) and sample:
+            payload['source_sample']=sample;self._journal_first_sample=True
+        if not self.recorder.emit('shadow_virtual_step',payload,timestamp_ns=self.clock()):self._fault=self._fault or 209
+        self._journal_key,self._journal_ns=key,now_ns
+
     def update(self,now_ns,dt_s,step,service_tick):
         if not self._stopping:
             try:self.validate_state()
             except ValueError:self._fault=self._fault or 207
-        if self.recorder is not None:
-            if not self.recorder.emit('shadow_virtual_step',dict(step=asdict(step),measured_q=list(self.arm.q),
-                    measured_dq=list(self.arm.dq),feedback=self.feedback_info,source_sample=self._sample,
-                    commands_sent=False),timestamp_ns=self.clock()):self._fault=self._fault or 209
+        if self.recorder is not None:self._record_virtual_step(now_ns,step)
         evidence=None
         if self._stopping and not self._reported:
             evidence=dict(mode='shadow_readonly',source_joined=self.source.joined,no_commands_sent=True)

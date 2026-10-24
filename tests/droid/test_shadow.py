@@ -215,3 +215,24 @@ def test_real_hand_counter_stream_is_accepted_and_integrity_checks_remain():
 def test_homed_hand_width_tolerance(tmp_path,max_width,valid):
     svc,src,c=make(tmp_path);start(svc,c);src.sample.update(max_width=max_width,width=min(0.0793,max_width))
     assert svc.state_sample().valid is valid
+
+
+def test_journal_is_event_driven_and_compact(tmp_path):
+    svc,src,c=make(tmp_path);start(svc,c)
+    for _ in range(250):  # one second of idle supervisor ticks at 250 Hz
+        c.advance(4_000_000);src.sample.update(arm_ns=c(),hand_ns=c(),arm_counter_ms=src.sample['arm_counter_ms']+4)
+        svc.control_step(c(),.004)
+    src.sample.update(errors=True)  # a status change is recorded on the next tick, not at the period
+    c.advance(4_000_000);src.sample.update(arm_ns=c(),hand_ns=c(),arm_counter_ms=src.sample['arm_counter_ms']+4)
+    svc.control_step(c(),.004)
+    svc.finish_shutdown(timeout_s=.1)
+    lines=(tmp_path/'recording/events.jsonl').read_text().splitlines()
+    events=[json.loads(line) for line in lines]
+    steps=[e for e in events if e['kind']=='shadow_virtual_step']
+    supervisor=[e for e in events if e['kind']=='supervisor']
+    assert len(steps)<=15 and len(supervisor)<=15  # was one of each per tick (251)
+    assert sum('source_sample' in e['payload'] for e in steps)==1
+    assert steps[-1]['payload']['change'] and steps[-1]['payload']['status']['errors'] is True
+    periodic=[line for line,e in zip(lines,events) if e['kind'] in ('supervisor','shadow_virtual_step')
+              and 'source_sample' not in e['payload']]
+    assert max(map(len,periodic))<1500
