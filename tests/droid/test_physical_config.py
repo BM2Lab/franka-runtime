@@ -120,6 +120,12 @@ def test_factory_connect_is_passive_until_start_and_refreshes(tmp_path):
     assert b.driver.thread is None and b.hand._thread is None and b.arm.dq==(.01,)*7
     assert calls==[dict(default_torque_threshold=1,default_force_threshold=1,realtime_config='enforce')]
     state.q=[.1]*7;b.estimate=object();assert b.preflight()['q']==(.1,)*7
+    np=pytest.importorskip('numpy')  # Franky's shapes: I_* 3x3, F_x_C* 3x1, column-major like libfranka
+    state.I_ee=np.array(d['tool']['I_ee'],dtype=float).reshape(3,3,order='F');state.F_x_Cee=np.array(d['tool']['F_x_Cee'],dtype=float).reshape(3,1)
+    state.I_load=np.array(d['tool']['I_load'],dtype=float).reshape(3,3,order='F');assert b.preflight()['q']==(.1,)*7
+    state.I_ee=state.I_ee+1e-2
+    with pytest.raises(ValueError,match='I_ee'):b.preflight()
+    state.I_ee=np.array(d['tool']['I_ee'],dtype=float).reshape(3,3,order='F')
     state.m_load=99
     with pytest.raises(ValueError,match='tool/load'):b.preflight()
 

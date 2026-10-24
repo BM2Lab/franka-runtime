@@ -89,7 +89,9 @@ class PhysicalDeviceFactory:
             t=d['tool']
             for key in ('m_ee','m_load','I_ee','I_load','F_x_Cee','F_x_Cload'):
                 actual=getattr(state,key);expected=t[key]
-                a=[actual] if isinstance(expected,(int,float)) else list(actual)
+                # Franky returns I_* as 3x3 and F_x_C* as 3x1 arrays; config keeps libfranka's column-major lists.
+                a=[actual] if isinstance(expected,(int,float)) else [float(x) for x in
+                   (actual.flatten(order='F') if hasattr(actual,'flatten') else actual)]
                 e=[expected] if isinstance(expected,(int,float)) else expected
                 if len(a)!=len(e) or any(not math.isfinite(x) or abs(x-y)>t['scalar_tolerance'] for x,y in zip(a,e)):
                     raise ValueError('Configured tool/load mismatch: '+key)
