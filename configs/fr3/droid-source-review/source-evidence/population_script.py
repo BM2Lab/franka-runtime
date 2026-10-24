@@ -166,7 +166,10 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
     proposal('workspace.model_sha256',hashlib.sha256(aliased).hexdigest(),'Hash of the exact derived reference asset')
     rig=None if payload is None else load_value.get('bounding_box')
     if rig and fresh_state is None:raise ValueError('Rig body points need the fresh state Hand mount')
-    for field in ('base_link','flange_link','link_points',*(() if fresh_state else ('tool_points_m',)),'table_z_m','clearance_m','interpolation_steps'):
+    observed=json.loads(Path(workspace_observation).read_text()) if workspace_observation is not None else {}
+    table=('table_z_m','clearance_m') if 'table_z_m' in observed else ()
+    for field in ('base_link','flange_link','link_points',*(() if fresh_state else ('tool_points_m',)),
+                  *(f for f in ('table_z_m','clearance_m') if f not in table),'interpolation_steps'):
         put('workspace.'+field,mock['workspace'][field],'mock_link','Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model')
     if fresh_state is not None:
         R,t=[row[:3] for row in mount[:3]],[mount[i][3] for i in range(3)]
@@ -186,6 +189,10 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
                 or len(lo)!=3 or len(hi)!=3 or any(a>=b for a,b in zip(lo,hi))):
             raise ValueError('Workspace observation needs schema 1, basis and box_min_m < box_max_m (3 each)')
         for field,value in (('box_min_m',lo),('box_max_m',hi)):put('workspace.'+field,value,'workspace_observation',box['basis'])
+        if 'table_z_m' in box:
+            if not (isinstance(box.get('clearance_m'),(int,float)) and 0<box['clearance_m']<=.1 and lo[2]<=box['table_z_m']+box['clearance_m']):
+                raise ValueError('Workspace observation table needs 0 < clearance_m <= 0.1 m')
+            for field in ('table_z_m','clearance_m'):put('workspace.'+field,box[field],'workspace_observation',box['basis'])
     else:
         for field,key in [('box_min_m','workspace_lower'),('box_max_m','workspace_upper')]:
             put('workspace.'+field,m4['limits'][key],'completed_m4_config','Historical circle-task box; may reject DROID task targets and must be reviewed for the new scene')

@@ -337,8 +337,8 @@
         0.0534
       ]
     ],
-    "table_z_m": 0.0,
-    "clearance_m": 0.05,
+    "table_z_m": 0.03,
+    "clearance_m": 0.02,
     "box_min_m": [
       0.27,
       -0.38,

@@ -236,7 +236,7 @@
     },
     "population_script": {
       "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
-      "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53",
+      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
       "snapshot": "source-evidence/population_script.py"
     },
     "fresh_state": {
@@ -260,8 +260,8 @@
       "snapshot": "source-evidence/hand_timing.json"
     },
     "workspace_observation": {
-      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-workspace-box/workspace-box.json",
-      "sha256": "2495b1d2d48fcb4ef9e03cd2b791a9e580343bb264dc289b9d701585a1dd4f19",
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-workspace-box/workspace-box-table.json",
+      "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821",
       "snapshot": "source-evidence/workspace_observation.json"
     }
   }

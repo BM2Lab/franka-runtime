@@ -4,7 +4,7 @@
   "approved": false,
   "executable": false,
   "motion_authorized": false,
-  "config_sha256": "855c522569fd1524cc933a3c37c27bd622a49de1717d86bc2b63a857b76df96d",
+  "config_sha256": "4afe12fbe7a0848d7d6360e13e6f233a5457dc5e37d439547674d349f60d6a42",
   "software_prefilled": [
     "artifacts.native_pin",
     "artifacts.native_pin_sha256",
@@ -63,645 +63,645 @@
     },
     "robot.address": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/unit_observation.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/unit_observation.json",
         "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17"
       },
       "basis": "Current FR3 FCI address: operator-stated and confirmed by successful read-only libfranka connections from the RT host built-in port (D7 shadow runs; echo_robot_state capture robot_state_20261024T184702Z.json sha256 c582264e...); supersedes archived DROID 172.16.0.1"
     },
     "robot.arm_serial": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/unit_observation.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/unit_observation.json",
         "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17"
       },
       "basis": "Operator-read arm serial number, stated 2026-10-24 as \"309969-2587331 02.01\"; 02.01 recorded as the label revision, not part of the serial"
     },
     "robot.control_serial": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/unit_observation.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/unit_observation.json",
         "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17"
       },
       "basis": "Operator-read control serial number, stated 2026-10-24"
     },
     "robot.identity_max_age_ns": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/unit_observation.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/unit_observation.json",
         "sha256": "17bc0b226dda8bc283fbfb9821e2efc92451ae5f77b7f91672a6e6b8d2c58b17"
       },
       "basis": "Operator decision 2026-10-24: no age limit for now (int64 max). Recorded identity stays bound to the RT boot clock_id, so a reboot still requires a new identity record"
     },
     "robot.model": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/arm_reference_urdf.urdf",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/arm_reference_urdf.urdf",
         "sha256": "a4e4443caa57eb96dd06fd64f8dab36969a65a333799a37f6982bd41966160c3"
       },
       "basis": "Archived FR3 model identity; not a fresh physical-unit identification"
     },
     "robot.firmware_version": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/archived_d6_summary.md",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/archived_d6_summary.md",
         "sha256": "7cf00096b72585f4f99eee1831f646f5ae438aa059d7925e50a7f2d199d4e6f9"
       },
       "basis": "Archived October 23 read-only summary; must be reconfirmed with unit serials"
     },
     "robot.fci_version": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/archived_d6_summary.md",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/archived_d6_summary.md",
         "sha256": "7cf00096b72585f4f99eee1831f646f5ae438aa059d7925e50a7f2d199d4e6f9"
       },
       "basis": "Selected server10 family; not a new FCI query"
     },
     "robot.collision_torque_nm": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Historical bare-flange constructor thresholds, not DROID 40/40 or new Hand approval"
     },
     "robot.collision_force_n": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Historical bare-flange constructor thresholds, not DROID 40/40 or new Hand approval"
     },
     "joint_bounds.lower_rad": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/legacy_reference.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/legacy_reference.yaml",
         "sha256": "e395c1705255235a0b90af4ca051c262a0367a0bf19330053d9e9e26d80f2efc"
       },
       "basis": "Archived model range/margin; effective values checked against completed M4 run"
     },
     "joint_bounds.upper_rad": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/legacy_reference.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/legacy_reference.yaml",
         "sha256": "e395c1705255235a0b90af4ca051c262a0367a0bf19330053d9e9e26d80f2efc"
       },
       "basis": "Archived model range/margin; effective values checked against completed M4 run"
     },
     "joint_bounds.margin_rad": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/legacy_reference.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/legacy_reference.yaml",
         "sha256": "e395c1705255235a0b90af4ca051c262a0367a0bf19330053d9e9e26d80f2efc"
       },
       "basis": "Archived model range/margin; effective values checked against completed M4 run"
     },
     "acceptance.max_target_lead_rad": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "D5 mock setpoint-lead baseline; physical acceptance proposal"
     },
     "acceptance.max_consecutive_row_speed_rad_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_fr3.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_fr3.yaml",
         "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920"
       },
       "basis": "DROID reference velocity ceilings adopted for row-to-row target admission after cross-host replay; not a measured-speed guard or pi0.5 action-contract constant"
     },
     "controller.joint_stiffness": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_fr3.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_fr3.yaml",
         "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920"
       },
       "basis": "Pinned DROID FR3 default hybrid feedback; candidate, not lab qualification"
     },
     "controller.joint_damping": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_fr3.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_fr3.yaml",
         "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920"
       },
       "basis": "Pinned DROID FR3 default hybrid feedback; candidate, not lab qualification"
     },
     "controller.cartesian_stiffness": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_fr3.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_fr3.yaml",
         "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920"
       },
       "basis": "Pinned DROID FR3 default hybrid feedback; candidate, not lab qualification"
     },
     "controller.cartesian_damping": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_fr3.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_fr3.yaml",
         "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920"
       },
       "basis": "Pinned DROID FR3 default hybrid feedback; candidate, not lab qualification"
     },
     "controller.error_clip_rad": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/legacy_reference.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/legacy_reference.yaml",
         "sha256": "e395c1705255235a0b90af4ca051c262a0367a0bf19330053d9e9e26d80f2efc"
       },
       "basis": "Existing Franky processing; slew is per callback, not elapsed-time scaling"
     },
     "controller.gain_time_constant_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/legacy_reference.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/legacy_reference.yaml",
         "sha256": "e395c1705255235a0b90af4ca051c262a0367a0bf19330053d9e9e26d80f2efc"
       },
       "basis": "Existing Franky processing; slew is per callback, not elapsed-time scaling"
     },
     "controller.compensate_coriolis": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/legacy_reference.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/legacy_reference.yaml",
         "sha256": "e395c1705255235a0b90af4ca051c262a0367a0bf19330053d9e9e26d80f2efc"
       },
       "basis": "Existing Franky processing; slew is per callback, not elapsed-time scaling"
     },
     "controller.max_delta_nm_per_callback": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/legacy_reference.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/legacy_reference.yaml",
         "sha256": "e395c1705255235a0b90af4ca051c262a0367a0bf19330053d9e9e26d80f2efc"
       },
       "basis": "Existing Franky processing; slew is per callback, not elapsed-time scaling"
     },
     "controller.libfranka_limit_rate": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_fr3.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_fr3.yaml",
         "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920"
       },
       "basis": "Pinned DROID filter/rate configuration"
     },
     "controller.lowpass_cutoff_hz": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_fr3.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_fr3.yaml",
         "sha256": "72fcadfdf4e58be5113bbbb34452de4026092b5465b578cb8711d059a9400920"
       },
       "basis": "Pinned DROID 100 Hz filter; preserves Franky slew before libfranka filtering"
     },
     "guards.max_measured_joint_velocity_rad_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Historical M4 guard, not DROID clamp semantics and not Hand qualification"
     },
     "guards.max_command_torque_nm": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Historical M4 guard, not DROID clamp semantics and not Hand qualification"
     },
     "guards.max_callback_gap_ns": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Historical native time guard; remains provisional for this runtime"
     },
     "guards.publisher_timeout_ns": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Historical native time guard; remains provisional for this runtime"
     },
     "stop.damping": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Completed archived smooth stop; bare-flange history does not qualify the mounted Hand"
     },
     "stop.ramp_duration_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Completed archived smooth stop; bare-flange history does not qualify the mounted Hand"
     },
     "stop.rest_velocity_rad_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Completed archived smooth stop; bare-flange history does not qualify the mounted Hand"
     },
     "stop.max_duration_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Completed archived smooth stop; bare-flange history does not qualify the mounted Hand"
     },
     "stop.compensate_coriolis": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Completed archived smooth stop; bare-flange history does not qualify the mounted Hand"
     },
     "stop.max_delta_nm_per_callback": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Completed archived smooth stop; bare-flange history does not qualify the mounted Hand"
     },
     "timing.control_hz": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Existing cross-host mock baseline; physical margins await timing measurements; control_hz is supervisor, servo remains 1000 Hz"
     },
     "timing.hold_timeout_ms": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Existing cross-host mock baseline; physical margins await timing measurements; control_hz is supervisor, servo remains 1000 Hz"
     },
     "timing.heartbeat_timeout_ms": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Existing cross-host mock baseline; physical margins await timing measurements; control_hz is supervisor, servo remains 1000 Hz"
     },
     "timing.command_timeout_ms": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Existing cross-host mock baseline; physical margins await timing measurements; control_hz is supervisor, servo remains 1000 Hz"
     },
     "timing.max_lease_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Existing cross-host mock baseline; physical margins await timing measurements; control_hz is supervisor, servo remains 1000 Hz"
     },
     "timing.startup_timeout_ns": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s admission allowance, inspired by DROID policy-start wait; not a measured native startup bound"
     },
     "timing.consumption_timeout_ns": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 50 ms first-consumption allowance; choose after timing tests"
     },
     "timing.stop_timeout_ns": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: native stop maximum plus 0.5 s for telemetry/worker join"
     },
     "timing.state_timeout_ns": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/ppo_candidate.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/ppo_candidate.yaml",
         "sha256": "94e9c81ce7e916a69bd55aa6b09249a8eb7cf211b2d856728d32d11cc1cf0080"
       },
       "basis": "PPO migration candidate state timeout; pending requalification for DROID"
     },
     "timing.native_log_capacity": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/completed_m4_config.yaml",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/completed_m4_config.yaml",
         "sha256": "9a91d76ab0a71c98095557f80d9f95c39bf685ad2fd345b7fcb074b011b46ec4"
       },
       "basis": "Existing native buffer capacity"
     },
     "clock.max_uncertainty_us": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Existing mock clock baseline; not measured physical margin"
     },
     "clock.min_probes": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Existing mock clock baseline; not measured physical margin"
     },
     "gripper.close_width_m": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_robot.py",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_robot.py",
         "sha256": "25f2edf095b13f590371a4c53c8fbf0b8948d5c08b42600542a579917442ec38"
       },
       "basis": "DROID closure=1 endpoint mapped to zero width; grasp outcome still needs Hand qualification"
     },
     "gripper.speed_m_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/droid_robot.py",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/droid_robot.py",
         "sha256": "25f2edf095b13f590371a4c53c8fbf0b8948d5c08b42600542a579917442ec38"
       },
       "basis": "Pinned DROID update_gripper speed=0.05 m/s"
     },
     "gripper.grasp_force_n": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "20 N provisional direct-libfranka force; not blindly copying Polymetis goto(force=0.1)"
     },
     "tool.F_T_EE": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/fresh_state.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/fresh_state.json",
         "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751"
       },
       "basis": "Read-only echo_robot_state with the Franka Hand configured in Desk; Desk nominal Hand parameters as reported by the controller, not a per-unit calibration"
     },
     "tool.m_ee": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/fresh_state.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/fresh_state.json",
         "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751"
       },
       "basis": "Read-only echo_robot_state with the Franka Hand configured in Desk; Desk nominal Hand parameters as reported by the controller, not a per-unit calibration"
     },
     "tool.I_ee": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/fresh_state.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/fresh_state.json",
         "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751"
       },
       "basis": "Read-only echo_robot_state with the Franka Hand configured in Desk; Desk nominal Hand parameters as reported by the controller, not a per-unit calibration"
     },
     "tool.F_x_Cee": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/fresh_state.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/fresh_state.json",
         "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751"
       },
       "basis": "Read-only echo_robot_state with the Franka Hand configured in Desk; Desk nominal Hand parameters as reported by the controller, not a per-unit calibration"
     },
     "tool.m_load": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/payload.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/payload.json",
         "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8"
       },
       "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
     },
     "tool.F_x_Cload": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/payload.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/payload.json",
         "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8"
       },
       "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
     },
     "tool.I_load": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/payload.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/payload.json",
         "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8"
       },
       "basis": "Operator-measured payload wrist-d435i-mount-rig-2026-10-24 set by the runtime at connect: Operator-weighed components (camera 72 g, mount 51 g), operator-measured camera offset from the TCP frame (-100, -40, -70) mm and rig bounding box (TCP frame: X -120..0 mm, Y 150 mm wide centred on the TCP axis, Z -100..-50 mm), 2026-10-24; mount lumped at the camera position; inertia from the D435i body box"
     },
     "artifacts.collision_model": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/collision_manifest.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/collision_manifest.json",
         "sha256": "486db0a4d5f0077232753e32e2f0fffd10ce0587c48537396314e829ded05201"
       },
       "basis": "Bundled franka_description FR3 v2.1 + Franka Hand mesh collision model (manifest-pinned files)"
     },
     "artifacts.collision_model_sha256": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/collision_manifest.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/collision_manifest.json",
         "sha256": "486db0a4d5f0077232753e32e2f0fffd10ce0587c48537396314e829ded05201"
       },
       "basis": "SHA-256 of the collision manifest, which pins every model file"
     },
     "gripper.max_state_age_ns": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/hand_timing.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/hand_timing.json",
         "sha256": "b83bb601d90ae550d3318b7c3ffb0e364f705e6854aee194441e4d77a768abb3"
       },
       "basis": "Measured read-only Hand state period 100.18 ms median / 100.74 ms max (50 samples, 2026-10-24); 250 ms is about 2.5 periods"
     },
     "gripper.epsilon_inner_m": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     "gripper.epsilon_outer_m": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing libfranka/Franky grasp default"
     },
     "gripper.poll_hz": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Contract feedback target, not achieved-rate evidence"
     },
     "gripper.moving_epsilon_m_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Width-change detection threshold"
     },
     "gripper.cancel_interval_ms": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device cancellation test cadence"
     },
     "gripper.cancel_attempts": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing fake-device bounded cancellation attempts"
     },
     "gripper.history_capacity": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Existing serialized Hand worker default"
     },
     "tool.scalar_tolerance": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured-value comparison tolerance; not physical calibration accuracy"
     },
     "tool.transform_tolerance": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Configured matrix comparison tolerance; not physical calibration accuracy"
     },
     "workspace.model_urdf": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Copied arm-only URDF with joint labels aliased in order; no Hand geometry added"
     },
     "workspace.model_sha256": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Hash of the exact derived reference asset"
     },
     "workspace.base_link": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
     },
     "workspace.flange_link": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
     },
     "workspace.link_points": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
-        "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
-      },
-      "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
-    },
-    "workspace.table_z_m": {
-      "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
-        "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
-      },
-      "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
-    },
-    "workspace.clearance_m": {
-      "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
     },
     "workspace.interpolation_steps": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model"
     },
     "workspace.tool_points_m": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/fresh_state.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/fresh_state.json",
         "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751"
       },
       "basis": "Flange-frame TCP and open-Hand fingertips at +/-0.04 m along the TCP y axis of the recorded Hand mount"
     },
     "workspace.body_points_m": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/payload.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/payload.json",
         "sha256": "8b16cd4ff83dce15951d12920ea4eacb3660693ad592a6de11b4c489f972f7b8"
       },
       "basis": "8 corners of the operator-measured rig bounding box of payload wrist-d435i-mount-rig-2026-10-24; table plane only"
     },
     "workspace.joint_names": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Logical contract aliases for the seven reference-model joints; explicit ordered rename recorded"
     },
     "workspace.box_min_m": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/workspace_observation.json",
-        "sha256": "2495b1d2d48fcb4ef9e03cd2b791a9e580343bb264dc289b9d701585a1dd4f19"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/workspace_observation.json",
+        "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821"
       },
-      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, bottom 3 cm above the mounting plane, face nearest the robot 27 cm from the base YZ plane"
+      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"
     },
     "workspace.box_max_m": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/workspace_observation.json",
-        "sha256": "2495b1d2d48fcb4ef9e03cd2b791a9e580343bb264dc289b9d701585a1dd4f19"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/workspace_observation.json",
+        "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821"
       },
-      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, bottom 3 cm above the mounting plane, face nearest the robot 27 cm from the base YZ plane"
+      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"
+    },
+    "workspace.table_z_m": {
+      "source": {
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/workspace_observation.json",
+        "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821"
+      },
+      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"
+    },
+    "workspace.clearance_m": {
+      "source": {
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/workspace_observation.json",
+        "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821"
+      },
+      "basis": "Operator-measured DROID task box, 2026-10-24: 61 x 76 x 50 cm (X x Y x Z) in the robot base frame, centred in Y, face nearest the robot 27 cm from the base YZ plane; its bottom, 3 cm above the mounting plane, is the table plane; operator chose 2 cm clearance so objects under 5 cm tall stay graspable"
     },
     "network.bind_host": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Recorded direct-link test configuration; no network changes performed"
     },
     "network.port": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Recorded direct-link test configuration; no network changes performed"
     },
     "network.allowed_peers": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Recorded direct-link test configuration; no network changes performed"
     },
     "network.token_env": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/mock_link.json",
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/mock_link.json",
         "sha256": "43a0ebb40019d3f231cfcc190333f2073a7962013734347609ac0fd8ca576025"
       },
       "basis": "Recorded direct-link test configuration; no network changes performed"
     },
     "recording.directory": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: New per-run recording directory; parent must exist and directory must not be reused"
     },
     "recording.queue_capacity": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Match historical native logging capacity; writer must keep up"
     },
     "recording.max_record_bytes": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 64 KiB per-event bound"
     },
     "recording.max_event_bytes": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 GiB event budget; session faults on exhaustion"
     },
     "recording.min_free_bytes": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: Additional 1 GiB free-space reserve"
     },
     "recording.fsync_interval_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 1 s target durability interval"
     },
     "recording.close_timeout_s": {
       "source": {
-        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/source-evidence/population_script.py",
-        "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53"
+        "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/source-evidence/population_script.py",
+        "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92"
       },
       "basis": "ENGINEERING PROPOSAL, not hardware evidence: 5 s bounded writer close"
     }
@@ -738,8 +738,8 @@
       "sha256": "d5923873495da0fc4d00a458a025acd8058c2a0c2fe362b4504d4823bb79c0d2"
     },
     "field_evidence": {
-      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-populated/field-evidence.json",
-      "sha256": "2c9926617ba1e294cc9cfb13e5dc9e71e0286785596d589ce023ed7537ee5f5b"
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-box-table-populated/field-evidence.json",
+      "sha256": "3e4344352967467661d9c2d1a48f5ccf48ca66810549e45f33086c21de4d9361"
     }
   },
   "settings_validated": false,
@@ -808,7 +808,7 @@
     },
     "population_script": {
       "path": "/home/chen-lab/franka-runtime/scripts/droid/populate_review.py",
-      "sha256": "f66e44b80c98dd5b903252167788c03347d80c1859c99863c2b0ad3c0ca80e53",
+      "sha256": "6058be453302e84b8f0258a9f2b2b3257f7590fc85ddf7b93a4485dc3af01b92",
       "snapshot": "source-evidence/population_script.py"
     },
     "fresh_state": {
@@ -832,8 +832,8 @@
       "snapshot": "source-evidence/hand_timing.json"
     },
     "workspace_observation": {
-      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-workspace-box/workspace-box.json",
-      "sha256": "2495b1d2d48fcb4ef9e03cd2b791a9e580343bb264dc289b9d701585a1dd4f19",
+      "path": "/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-workspace-box/workspace-box-table.json",
+      "sha256": "15af9e927fb2535a7e071d302dbe01edf007300974c50445022e9a37cfe3f821",
       "snapshot": "source-evidence/workspace_observation.json"
     }
   },
