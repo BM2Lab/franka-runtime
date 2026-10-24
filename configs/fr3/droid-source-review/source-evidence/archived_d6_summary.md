@@ -485,3 +485,25 @@ unit/tool/collision/approval fields**. See
 copies distinguish completed M4 evidence, pinned DROID defaults, mock baselines
 and engineering proposals. The prior all-null review remains historical.
 No robot/network operation or new motion approval occurred.
+
+
+## Cross-host mock completed, 2026-10-24
+
+See [cross-host results](droid-crosshost-mock-results.md): clean 10/30-step mock
+episodes, 339 µs clock uncertainty and ~110 ms capture-to-receipt p95. The mock
+was stopped afterward. The non-executable target-admission bound now uses pinned
+DROID ceilings, while measured-speed guards remain unchanged. Native timing and
+physical unit/tool/collision/stop qualification are still outstanding.
+
+
+## D7 shadow implementation — 2026-10-24
+
+The read-only FCI shadow backend is implemented separately from mock and native
+control. See [D7 shadow](droid-d7-shadow.md) for runner behavior, source validity,
+recording scope and the RT launch command. Backend identity starts with `shadow`;
+application receipts are disabled. Real measured q drives admission/workspace
+checks while execution is virtual. No arm/Hand commands are available.
+
+Offline verification does not qualify physical timing, collision geometry, tool
+configuration, controller stop or Hand cancellation. No FCI connection was made
+during this implementation. Existing physical admission blockers remain.

@@ -186,7 +186,7 @@
     "epsilon_inner_m": 0.005,
     "epsilon_outer_m": 0.005,
     "poll_hz": 50,
-    "max_state_age_ns": 100000000,
+    "max_state_age_ns": 250000000,
     "moving_epsilon_m_s": 0.001,
     "cancel_interval_ms": 10,
     "cancel_attempts": 20,

@@ -1,0 +1,27 @@
+{
+  "captured": "2026-10-24",
+  "robot": "172.16.0.6 FR3, Idle, FCI active, Franka Hand configured in Desk",
+  "reader": "droid_readonly_state 4de8b885..., libfranka 0.21.2, requested 50 Hz",
+  "read_only": true,
+  "arm": {
+    "samples": 241,
+    "median_ms": 20.89,
+    "max_ms": 21.07
+  },
+  "hand": {
+    "samples": 50,
+    "median_ms": 100.18,
+    "max_ms": 100.74
+  },
+  "hand_counter_per_s": 20.05,
+  "hand_max_width_m": [
+    0.0799846276640892
+  ],
+  "ee_mass_kg": 0.7300000190734863,
+  "F_T_EE_translation": [
+    0,
+    0,
+    0.10339999943971634
+  ],
+  "capture_sha256": "e9a6fe04f3298c8afddcc1d60dca08a94bd7b4c569d83b6a7f8b96e1f63dfdae"
+}
