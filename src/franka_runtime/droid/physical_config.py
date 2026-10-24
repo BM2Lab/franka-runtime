@@ -21,13 +21,15 @@ FIELDS = {
  'clock': 'max_uncertainty_us min_probes',
  'gripper': 'open_width_m close_width_m speed_m_s grasp_force_n epsilon_inner_m epsilon_outer_m poll_hz max_state_age_ns moving_epsilon_m_s cancel_interval_ms cancel_attempts history_capacity',
  'tool': 'F_T_EE m_ee I_ee F_x_Cee m_load I_load F_x_Cload scalar_tolerance transform_tolerance',
- 'workspace': 'model_urdf model_sha256 base_link flange_link joint_names link_points tool_points_m table_z_m clearance_m box_min_m box_max_m interpolation_steps',
+ 'workspace': 'model_urdf model_sha256 base_link flange_link joint_names link_points tool_points_m body_points_m table_z_m clearance_m box_min_m box_max_m interpolation_steps',
  'network': 'bind_host port allowed_peers token_env',
  'artifacts': 'native_pin native_pin_sha256 collision_model collision_model_sha256',
  'recording': 'directory queue_capacity max_record_bytes max_event_bytes min_free_bytes fsync_interval_s close_timeout_s',
  'approval': 'approved_by approved_at physical_stop_procedure workspace_review hand_review collision_review',
 }
 FIELDS={key:tuple(value.split()) for key,value in FIELDS.items()}
+# May be commissioned as an explicit empty list (e.g. no rig geometry beyond the Hand).
+OPTIONAL_LISTS={('workspace','body_points_m')}
 TOP={'schema_version','runtime','backend','status','executable','motion_authorized','provenance',*FIELDS}
 
 
@@ -75,7 +77,7 @@ class PhysicalDroidConfig:
 
     def missing(self):
         return [f'{s}.{k}' for s,keys in FIELDS.items() for k in keys
-                if self.data[s][k] is None or self.data[s][k]=='' or self.data[s][k]==[]]
+                if self.data[s][k] is None or self.data[s][k]=='' or (self.data[s][k]==[] and (s,k) not in OPTIONAL_LISTS)]
 
     @property
     def sha256(self):
@@ -145,13 +147,14 @@ class PhysicalDroidConfig:
         if abs(det-1)>1e-6:raise ValueError('Improper tool rotation')
         w=d['workspace']
         for k in ('base_link','flange_link','model_urdf'):text(w[k],k)
-        for k in ('joint_names','link_points','tool_points_m'):
+        for k in ('joint_names','link_points','tool_points_m','body_points_m'):
             if not isinstance(w[k],list):raise ValueError(f'{k}: list required')
         for v in w['joint_names']+w['link_points']:text(v,'workspace link/joint')
         if not isinstance(w['joint_names'],list) or len(w['joint_names'])!=7 or len(set(w['joint_names']))!=7:raise ValueError('Seven distinct physical joint names required')
         for v in w['joint_names']+w['link_points']:text(v,'workspace link/joint')
         if not w['link_points'] or not w['tool_points_m']:raise ValueError('Workspace/link geometry required')
         for row in w['tool_points_m']:vector(row,3,'tool point',signed=True)
+        for row in w['body_points_m']:vector(row,3,'body point',signed=True)
         number(w['table_z_m'],'table_z',minimum=-math.inf);number(w['clearance_m'],'clearance')
         lo=vector(w['box_min_m'],3,'box_min',signed=True);hi=vector(w['box_max_m'],3,'box_max',signed=True)
         if any(a>=b for a,b in zip(lo,hi)):raise ValueError('Invalid workspace box')

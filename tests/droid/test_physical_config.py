@@ -28,7 +28,7 @@ def complete(tmp_path):
     d['tool'].update(F_T_EE=[[float(i==j) for j in range(4)] for i in range(4)],I_ee=[0.]*9,I_load=[0.]*9,F_x_Cee=[0.]*3,F_x_Cload=[0.]*3,scalar_tolerance=.001,transform_tolerance=.001)
     urdf=tmp_path/'model.urdf'
     urdf.write_text('<robot name="test">'+''.join(f'<joint name="panda_joint{i}" type="revolute"><parent link="l{i-1}"/><child link="l{i}"/><origin xyz="0 0 0.1"/><axis xyz="0 0 1"/></joint>' for i in range(1,8))+'</robot>')
-    w=d['workspace'];w.update(model_urdf=str(urdf),model_sha256=digest(urdf),base_link='l0',flange_link='l7',joint_names=list(SPEC.robot.joint_names),link_points=['l7'],tool_points_m=[[0.,0.,0.]],table_z_m=-1.,clearance_m=.01,box_min_m=[-2.]*3,box_max_m=[2.]*3)
+    w=d['workspace'];w.update(model_urdf=str(urdf),model_sha256=digest(urdf),base_link='l0',flange_link='l7',joint_names=list(SPEC.robot.joint_names),link_points=['l7'],tool_points_m=[[0.,0.,0.]],body_points_m=[],table_z_m=-1.,clearance_m=.01,box_min_m=[-2.]*3,box_max_m=[2.]*3)
     artifact=tmp_path/'artifact.json';artifact.write_text('{}')
     d['artifacts'].update(native_pin=str(artifact),native_pin_sha256=digest(artifact),collision_model=str(artifact),collision_model_sha256=digest(artifact))
     d['network'].update(bind_host='127.0.0.1',port=12345,allowed_peers=['127.0.0.1'],token_env='TEST_TOKEN')

@@ -77,8 +77,10 @@ def _apply(transform, point):
 
 class WorkspaceCheck:
     def __init__(self, chain, *, link_points, tool_points_m, flange_link, table_z_m, clearance_m, box_min_m,
-                 box_max_m, interpolation_steps):
+                 box_max_m, interpolation_steps, body_points_m=()):
         self.chain, self.links, self.tool = chain, tuple(link_points), tuple(tuple(p) for p in tool_points_m)
+        # Flange-frame points on rig/payload geometry: table plane only, like link points (not the task box).
+        self.body = tuple(tuple(p) for p in body_points_m)
         self.flange, self.table_z, self.clearance = flange_link, table_z_m, clearance_m
         self.box_min, self.box_max, self.steps = tuple(box_min_m), tuple(box_max_m), interpolation_steps
 
@@ -86,6 +88,7 @@ class WorkspaceCheck:
         frames = self.chain.frames(q)
         links = {name: tuple(frames[name][r][3] for r in range(3)) for name in self.links}
         tool = [_apply(frames[self.flange], p) for p in self.tool]
+        links.update((f"body point {i}", _apply(frames[self.flange], p)) for i, p in enumerate(self.body))
         return links, tool
 
     def check_configuration(self, q, label):
@@ -114,5 +117,6 @@ def from_settings(workspace, config_dir):
     chain = SerialChain(path, workspace["base_link"], workspace["flange_link"])
     return WorkspaceCheck(chain, link_points=workspace["link_points"], tool_points_m=workspace["tool_points_m"],
                           flange_link=workspace["flange_link"], table_z_m=workspace["table_z_m"],
+                          body_points_m=workspace.get("body_points_m") or (),
                           clearance_m=workspace["clearance_m"], box_min_m=workspace["box_min_m"],
                           box_max_m=workspace["box_max_m"], interpolation_steps=workspace["interpolation_steps"])

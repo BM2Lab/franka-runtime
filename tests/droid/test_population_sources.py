@@ -32,7 +32,7 @@ def inputs(tmp_path):
 def test_populated_draft_keeps_tool_identity_and_approval_unknown(tmp_path):
     args=inputs(tmp_path);r=POP(**args)
     c=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json');d=c.data
-    assert r['prefilled']==86 and r['remaining']==18
+    assert r['prefilled']==87 and r['remaining']==18
     assert d['controller']['joint_stiffness']==[40,30,50,25,35,25,10]
     assert d['acceptance']['max_consecutive_row_speed_rad_s']==[2.075]*4+[2.51]*3
     assert d['guards']['max_measured_joint_velocity_rad_s']==[.435]*4+[.522]*3
@@ -212,7 +212,7 @@ def test_rig_box_and_true_fingertips_become_workspace_tool_points(tmp_path):
     path=payload(tmp_path,bounding_box=runpy.run_path(str(ROOT/'scripts/droid/build_payload.py'))['rig_box'](
         [[.707107,.707107,0],[-.707107,.707107,0],[0,0,1]],[0,0,.1034],(-.12,-.075,-.10),(0.,.075,-.05)))
     POP(**inputs(tmp_path),fresh_state=FRESH,collision_bundle=BUNDLE,unit_observation=full_unit_observation(tmp_path),payload=path)
-    pts=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json').data['workspace']['tool_points_m']
-    assert len(pts)==11 and pts[0]==[0.,0.,.1034]
+    w=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json').data['workspace'];pts,body=w['tool_points_m'],w['body_points_m']
+    assert len(pts)==3 and pts[0]==[0.,0.,.1034] and len(body)==8
     assert [round(v,4) for v in pts[1]]==[.0283,.0283,.1034]  # fingertip along the TCP y axis, not the flange y axis
-    assert min(p[2] for p in pts[3:])==pytest.approx(.0034,abs=1e-6)
+    assert min(p[2] for p in body)==pytest.approx(.0034,abs=1e-6)

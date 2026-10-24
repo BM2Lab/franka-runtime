@@ -165,16 +165,19 @@ def populate(*,repo,m4_run,legacy_reference,droid_sources,mock_link,observed_sta
     proposal('workspace.model_urdf','assets/arm-contract-names.reference.urdf','Copied arm-only URDF with joint labels aliased in order; no Hand geometry added')
     proposal('workspace.model_sha256',hashlib.sha256(aliased).hexdigest(),'Hash of the exact derived reference asset')
     rig=None if payload is None else load_value.get('bounding_box')
-    for field in ('base_link','flange_link','link_points',*(() if rig else ('tool_points_m',)),'table_z_m','clearance_m','interpolation_steps'):
+    if rig and fresh_state is None:raise ValueError('Rig body points need the fresh state Hand mount')
+    for field in ('base_link','flange_link','link_points',*(() if fresh_state else ('tool_points_m',)),'table_z_m','clearance_m','interpolation_steps'):
         put('workspace.'+field,mock['workspace'][field],'mock_link','Nominal archived arm/Hand point-check setup; not a surveyed workspace or collision model')
-    if rig:
-        if fresh_state is None:raise ValueError('Rig tool points need the fresh state Hand mount')
+    if fresh_state is not None:
         R,t=[row[:3] for row in mount[:3]],[mount[i][3] for i in range(3)]
         tip=lambda y:[round(sum(R[i][j]*v for j,v in enumerate((0.,y,0.)))+t[i],6) for i in range(3)]
-        points=[tip(0.),tip(.04),tip(-.04),*rig['corners_flange_m']]
-        put('workspace.tool_points_m',points,'payload',
-            'Flange-frame check points: TCP and fingertips at +/-0.04 m along the TCP y axis (open Hand, recorded mount), '
-            f"plus the 8 corners of the operator-measured rig bounding box of payload {load_value['name']}")
+        put('workspace.tool_points_m',[tip(0.),tip(.04),tip(-.04)],'fresh_state',
+            'Flange-frame TCP and open-Hand fingertips at +/-0.04 m along the TCP y axis of the recorded Hand mount')
+    if rig:
+        put('workspace.body_points_m',rig['corners_flange_m'],'payload',
+            f"8 corners of the operator-measured rig bounding box of payload {load_value['name']}; table plane only")
+    else:
+        proposal('workspace.body_points_m',[],'No rig geometry beyond the Hand declared')
     put('workspace.joint_names',logical,'mock_link','Logical contract aliases for the seven reference-model joints; explicit ordered rename recorded')
     for field,key in [('box_min_m','workspace_lower'),('box_max_m','workspace_upper')]:
         put('workspace.'+field,m4['limits'][key],'completed_m4_config','Historical circle-task box; may reject DROID task targets and must be reviewed for the new scene')

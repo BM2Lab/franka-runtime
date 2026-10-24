@@ -107,6 +107,7 @@
     "joint_names": null,
     "link_points": null,
     "tool_points_m": null,
+    "body_points_m": null,
     "table_z_m": null,
     "clearance_m": null,
     "box_min_m": null,
