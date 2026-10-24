@@ -44,7 +44,7 @@ class ShadowRuntimeConfig:
         integer(net['port'],'port');text(net['token_env'],'token_env')
         if net['port']>65535 or not isinstance(net['allowed_peers'],list) or not net['allowed_peers']:raise ValueError('Explicit peers/port required')
         for peer in net['allowed_peers']:text(peer,'peer')
-        workspace=deepcopy(r['workspace']);workspace['model_urdf']=str(p.path(workspace['model_urdf']))
+        workspace=deepcopy(r['workspace']);workspace['model_urdf']=str(p.path(workspace['model_urdf']).resolve())  # absolute: from_settings must not re-join config_dir
         if hashlib.sha256(Path(workspace['model_urdf']).read_bytes()).hexdigest()!=workspace['model_sha256']:raise ValueError('Workspace model hash mismatch')
         for key in ('box_min_m','box_max_m'):vector(workspace[key],3,key,signed=True)
         if any(a>=b for a,b in zip(workspace['box_min_m'],workspace['box_max_m'])):raise ValueError('Invalid workspace box')

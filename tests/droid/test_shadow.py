@@ -178,3 +178,12 @@ def test_readonly_source_hash_failure_never_spawns(tmp_path):
     source=ReadOnlyStateSource(helper,'0'*64,'not-used',stderr_path=tmp_path/'stderr')
     with pytest.raises(ValueError,match='hash mismatch'):source.start()
     assert source.process is None and not (tmp_path/'stderr').exists()
+
+
+def test_relative_config_paths_resolve_the_workspace_model_once(tmp_path,monkeypatch):
+    """The handoff launches from the repo root with relative --config; the URDF must not be joined twice."""
+    monkeypatch.chdir(ROOT)
+    data=json.loads(Path('configs/fr3/droid.jointpos.shadow-link.json').read_text())
+    data.update(recording_directory=str(tmp_path/'recording'))
+    settings=ShadowRuntimeConfig(data,Path('configs/fr3')).require_runnable()
+    assert settings['robot_id']
