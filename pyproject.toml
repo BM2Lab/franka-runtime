@@ -13,6 +13,7 @@ dependencies = ["contracts==0.0.2"]
 dev = ["pytest>=8"]
 ppo = ["numpy>=1.26,<3", "PyYAML>=6,<7"]
 m4 = ["numpy>=1.26,<3", "PyYAML>=6,<7"]
+collision = ["pin==4.0.0"]
 
 [project.scripts]
 franka-m4 = "franka_runtime.service.cli:main"

@@ -102,3 +102,36 @@ def test_hand_timing_without_margin_or_read_only_basis_is_refused(tmp_path,chang
 def test_without_hand_timing_the_proposal_baseline_remains(tmp_path):
     POP(**inputs(tmp_path))
     assert PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json').data['gripper']['max_state_age_ns']==100_000_000
+
+
+FRESH=ROOT/'tests/fixtures/droid/robot-state-with-hand-2026-10-24.json'
+BUNDLE=ROOT/'configs/fr3/droid-source-review/assets/collision'
+
+
+def unit_observation(tmp_path):
+    path=tmp_path/'unit.json'
+    path.write_text(json.dumps(dict(schema_version=1,address='172.16.0.6',basis='Read-only FCI connection to the current unit')))
+    return path
+
+
+def test_fresh_tool_collision_bundle_and_unit_address_fill_their_fields(tmp_path):
+    r=POP(**inputs(tmp_path),fresh_state=FRESH,collision_bundle=BUNDLE,unit_observation=unit_observation(tmp_path))
+    out=tmp_path/'out';c=PhysicalDroidConfig.load(out/'physical.review.pending.json');d=c.data
+    assert r['remaining']==9 and all(f.startswith(('approval.','robot.')) for f in r['missing'])
+    assert d['robot']['address']=='172.16.0.6' and d['tool']['m_ee']==.73
+    assert d['tool']['F_T_EE'][2][3]==.1034 and d['tool']['F_T_EE'][1][:2]==[-.707107,.707107]
+    assert d['artifacts']['collision_model_sha256']==digest(c.path(d['artifacts']['collision_model']))
+    prov=json.loads((out/'provenance.json').read_text())['field_provenance']
+    assert 'not a per-unit calibration' in prov['tool.m_ee']['basis']
+    pytest.importorskip('pinocchio')
+    from franka_runtime.droid.collision import engine_from_physical_config
+    d['robot'].update(arm_serial='synthetic',control_serial='synthetic',identity_max_age_ns=1)  # schema stand-ins only
+    engine=engine_from_physical_config(c)
+    assert engine.check_configuration((0.005415,-0.783251,-0.000904,-2.353230,-0.013001,1.562240,-0.001859))
+
+
+def test_collision_bundle_with_a_different_hand_mount_is_refused(tmp_path):
+    state=json.loads(FRESH.read_text());state['F_T_EE'][14]=.2
+    fresh=tmp_path/'fresh.json';fresh.write_text(json.dumps(state))
+    with pytest.raises(ValueError,match='Hand mount'):POP(**inputs(tmp_path),fresh_state=fresh,collision_bundle=BUNDLE)
+    assert not (tmp_path/'out').exists()

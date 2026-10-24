@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "kind": "franka_description_mesh_self_collision_v1",
+  "engine": {
+    "pinocchio": "4.0.0",
+    "note": "pin wheel; same Pinocchio/Coal versions as the Franky build"
+  },
+  "source": {
+    "package": "franka_description",
+    "version": "1.3.0",
+    "commit": "1ccde30d5a30a710f335c9f6545528447a04bc7c",
+    "urdf_xacro": "robots/fr3v2.1/fr3v2.1.urdf.xacro",
+    "srdf_xacro": "robots/fr3v2.1/fr3v2.1.srdf.xacro",
+    "xacro_args": {
+      "arm_id": "fr3v2.1",
+      "hand": "true",
+      "with_sc": "false"
+    },
+    "note": "Mesh collision geometry shared with the robot-returned model and the PPO simulation asset; URDF/SRDF are unmodified xacro output; visual meshes are referenced but not bundled"
+  },
+  "urdf": "fr3v2_1_hand.urdf",
+  "srdf": "fr3v2_1_hand.srdf",
+  "files": {
+    "fr3v2_1_hand.srdf": "7cc1b7f21800f015fac1391b18a853b3ca704be54e0c4124fe9f570510c7ac89",
+    "fr3v2_1_hand.urdf": "42996240dc3d4625080212efddc74342a794e2ba7834957c697a37e8f6162af4",
+    "franka_description/meshes/robot_arms/fr3v2.1/collision/link0.stl": "b15c1ad04c251323e010641599d539d2569f91299195a90a7be1fd3ef501d093",
+    "franka_description/meshes/robot_arms/fr3v2.1/collision/link1.stl": "7205ad2ebf6d2ad1755e13d0e9d56eaa66c5e534266ab6c0e54decde43d0cd89",
+    "franka_description/meshes/robot_arms/fr3v2.1/collision/link2.stl": "633d6ecf3aaffc78cb2e1682885ef2a1b3fd53e54dfa5df08da1cda9d719e52b",
+    "franka_description/meshes/robot_arms/fr3v2.1/collision/link3.stl": "f3d7b5c02d088fbd9b6be771c678132d957ca509c306058f1c14b6fbb6dfc119",
+    "franka_description/meshes/robot_arms/fr3v2.1/collision/link4.stl": "501b122a84a96217c7d4246d2bfb72b3a65907ca8d908fbe3c11887f06beaa8b",
+    "franka_description/meshes/robot_arms/fr3v2.1/collision/link5.stl": "293d21d6cfabd24f4855bf18313877d7b10cb957a8874952c2270f654dfd4867",
+    "franka_description/meshes/robot_arms/fr3v2.1/collision/link6.stl": "26e9536ba35f18534dbf9d9d0a345182b8bf4b42db66aa0c5e6c776747baadee",
+    "franka_description/meshes/robot_arms/fr3v2.1/collision/link7.stl": "f0001986a733293afb0a8142eadf5adc582397cfc05e538e60963fc3bb2b6e41",
+    "franka_description/meshes/robot_ee/franka_hand_white/collision/hand.stl": "94493e94f30fe940f2c8ca2f155c3bbe67bbff406d3edf5e261670d2f0f6e2ed"
+  },
+  "collision_pairs": 44,
+  "arm_joints": [
+    "fr3v2.1_joint1",
+    "fr3v2.1_joint2",
+    "fr3v2.1_joint3",
+    "fr3v2.1_joint4",
+    "fr3v2.1_joint5",
+    "fr3v2.1_joint6",
+    "fr3v2.1_joint7"
+  ],
+  "contract_joint_names": [
+    "panda_joint1",
+    "panda_joint2",
+    "panda_joint3",
+    "panda_joint4",
+    "panda_joint5",
+    "panda_joint6",
+    "panda_joint7"
+  ],
+  "finger_joints": [
+    "fr3v2.1_finger_joint1",
+    "fr3v2.1_finger_joint2"
+  ],
+  "finger_position_m": 0.04,
+  "flange_frame": "fr3v2.1_link8",
+  "workspace_urdf_sha256": "8c16cace888871113ba8fd6dc4e3d750a97fb5cfa1740ba5421bacd0f717168d",
+  "hand_mount_F_T_EE": [
+    [
+      0.707107,
+      0.707107,
+      0,
+      0
+    ],
+    [
+      -0.707107,
+      0.707107,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0.1034
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "hand_mount_source": {
+    "path": "RT host:/home/chen-lab/yifan/droid-deployment/commissioning/2026-10-24-fresh-state/robot_state_20261024T184702Z.json",
+    "sha256": "c582264ef16c181054fd1264e2a6ef3702f2c58527b444711a2238d007f2d751"
+  },
+  "min_clearance_m": 0.02,
+  "min_clearance_basis": "ENGINEERING PROPOSAL for lab review: margin on mesh geometry; franka_description's own with_sc capsules use safety_distance 0.03 m",
+  "provenance": "franka_description 1.3.0 (1ccde30) FR3 v2.1 + Franka Hand mesh collision model, Franka SRDF exclusions, Pinocchio 4.0.0/Coal"
+}
