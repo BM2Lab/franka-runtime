@@ -206,3 +206,13 @@ def test_payload_converts_tcp_com_to_flange_and_fills_load_fields(tmp_path):
 def test_implausible_payload_is_refused(tmp_path):
     with pytest.raises(ValueError,match='Payload'):
         POP(**inputs(tmp_path),fresh_state=FRESH,payload=payload(tmp_path,m_load=5.))
+
+
+def test_rig_box_and_true_fingertips_become_workspace_tool_points(tmp_path):
+    path=payload(tmp_path,bounding_box=runpy.run_path(str(ROOT/'scripts/droid/build_payload.py'))['rig_box'](
+        [[.707107,.707107,0],[-.707107,.707107,0],[0,0,1]],[0,0,.1034],(-.12,-.075,-.10),(0.,.075,-.05)))
+    POP(**inputs(tmp_path),fresh_state=FRESH,collision_bundle=BUNDLE,unit_observation=full_unit_observation(tmp_path),payload=path)
+    pts=PhysicalDroidConfig.load(tmp_path/'out/physical.review.pending.json').data['workspace']['tool_points_m']
+    assert len(pts)==11 and pts[0]==[0.,0.,.1034]
+    assert [round(v,4) for v in pts[1]]==[.0283,.0283,.1034]  # fingertip along the TCP y axis, not the flange y axis
+    assert min(p[2] for p in pts[3:])==pytest.approx(.0034,abs=1e-6)

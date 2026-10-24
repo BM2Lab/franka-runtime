@@ -27,6 +27,8 @@ def main():
     p.add_argument("--franka-description-commit", required=True)
     p.add_argument("--min-clearance-m", type=float, required=True)
     p.add_argument("--contract-joint-names", nargs=7, default=[f"panda_joint{i}" for i in range(1, 8)])
+    p.add_argument("--payload", type=Path, help="payload file with a rig bounding_box to attach to the flange")
+    p.add_argument("--output", type=Path, help="manifest path (default: <bundle>/manifest.json)")
     args = p.parse_args()
     urdf, srdf = "fr3v2_1_hand.urdf", "fr3v2_1_hand.srdf"
     files = {str(f.relative_to(args.bundle)): sha(f) for f in sorted(args.bundle.rglob("*"))
@@ -42,6 +44,17 @@ def main():
     geom = pin.buildGeomFromUrdf(model, str(args.bundle/urdf), pin.GeometryType.COLLISION, package_dirs=[str(args.bundle)])
     geom.addAllCollisionPairs()
     pin.removeCollisionPairs(model, geom, str(args.bundle/srdf))
+    boxes = []
+    if args.payload is not None:
+        rig = json.loads(args.payload.read_text())["bounding_box"]
+        boxes = [dict(name="rig", parent_frame="fr3v2.1_link8", size_m=rig["size_m"], center_flange_m=rig["center_flange_m"],
+                      rotation_flange=rig["rotation_flange"],
+                      # Rigid with the flange (link7/link8/hand) or riding on the Hand (fingers): never paired.
+                      exclude_links=["fr3v2.1_link7", "fr3v2.1_link8", "fr3v2.1_hand", "fr3v2.1_hand_tcp",
+                                     "fr3v2.1_leftfinger", "fr3v2.1_rightfinger"],
+                      source=dict(path=str(args.payload.resolve()), sha256=sha(args.payload)))]
+        from franka_runtime.droid.collision import add_attached_boxes
+        add_attached_boxes(pin, model, geom, boxes)
     manifest = dict(
         schema_version=1, kind="franka_description_mesh_self_collision_v1",
         engine=dict(pinocchio=pin.__version__, note="pin wheel; same Pinocchio/Coal versions as the Franky build"),
@@ -51,7 +64,7 @@ def main():
                     xacro_args=dict(arm_id="fr3v2.1", hand="true", with_sc="false"),
                     note="Mesh collision geometry shared with the robot-returned model and the PPO simulation asset; "
                          "URDF/SRDF are unmodified xacro output; visual meshes are referenced but not bundled"),
-        urdf=urdf, srdf=srdf, files=files, collision_pairs=len(geom.collisionPairs),
+        urdf=urdf, srdf=srdf, files=files, collision_pairs=len(geom.collisionPairs), attached_boxes=boxes,
         arm_joints=[f"fr3v2.1_joint{i}" for i in range(1, 8)], contract_joint_names=args.contract_joint_names,
         finger_joints=["fr3v2.1_finger_joint1", "fr3v2.1_finger_joint2"], finger_position_m=0.04,
         flange_frame="fr3v2.1_link8", workspace_urdf_sha256=sha(args.workspace_urdf),
@@ -61,7 +74,7 @@ def main():
                             "with_sc capsules use safety_distance 0.03 m",
         provenance=f"franka_description {args.franka_description_version} ({args.franka_description_commit[:7]}) FR3 v2.1 "
                    f"+ Franka Hand mesh collision model, Franka SRDF exclusions, Pinocchio {pin.__version__}/Coal")
-    out = args.bundle/"manifest.json"
+    out = args.output or args.bundle/"manifest.json"
     out.write_text(json.dumps(manifest, indent=2)+"\n")
     print(json.dumps(dict(manifest=str(out), sha256=sha(out), files=len(files), collision_pairs=manifest["collision_pairs"]), indent=2))
 

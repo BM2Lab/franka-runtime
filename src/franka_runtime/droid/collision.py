@@ -22,6 +22,26 @@ FK_SAMPLES = 64
 FK_TOLERANCE_M = 1e-9
 
 
+def add_attached_boxes(pin, model, geometry, boxes):
+    """Attach manifest boxes (e.g. a wrist camera rig) to a frame; pair them with every link geometry
+    that moves relative to them. Returns the number of pairs added."""
+    import coal
+    import numpy as np
+    added = 0
+    for box in boxes:
+        frame = model.frames[model.getFrameId(box["parent_frame"])]
+        local = pin.SE3(np.array(box["rotation_flange"]), np.array(box["center_flange_m"]))
+        joint = getattr(frame, "parentJoint", None)
+        joint = frame.parent if joint is None else joint
+        index = geometry.addGeometryObject(pin.GeometryObject(box["name"], joint, frame.placement*local, coal.Box(*box["size_m"])))
+        excluded = set(box["exclude_links"])
+        for other, obj in enumerate(geometry.geometryObjects):
+            if other != index and model.frames[obj.parentFrame].name not in excluded and obj.name not in excluded:
+                geometry.addCollisionPair(pin.CollisionPair(other, index))
+                added += 1
+    return added
+
+
 def _sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -64,6 +84,7 @@ class SelfCollisionEngine:
         self.geometry = pin.buildGeomFromUrdf(self.model, urdf, pin.GeometryType.COLLISION, package_dirs=[str(root)])
         self.geometry.addAllCollisionPairs()
         pin.removeCollisionPairs(self.model, self.geometry, srdf)
+        add_attached_boxes(pin, self.model, self.geometry, m.get("attached_boxes", []))
         if len(self.geometry.collisionPairs) != m["collision_pairs"]:
             raise ValueError("Collision pair count differs from the manifest")
         self.data, self.geometry_data = self.model.createData(), pin.GeometryData(self.geometry)

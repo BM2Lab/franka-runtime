@@ -64,3 +64,43 @@ def test_binding_refuses_changed_files_tool_urdf_or_joint_names(tmp_path):
         engine(joints=[f"fr3_joint{i}" for i in range(1, 8)])
     with pytest.raises(ValueError):
         engine().check_configuration(HOME[:6])
+
+
+RIG_INTO_BASE = (2.136, 1.564, 0.8, -2.566, -1.1, 1.48, 0.956)  # found by search: only the rig box hits link0 (2.3 cm)
+
+
+def rig_manifest(tmp_path):
+    import runpy
+    import sys
+    payload = runpy.run_path(str(ROOT/"scripts/droid/build_payload.py"))["build"](
+        name="rig-test", components=[("D435i", .072), ("mount", .051)], com_tcp_m=(-.1, -.04, -.07),
+        state=ROOT/"tests/fixtures/droid/robot-state-with-hand-2026-10-24.json", basis="test",
+        bbox_tcp_min=(-.12, -.075, -.10), bbox_tcp_max=(0., .075, -.05))
+    (tmp_path/"payload.json").write_text(json.dumps(payload))
+    bundle = tmp_path/"bundle"
+    shutil.copytree(ASSETS/"collision", bundle)
+    (bundle/"manifest.json").unlink()
+    argv = sys.argv
+    sys.argv = ["build", "--bundle", str(bundle), "--workspace-urdf", str(ASSETS/"arm-contract-names.reference.urdf"),
+                "--state", str(ROOT/"tests/fixtures/droid/robot-state-with-hand-2026-10-24.json"),
+                "--franka-description-version", "1.3.0", "--franka-description-commit", "1ccde30d5a30a710f335c9f6545528447a04bc7c",
+                "--min-clearance-m", "0.02", "--payload", str(tmp_path/"payload.json")]
+    try:
+        runpy.run_path(str(ROOT/"scripts/droid/build_collision_manifest.py"), run_name="__main__")
+    finally:
+        sys.argv = argv
+    return bundle/"manifest.json"
+
+
+def test_attached_rig_box_is_checked_against_links_that_move_relative_to_it(tmp_path, capsys):
+    m = rig_manifest(tmp_path)
+    data = json.loads(m.read_text())
+    assert data["collision_pairs"] == 44+7 and data["attached_boxes"][0]["name"] == "rig"
+    e = engine(m)
+    rig = [i for i, o in enumerate(e.geometry.geometryObjects) if o.name == "rig"][0]
+    partners = {e.geometry.geometryObjects[p.first if p.second == rig else p.second].name
+                for p in e.geometry.collisionPairs if rig in (p.first, p.second)}
+    assert partners == {f"fr3v2.1_link{i}_0" for i in range(7)}
+    assert e.check_configuration(HOME) is True
+    assert engine().check_configuration(RIG_INTO_BASE) is True  # without the rig, the model misses this contact
+    assert e.check_configuration(RIG_INTO_BASE) is False
