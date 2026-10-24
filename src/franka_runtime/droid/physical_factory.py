@@ -39,6 +39,7 @@ class PhysicalDeviceFactory:
                  control_cpu=None,scheduler=None):
         self.config,self.clock,self.clock_id=config,clock,clock_id
         self.control_cpu=control_cpu
+        import time;self.sleep=time.sleep
         if scheduler is None:
             import os;scheduler=os
         self.scheduler=scheduler
@@ -81,7 +82,12 @@ class PhysicalDeviceFactory:
         # The rig payload (e.g. wrist camera) is not in Desk's end-effector profile; set it on every
         # connect so gravity compensation matches the commissioned tool, then read_arm verifies it.
         t=d['tool'];robot.set_load(t['m_load'],t['F_x_Cload'],t['I_load'])
-        record('payload_set',dict(m_load=t['m_load'],F_x_Cload=t['F_x_Cload'],I_load=t['I_load']))
+        # The reported state can lag the command; wait (bounded) until the robot reports the load.
+        start=self.clock()
+        while abs(float(robot.state.m_load)-t['m_load'])>t['scalar_tolerance']:
+            if self.clock()-start>1_000_000_000:raise ValueError(f'Robot did not report the set load: m_load {robot.state.m_load}')
+            self.sleep(.01)
+        record('payload_set',dict(m_load=t['m_load'],F_x_Cload=t['F_x_Cload'],I_load=t['I_load'],confirmed_after_ns=self.clock()-start))
 
         def read_arm():
             record('device_identity',self._identity(d))
@@ -104,7 +110,7 @@ class PhysicalDeviceFactory:
                    (actual.flatten(order='F') if hasattr(actual,'flatten') else actual)]
                 e=[expected] if isinstance(expected,(int,float)) else expected
                 if len(a)!=len(e) or any(not math.isfinite(x) or abs(x-y)>t['scalar_tolerance'] for x,y in zip(a,e)):
-                    raise ValueError('Configured tool/load mismatch: '+key)
+                    raise ValueError(f'Configured tool/load mismatch: {key} reported {a} expected {e}')
             actual=state.F_T_EE.matrix
             if any(not math.isfinite(float(actual[i][j])) or abs(float(actual[i][j])-t['F_T_EE'][i][j])>t['transform_tolerance'] for i in range(4) for j in range(4)):
                 raise ValueError('Configured TCP mismatch')
